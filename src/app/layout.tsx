@@ -1,14 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Theme } from "@radix-ui/themes";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import SideNav from "@/components/nav/SideNav";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+export const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export default function RootLayout({
@@ -19,9 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} antialiased`}
       >
-        {children}
+        <Theme appearance="dark" accentColor="violet">
+          <SidebarProvider>
+            <SideNav />
+            {children}
+          </SidebarProvider>
+        </Theme>
       </body>
     </html>
   );
