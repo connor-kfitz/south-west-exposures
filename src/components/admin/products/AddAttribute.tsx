@@ -20,9 +20,9 @@ interface AttributeCard {
   deleteAttribute: (id: string) => Promise<boolean>;
 }
 
-export default function AddAttribute({ 
-  className, 
-  type, 
+export default function AddAttribute({
+  className,
+  type,
   data,
   error,
   addError,
@@ -56,6 +56,10 @@ export default function AddAttribute({
         return "Volumes (mL)";
       case "Isotopes":
         return "Isotopes";
+      case "Accessories":
+        return "Accessories";
+      case "Usages":
+        return "Usages";
       default:
         return "";
     }
@@ -69,28 +73,32 @@ export default function AddAttribute({
         return "Volume";
       case "Isotopes":
         return "Isotope";
+      case "Accessories":
+        return "Accessory";
+      case "Usages":
+        return "Usage";
       default:
         return "";
     }
   }
-  
+
   return (
     <Card className={cn("p-6 w-1/6", className)}>
       {error ? <div>{error}</div> : (<>
-      <CardHeader className="p-0 mb-4 font-bold flex-row justify-between">
-        <h2>{getHeader()}</h2>
-        <span>{data?.length ?? 0}</span>
-      </CardHeader>
-      <CardContent className="p-0">
-        <AttributeTable type={type} data={data} deleteOnClick={deleteOnClick}/>
-      </CardContent>
-      <CardFooter className="flex-col items-start p-0">
-        {addError && <label className="text-xs italic mb-2 ml-1">{addError}</label>}
-        <Input className="mb-4" placeholder={`New ${getPlaceholderValue()}`} ref={inputRef}/>
-        <Button className="w-full cursor-pointer" onClick={addOnClick}>
-          {loadingAddAttribute ? <LoadingSpinner/> : "Add"}
-        </Button>
-      </CardFooter>
+        <CardHeader className="p-0 mb-4 font-bold flex-row justify-between">
+          <h2>{getHeader()}</h2>
+          <span>{data?.length ?? 0}</span>
+        </CardHeader>
+        <CardContent className="p-0">
+          <AttributeTable type={type} data={data} deleteOnClick={deleteOnClick} />
+        </CardContent>
+        <CardFooter className="flex-col items-start p-0">
+          {addError && <label className="text-xs italic mb-2 ml-1">{addError}</label>}
+          <Input className="mb-4" placeholder={`New ${getPlaceholderValue()}`} ref={inputRef} />
+          <Button className="w-full cursor-pointer" onClick={addOnClick}>
+            {loadingAddAttribute ? <LoadingSpinner /> : "Add"}
+          </Button>
+        </CardFooter>
       </>)}
     </Card>
   )
@@ -108,13 +116,17 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
   function getHeaderName(): string {
     switch (type) {
       case "Shields":
-        return "Name"
+        return "Name";
       case "Volumes":
-        return "Value"
+        return "Value";
       case "Isotopes":
         return "Name";
+      case "Accessories":
+        return "Name";
+      case "Usages":
+        return "Name";
       default:
-        return ""
+        return "";
     }
   }
 
@@ -142,7 +154,7 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
             <TableCell>{getKey(item)}</TableCell>
             <TableCell>
               <Button variant="ghost" className="block ml-auto px-2 cursor-pointer" onClick={() => deleteOnClick(item.id)}>
-                <Image 
+                <Image
                   src="/images/admin/products/delete.svg"
                   alt="delete"
                   width={20}
