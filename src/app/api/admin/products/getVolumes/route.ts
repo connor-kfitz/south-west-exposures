@@ -5,9 +5,9 @@ export async function GET() {
 
   try {
     const query = `
-      SELECT shield_id AS id, name 
-      FROM shields
-      ORDER BY shield_id
+      SELECT volume_id AS id, value 
+      FROM volumes
+      ORDER BY volume_id
     `;
 
     const result = await client.query(query);

@@ -6,14 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
-import { Shield } from "@/types/admin-products";
+import { AttributeInput, AttributeTypes } from "@/types/admin-products";
 import Image from "next/image";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
 interface AttributeCard {
   className?: string;
-  header: string;
-  data: Shield[];
+  type: AttributeTypes;
+  data: AttributeInput[];
   error: string;
   addError: string;
   addAttribute: (value?: string) => Promise<boolean>;
@@ -22,7 +22,7 @@ interface AttributeCard {
 
 export default function AddAttribute({ 
   className, 
-  header, 
+  type, 
   data,
   error,
   addError,
@@ -48,19 +48,41 @@ export default function AddAttribute({
     await deleteAttribute(id);
   }
 
+  function getHeader(): string {
+    switch (type) {
+      case "Shields":
+        return "Shields";
+      case "Volumes":
+        return "Volumes (mL)";
+      default:
+        return "";
+    }
+  }
+
+  function getPlaceholderValue(): string {
+    switch (type) {
+      case "Shields":
+        return "Shield";
+      case "Volumes":
+        return "Volume";
+      default:
+        return "";
+    }
+  }
+  
   return (
     <Card className={cn("p-6 w-1/6", className)}>
       {error ? <div>{error}</div> : (<>
       <CardHeader className="p-0 mb-4 font-bold flex-row justify-between">
-        <h2>{header}</h2>
+        <h2>{getHeader()}</h2>
         <span>{data?.length ?? 0}</span>
       </CardHeader>
       <CardContent className="p-0">
-        <AttributeTable data={data} deleteOnClick={deleteOnClick}/>
+        <AttributeTable type={type} data={data} deleteOnClick={deleteOnClick}/>
       </CardContent>
       <CardFooter className="flex-col items-start p-0">
         {addError && <label className="text-xs italic mb-2 ml-1">{addError}</label>}
-        <Input className="mb-4" placeholder="New Shield" ref={inputRef}/>
+        <Input className="mb-4" placeholder={`New ${getPlaceholderValue()}`} ref={inputRef}/>
         <Button className="w-full cursor-pointer" onClick={addOnClick}>
           {loadingAddAttribute ? <LoadingSpinner/> : "Add"}
         </Button>
@@ -71,24 +93,45 @@ export default function AddAttribute({
 }
 
 interface AttributeTableProps {
-  data: Shield[];
+  type: AttributeTypes;
+  data: AttributeInput[];
   deleteOnClick: (id: string) => Promise<void>;
 }
 
-function AttributeTable({ data, deleteOnClick }: AttributeTableProps) {
+function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
   if (!data.length) return;
+
+  function getHeaderName(): string {
+    switch (type) {
+      case "Shields":
+        return "Name"
+      case "Volumes":
+        return "Value"
+    }
+  }
+
+  function getKey(item: AttributeInput): string {
+    if ("name" in item) {
+      return item.name;
+    } else if ("value" in item) {
+      return item.value;
+    } else {
+      return "";
+    }
+  }
+
   return (
     <Table className="mb-4">
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
+          <TableHead>{getHeaderName()}</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((item, index) => (
           <TableRow key={index}>
-            <TableCell>{item.name}</TableCell>
+            <TableCell>{getKey(item)}</TableCell>
             <TableCell>
               <Button variant="ghost" className="block ml-auto px-2 cursor-pointer" onClick={() => deleteOnClick(item.id)}>
                 <Image 

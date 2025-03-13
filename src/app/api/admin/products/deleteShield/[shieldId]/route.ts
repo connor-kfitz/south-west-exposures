@@ -5,7 +5,7 @@ export async function DELETE(req: Request, { params }: { params: { shieldId: str
   const { shieldId } = params; 
 
   if (!shieldId) {
-    return new Response(JSON.stringify({ message: 'Shield ID is required.' }), {
+    return new Response(JSON.stringify({ message: 'Shield Id is required.' }), {
       status: 400,
     });
   }
