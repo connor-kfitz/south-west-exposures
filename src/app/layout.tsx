@@ -19,7 +19,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased`}
       >
-        <Theme appearance="dark" accentColor="violet">
+        <Theme appearance="dark" accentColor="orange">
           <SidebarProvider>
             <SideNav />
             {children}

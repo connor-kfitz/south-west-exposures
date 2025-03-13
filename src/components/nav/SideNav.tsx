@@ -3,8 +3,8 @@
 import { SideNavLink } from "@/types/side-nav";
 import { usePathname } from 'next/navigation';
 import { 
-         Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, 
-         SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem
+  Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, 
+  SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem
 } from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";

@@ -1,0 +1,89 @@
+import { Shield } from "@/types/admin-products";
+import { useState, useEffect } from "react";
+
+interface useShieldsReturn {
+  shields: Shield[];
+  loading: boolean;
+  error: string;
+  addError: string;
+  postShield: (name?: string) => Promise<boolean>;
+  deleteShield: (id: string) => Promise<boolean>;
+}
+
+export function useShields(): useShieldsReturn {
+  const [shields, setShields] = useState<Shield[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  const [addError, setAddError] = useState<string>("");
+
+  useEffect(() => {
+    fetchShields();
+  },[]);
+
+  async function fetchShields(): Promise<void> {
+    try {
+      const response = await fetch("/api/admin/products/getShields");
+      if (!response.ok) throw new Error(`${response.status}`);
+      const shields = await response.json();
+      setShields(shields);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function postShield(name?: string): Promise<boolean> {
+    try {
+      const response = await fetch("/api/admin/products/postShield", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name })
+      });
+      if (!response.ok) throw new Error(`${response.status}`);
+      await fetchShields();
+      setAddError("");
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        const statusCode = parseInt(error.message, 10);
+        switch (statusCode) {
+          case 400:
+            setAddError("Shield name is required");
+            break;
+          case 409:
+            setAddError("Duplicate name");
+            break;
+        }
+      }
+      return false;
+    }
+  }
+
+  async function deleteShield(id: string): Promise<boolean> {
+    if (!id) return false;
+    try {
+      const response = await fetch(`/api/admin/products/deleteShield/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error(`${response.status}`);
+      await fetchShields();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  return {
+    shields,
+    loading,
+    error,
+    addError,
+    postShield,
+    deleteShield
+  }
+}
