@@ -1,4 +1,4 @@
-export type AttributeTypes = "Shields" | "Volumes" 
+export type AttributeTypes = "Shields" | "Volumes" | "Isotopes" 
 
 export type Shield = {
   id: string;
@@ -10,4 +10,9 @@ export type Volume = {
   value: string;
 }
 
-export type AttributeInput = Shield | Volume;
+export type Isotope = {
+  id: string;
+  name: string;
+}
+
+export type AttributeInput = Shield | Volume | Isotope;

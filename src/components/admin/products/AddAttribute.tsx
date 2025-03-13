@@ -54,6 +54,8 @@ export default function AddAttribute({
         return "Shields";
       case "Volumes":
         return "Volumes (mL)";
+      case "Isotopes":
+        return "Isotopes";
       default:
         return "";
     }
@@ -65,6 +67,8 @@ export default function AddAttribute({
         return "Shield";
       case "Volumes":
         return "Volume";
+      case "Isotopes":
+        return "Isotope";
       default:
         return "";
     }
@@ -107,6 +111,10 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
         return "Name"
       case "Volumes":
         return "Value"
+      case "Isotopes":
+        return "Name";
+      default:
+        return ""
     }
   }
 
