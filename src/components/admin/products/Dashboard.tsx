@@ -9,6 +9,7 @@ import { useProducts } from "@/hooks/useProducts";
 import AddAttribute from "@/components/admin/products/AddAttribute";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import AddProduct from "./AddProduct";
+import Products from "./Products";
 
 export default function Dashboard() {
   const { shields, loading: shieldsLoading, error: shieldsError, addError: shieldsAddError, postShield, deleteShield } = useShields();
@@ -24,6 +25,9 @@ export default function Dashboard() {
     <section className="flex gap-5">
       <section className="grow">
         <section className="bg-red">
+          <Products 
+            products={products}
+          />
           <AddProduct
             shields={shields}
             volumes={volumes}

@@ -7,7 +7,6 @@ export async function GET() {
     const query = `
       SELECT * FROM public.products
       ORDER BY product_id ASC
-      ORDER BY product_id
     `;
 
     const result = await client.query(query);
