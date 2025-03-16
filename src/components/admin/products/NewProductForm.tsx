@@ -48,7 +48,8 @@ const formSchema = z.object({
     src: z.string()
   })).min(1, "At least one image is required"),
   specifications: z.record(z.string(), volumeFormSchema),
-  faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required")
+  faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required"),
+  relatedProducts: z.array(z.string())
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -88,7 +89,8 @@ export default function NewProductForm({
       volumes: [],
       images: [],
       specifications: {},
-      faqs: [{question: "", answer: ""}]
+      faqs: [{question: "", answer: ""}],
+      relatedProducts: []
     },
   });
 
@@ -566,7 +568,7 @@ function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
   return (
     <FormField
       control={form.control}
-      name="description"
+      name="relatedProducts"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Related Products</FormLabel>
@@ -574,7 +576,7 @@ function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
           <FormControl>
             <MultiSelect
               options={productOptions}
-              type="Accessories"
+              type="Related Products"
               onValueChange={field.onChange}
             />
           </FormControl>
