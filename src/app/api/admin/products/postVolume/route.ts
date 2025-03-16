@@ -3,21 +3,21 @@ import pool from '@/lib/db';
 
 export async function POST(req: Request) {
   try {
-    const { value } = await req.json();
+    const { name } = await req.json();
 
-    if (!value) {
-      return NextResponse.json({ error: 'Volume value is required' }, { status: 400 });
+    if (!name) {
+      return NextResponse.json({ error: 'Volume name is required' }, { status: 400 });
     }
 
-    const checkResult = await pool.query('SELECT * FROM volumes WHERE value = $1', [value]);
+    const checkResult = await pool.query('SELECT * FROM volumes WHERE name = $1', [name]);
 
     if (checkResult.rows.length > 0) {
-      return NextResponse.json({ error: 'Duplicate Value' }, { status: 409 });
+      return NextResponse.json({ error: 'Duplicate name' }, { status: 409 });
     }
 
     const result = await pool.query(
-      'INSERT INTO volumes (value) VALUES ($1) RETURNING *',
-      [value]
+      'INSERT INTO volumes (name) VALUES ($1) RETURNING *',
+      [name]
     );
 
     return NextResponse.json({ message: 'Volume created', volume: result.rows[0] }, { status: 201 });

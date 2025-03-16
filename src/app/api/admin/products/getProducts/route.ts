@@ -5,9 +5,9 @@ export async function GET() {
 
   try {
     const query = `
-      SELECT volume_id AS id, name 
-      FROM volumes
-      ORDER BY volume_id
+      SELECT * FROM public.products
+      ORDER BY product_id ASC
+      ORDER BY product_id
     `;
 
     const result = await client.query(query);

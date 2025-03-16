@@ -6,14 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
-import { AttributeInput, AttributeTypes } from "@/types/admin-products";
 import Image from "next/image";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { ProductAttribute, ProductAttributeTypes } from "@/types/admin-products";
 
 interface AttributeCard {
   className?: string;
-  type: AttributeTypes;
-  data: AttributeInput[];
+  type: ProductAttributeTypes;
+  data: ProductAttribute[];
   error: string;
   addError: string;
   addAttribute: (value?: string) => Promise<boolean>;
@@ -83,7 +83,7 @@ export default function AddAttribute({
   }
 
   return (
-    <Card className={cn("p-6 w-1/6", className)}>
+    <Card className={cn("p-6", className)}>
       {error ? <div>{error}</div> : (<>
         <CardHeader className="p-0 mb-4 font-bold flex-row justify-between">
           <h2>{getHeader()}</h2>
@@ -105,8 +105,8 @@ export default function AddAttribute({
 }
 
 interface AttributeTableProps {
-  type: AttributeTypes;
-  data: AttributeInput[];
+  type: ProductAttributeTypes;
+  data: ProductAttribute[];
   deleteOnClick: (id: string) => Promise<void>;
 }
 
@@ -130,16 +130,6 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
     }
   }
 
-  function getKey(item: AttributeInput): string {
-    if ("name" in item) {
-      return item.name;
-    } else if ("value" in item) {
-      return item.value;
-    } else {
-      return "";
-    }
-  }
-
   return (
     <Table className="mb-4">
       <TableHeader>
@@ -151,7 +141,7 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
       <TableBody>
         {data.map((item, index) => (
           <TableRow key={index}>
-            <TableCell>{getKey(item)}</TableCell>
+            <TableCell>{item.name}</TableCell>
             <TableCell>
               <Button variant="ghost" className="block ml-auto px-2 cursor-pointer" onClick={() => deleteOnClick(item.id)}>
                 <Image

@@ -1,31 +1,31 @@
-import { Volume } from "@/types/admin-products";
+import { Product } from "@/types/admin-products";
 import { useState, useEffect } from "react";
 
-interface useVolumesReturn {
-  volumes: Volume[];
+interface useProductsReturn {
+  products: Product[];
   loading: boolean;
   error: string;
   addError: string;
-  postVolume: (name?: string) => Promise<boolean>;
-  deleteVolume: (id: string) => Promise<boolean>;
+  postProduct: (value?: string) => Promise<boolean>;
+  deleteProduct: (id: string) => Promise<boolean>;
 }
 
-export function useVolumes(): useVolumesReturn {
-  const [volumes, setVolumes] = useState<Volume[]>([]);
+export function useProducts(): useProductsReturn {
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
 
   useEffect(() => {
-    fetchVolumes();
-  },[]);
+    fetchProducts();
+  }, []);
 
-  async function fetchVolumes(): Promise<void> {
+  async function fetchProducts(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getVolumes");
+      const response = await fetch("/api/admin/products/getProducts");
       if (!response.ok) throw new Error(`${response.status}`);
-      const volumes = await response.json();
-      setVolumes(volumes);
+      const products = await response.json();
+      setProducts(products);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -37,15 +37,15 @@ export function useVolumes(): useVolumesReturn {
     }
   }
 
-  async function postVolume(name?: string): Promise<boolean> {
+  async function postProduct(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/postVolume", {
+      const response = await fetch("/api/admin/products/postProduct", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchVolumes();
+      await fetchProducts();
       setAddError("");
       return true;
     } catch (error) {
@@ -53,10 +53,10 @@ export function useVolumes(): useVolumesReturn {
         const statusCode = parseInt(error.message, 10);
         switch (statusCode) {
           case 400:
-            setAddError("Volume name is required");
+            setAddError("Product value is required");
             break;
           case 409:
-            setAddError("Duplicate name");
+            setAddError("Duplicate value");
             break;
         }
       }
@@ -64,14 +64,14 @@ export function useVolumes(): useVolumesReturn {
     }
   }
 
-  async function deleteVolume(id: string): Promise<boolean> {
+  async function deleteProduct(id: string): Promise<boolean> {
     if (!id) return false;
     try {
-      const response = await fetch(`/api/admin/products/deleteVolume/${id}`, {
+      const response = await fetch(`/api/admin/products/deleteProduct/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchVolumes();
+      await fetchProducts();
       return true;
     } catch {
       return false;
@@ -79,11 +79,11 @@ export function useVolumes(): useVolumesReturn {
   }
 
   return {
-    volumes,
+    products,
     loading,
     error,
     addError,
-    postVolume,
-    deleteVolume
+    postProduct,
+    deleteProduct
   }
 }

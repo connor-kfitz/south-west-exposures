@@ -1,28 +1,25 @@
-export type AttributeTypes = "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages";
+export type ProductAttributeTypes = "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages";
 
-export type Shield = {
+export type ProductAttribute = {
   id: string;
   name: string;
 }
 
-export type Volume = {
+export type ProductImage = {
   id: string;
-  value: string;
+  blob: string;
+  src: string;
 }
 
-export type Isotope = {
-  id: string;
-  name: string;
+export type ProductFaq = {
+  question: string;
+  answer: string;
 }
 
-export type Accessory = {
-  id: string;
-  name: string;
-}
-
-export type Usage = {
+export type Product = {
   id: string;
   name: string;
+  description: string;
+  features: string[];
+  material: string;
 }
-
-export type AttributeInput = Shield | Volume | Isotope | Accessory | Usage;
