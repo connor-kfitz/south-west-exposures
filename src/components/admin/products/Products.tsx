@@ -33,7 +33,7 @@ export default function Products({ products }: ProductsProps) {
 
   return (
     <Card className="p-6 mb-6">
-      <CardHeader className="p-0 mb-4 font-bold flex-row justify-between">
+      <CardHeader className="p-0 mb-6 font-bold flex-row justify-between">
         <h2>Products</h2>
       </CardHeader>
       <CardContent className="p-0">

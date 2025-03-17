@@ -6,6 +6,7 @@ import { useIsotopes } from "@/hooks/useIsotopes";
 import { useAccessories } from "@/hooks/useAccessories";
 import { useUsages } from "@/hooks/useUsages";
 import { useProducts } from "@/hooks/useProducts";
+import { useFilters } from "@/hooks/useFilters";
 import AddAttribute from "@/components/admin/products/AddAttribute";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import AddProduct from "./AddProduct";
@@ -18,8 +19,10 @@ export default function Dashboard() {
   const { accessories, loading: accessoriesLoading, error: accessoriesError, addError: accessoriesAddError, postAccessory, deleteAccessory } = useAccessories();
   const { usages, loading: usagesLoading, error: usagesError, addError: usagesAddError, postUsage, deleteUsage } = useUsages();
   const { products, loading: loadingProducts } = useProducts();
+  const { filters, loading: loadingFilters } = useFilters();
 
-  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts) return <LoadingSpinner />;
+  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters) 
+    return <LoadingSpinner/>;
 
   return (
     <section className="flex gap-5">
@@ -35,6 +38,7 @@ export default function Dashboard() {
             accessories={accessories}
             usages={usages}
             products={products}
+            filters={filters}
           />
         </section>
       </section>

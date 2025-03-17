@@ -22,7 +22,7 @@ function SortableImage({ image, removeImage }: SortableImageProps) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="relative w-24 h-24 border border-border rounded-md overflow-hidden cursor-grab">
-      <Image src={image.blob ?? image.src} alt="Uploaded" width={100} height={100} className="object-cover w-full h-full" />
+      <Image src={image.file ? URL.createObjectURL(image.file) : image.src} alt="Uploaded" width={100} height={100} className="object-cover w-full h-full"/>
       <button
         type="button"
         onClick={() => removeImage(image.id)}

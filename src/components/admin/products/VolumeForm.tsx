@@ -26,6 +26,7 @@ export function VolumeForm({ mainForm, formSchema, selectedVolume, formSpacing, 
 
   const fields = [
     { name: "weight", label: "Weight" },
+    { name: "height", label: "Height" },
     { name: "innerDiameter", label: "Inner Diameter" },
     { name: "outerDiameter", label: "Outer Diameter" },
     { name: "shieldingSide", label: "Shielding Side" },

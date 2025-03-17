@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelect } from "@/components/shared/MultiSelect";
-import { Product, ProductAttribute, ProductImage } from "@/types/admin-products";
+import { Filter, Product, ProductAttribute, ProductImage, Specifications } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
 import { SortableImages } from "./SortableImages";
 import { generateUUID } from "@/lib/utils";
@@ -17,6 +17,7 @@ import z from "zod";
 
 export const volumeFormSchema = z.object({
   weight: z.string(),
+  height: z.string(),
   innerDiameter: z.string(),
   outerDiameter: z.string(),
   shieldingSide: z.string(),
@@ -44,7 +45,7 @@ const formSchema = z.object({
   volumes: z.array(z.string().min(1, "At least one volume is required")).min(1, "Select at least one option"),
   images: z.array(z.object({
     id: z.string(),
-    blob: z.string(),
+    file: z.instanceof(File),
     src: z.string()
   })).min(1, "At least one image is required"),
   specifications: z.record(z.string(), volumeFormSchema),
@@ -61,6 +62,7 @@ interface NewProductFormProps {
   accessoryOptions: ProductAttribute[];
   volumeOptions: ProductAttribute[];
   productOptions: Product[];
+  filters: Filter[];
 }
 
 export default function NewProductForm({ 
@@ -69,7 +71,8 @@ export default function NewProductForm({
   shieldOptions,
   accessoryOptions,
   volumeOptions,
-  productOptions
+  productOptions,
+  filters
 }: NewProductFormProps) {
 
   const [features, setFeatures] = useState<string[]>([""]);
@@ -91,7 +94,7 @@ export default function NewProductForm({
       specifications: {},
       faqs: [{question: "", answer: ""}],
       relatedProducts: []
-    },
+    }
   });
 
   const images = form.watch("images");
@@ -111,7 +114,7 @@ export default function NewProductForm({
     const files = Array.from(event.target.files || []);
     const newImages = files.map((file) => ({
       id: generateUUID(),
-      blob: URL.createObjectURL(file),
+      file: file,
       src: ""
     }));
     form.setValue("images", [...images, ...newImages]);
@@ -121,6 +124,7 @@ export default function NewProductForm({
     const specifications = form.getValues("specifications");
     const newSpecifications = {[name]: {
       weight: undefined,
+      height: undefined,
       innerDiamter: undefined,
       outerDiamter: undefined,
       shieldingSide: undefined,
@@ -129,17 +133,7 @@ export default function NewProductForm({
       topShieldPbEquiv: undefined,
       bottom: undefined,
       bottomPbEquiv: undefined
-    }} as unknown as Record<string, {
-      weight: string;
-      innerDiameter: string;
-      outerDiameter: string;
-      shieldingSide: string;
-      shieldingSidePbEquiv: string;
-      topShield: string;
-      topShieldPbEquiv: string;
-      bottom: string;
-      bottomPbEquiv: string;
-    }>;
+    }} as unknown as Specifications;
     form.setValue("specifications", {...specifications, ...newSpecifications})
   }
 
@@ -151,9 +145,75 @@ export default function NewProductForm({
     form.setValue("specifications", updatedSpecifications);
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Todo: Post Values to Database
+  async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
+    const formData = prepareFormData();
+
+    try {
+      const response = await fetch("/api/admin/products/postProduct", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) throw new Error();
+      form.reset();
+    } catch (error) {
+      console.error("Error posting product:", error);
+    }
+  }
+
+  function prepareFormData() {
+    const data = form.getValues();
+    const formData = new FormData();
+
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("features", JSON.stringify(data.features));
+    formData.append("material", data.material);
+    formData.append("usages", JSON.stringify(getAttributeIds(data.usages, usageOptions)));
+    formData.append("usageFilterId", getIdFromName("Usages", filters));
+    formData.append("isotopes", JSON.stringify(getAttributeIds(data.isotopes, isotopeOptions)));
+    formData.append("isotopeFilterId", getIdFromName("Isotopes", filters));
+    formData.append("volumes", JSON.stringify(getAttributeIds(data.volumes, volumeOptions)));
+    formData.append("volumeFilterId", getIdFromName("Volumes", filters));
+    formData.append("shields", JSON.stringify(getAttributeIds(data.shields, shieldOptions)));
+    formData.append("shieldFilterId", getIdFromName("Shields", filters));
+    formData.append("accessories", JSON.stringify(getAttributeIds(data.accessories, accessoryOptions)));
+    formData.append("accessoryFilterId", getIdFromName("Accessories", filters));
+    formData.append("specifications", JSON.stringify(getSpecificationsArray(data.specifications)));
+    formData.append("faqs", JSON.stringify(data.faqs));
+    formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts, productOptions)));
+    formData.append("images", JSON.stringify(data.images));
+
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((image) => {
+        formData.append(`imageFiles`, image.file);
+      });
+    }
+
+    return formData;
+  }
+
+  function getIdFromName(name: string, object: Filter[]): string {
+    const filter = object.find((filter) => filter.name === name);
+    return filter ? filter.id : "";
+  }
+
+  function getAttributeIds(formValues: string[], attributeValues: ProductAttribute[]) {
+    return attributeValues
+      .filter((attr) => formValues.includes(attr.name))
+      .map((attr) => ({ name: attr.name, id: attr.id }));
+  }
+
+  function getSpecificationsArray(specifications: Specifications) {
+    return Object.entries(specifications).map(([key, dataObject]) => ({
+      volumeId: volumeOptions.find(volume => volume.name === key)?.id,
+      ...dataObject,
+    }));
+  }
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    await postProduct(form);
   }
 
   return (
