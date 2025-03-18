@@ -33,6 +33,19 @@ export const faqFormSchema = z.object({
   answer: z.string().min(1, "Answer is required"),
 });
 
+const productImageSchema = z.object({
+  id: z.string(),
+  file: z.unknown().refine((value: unknown) => {
+    if (typeof window !== 'undefined') {
+      return value instanceof File;
+    }
+    return true;
+  }, {
+    message: 'File must be a valid File object in the browser or a string on the server',
+  }),
+  src: z.string(),
+});
+
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
@@ -43,11 +56,7 @@ const formSchema = z.object({
   shields: z.array(z.string().min(1, "At least one shield is required")).min(1, "Select at least one option"),
   accessories: z.array(z.string().min(1, "At least one accessory is required")).min(1, "Select at least one option"),
   volumes: z.array(z.string().min(1, "At least one volume is required")).min(1, "Select at least one option"),
-  images: z.array(z.object({
-    id: z.string(),
-    file: z.instanceof(File),
-    src: z.string()
-  })).min(1, "At least one image is required"),
+  images: z.array(productImageSchema).min(1, "At least one image is required"),
   specifications: z.record(z.string(), volumeFormSchema),
   faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required"),
   relatedProducts: z.array(z.string())
@@ -186,7 +195,7 @@ export default function NewProductForm({
 
     if (data.images && data.images.length > 0) {
       data.images.forEach((image) => {
-        formData.append(`imageFiles`, image.file);
+        formData.append(`imageFiles`, image.file as File);
       });
     }
 

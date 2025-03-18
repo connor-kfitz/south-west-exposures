@@ -7,9 +7,9 @@ export type ProductAttribute = {
 
 export type ProductImage = {
   id: string;
-  file: File;
+  file?: File | string | unknown;
   src: string;
-}
+};
 
 export type ProductFaq = {
   question: string;
