@@ -246,7 +246,7 @@ export default function NewProductForm({
     formData.append("shieldFilterId", getIdFromName("Shields", filters));
     formData.append("accessories", JSON.stringify(getAttributeIds(data.accessories, accessoryOptions)));
     formData.append("accessoryFilterId", getIdFromName("Accessories", filters));
-    formData.append("specifications", JSON.stringify(data.specifications));
+    formData.append("specifications", JSON.stringify(updateSpecifcationIds(data.specifications, volumeOptions)));
     formData.append("faqs", JSON.stringify(data.faqs));
     formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts || [], productOptions)));
     formData.append("images", JSON.stringify(data.images));
@@ -269,6 +269,13 @@ export default function NewProductForm({
     return attributeValues
       .filter((attr) => formValues.includes(attr.name))
       .map((attr) => ({ name: attr.name, id: attr.id }));
+  }
+
+  function updateSpecifcationIds(formValues: z.infer<typeof volumeFormSchema>[], volumeOptions: ProductAttribute[]) {
+    return formValues.map(value => {
+      const matchedItem = volumeOptions.find(volume => volume.name === value.volume);
+      return matchedItem ? { ...value, volume: matchedItem.id } : value;
+    });
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

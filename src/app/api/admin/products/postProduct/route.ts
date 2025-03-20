@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     if (specifications && Array.isArray(specifications)) {
       for (const spec of specifications) {
         const {
-          volumeId, weight, height, innerDiameter, outerDiameter,
+          volume, weight, height, innerDiameter, outerDiameter,
           shieldingSide, shieldingSidePbEquiv, topShield,
           topShieldPbEquiv, bottom, bottomPbEquiv
         } = spec;
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
              bottom, bottom_pb_equiv
            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`,
           [
-            productId, volumeId, weight, height, innerDiameter, outerDiameter,
+            productId, volume, weight, height, innerDiameter, outerDiameter,
             shieldingSide, shieldingSidePbEquiv, topShield, topShieldPbEquiv,
             bottom, bottomPbEquiv
           ]
