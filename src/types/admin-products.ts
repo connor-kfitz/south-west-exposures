@@ -6,9 +6,9 @@ export type ProductAttribute = {
 }
 
 export type ProductImage = {
-  id: string;
+  id?: string;
   file?: File | string | unknown;
-  src: string;
+  src?: string;
 };
 
 export type ProductFaq = {
@@ -28,16 +28,3 @@ export type Filter = {
   id: string;
   name: string;
 }
-
-export type Specifications = Record<string, {
-  weight: string;
-  height: string;
-  innerDiameter: string;
-  outerDiameter: string;
-  shieldingSide: string;
-  shieldingSidePbEquiv: string;
-  topShield: string;
-  topShieldPbEquiv: string;
-  bottom: string;
-  bottomPbEquiv: string;
-}>

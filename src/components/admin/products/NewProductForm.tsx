@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelect } from "@/components/shared/MultiSelect";
-import { Filter, Product, ProductAttribute, ProductImage, Specifications } from "@/types/admin-products";
+import { Filter, Product, ProductAttribute, ProductImage } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
 import { SortableImages } from "./SortableImages";
 import { generateUUID } from "@/lib/utils";
@@ -16,17 +16,67 @@ import { FaqsFields } from "./FaqsFields";
 import z from "zod";
 
 export const volumeFormSchema = z.object({
-  weight: z.string(),
-  height: z.string(),
-  innerDiameter: z.string(),
-  outerDiameter: z.string(),
-  shieldingSide: z.string(),
-  shieldingSidePbEquiv: z.string(),
-  topShield: z.string(),
-  topShieldPbEquiv: z.string(),
-  bottom: z.string(),
+  volume: z.string(),
+  weight: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Weight must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  height: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Height must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  innerDiameter: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Inner diameter must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  outerDiameter: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Outer diameter must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  shieldingSide: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Shielding side must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  shieldingSidePbEquiv: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Shielding side Pb equivalent must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  topShield: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Top shield must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  topShieldPbEquiv: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Top shield Pb equivalent must be a valid number"
+    })
+    .transform(val => val.trim()),
+
+  bottom: z.string()
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Bottom must be a valid number"
+    })
+    .transform(val => val.trim()),
+
   bottomPbEquiv: z.string()
-})
+    .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
+      message: "Bottom Pb equivalent must be a valid number"
+    })
+    .transform(val => val.trim())
+});
 
 export const faqFormSchema = z.object({
   question: z.string().min(1, "Question is required"),
@@ -34,7 +84,7 @@ export const faqFormSchema = z.object({
 });
 
 const productImageSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   file: z.unknown().refine((value: unknown) => {
     if (typeof window !== 'undefined') {
       return value instanceof File;
@@ -43,23 +93,23 @@ const productImageSchema = z.object({
   }, {
     message: 'File must be a valid File object in the browser or a string on the server',
   }),
-  src: z.string(),
+  src: z.string().optional()
 });
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().min(1, "Description is required"),
-  material: z.string().min(1, "Material is required"),
-  features: z.array(z.string().min(1, "Feature cannot be empty")),
+  name: z.string().min(1, "Name is required").transform(val => val.trim()), 
+  description: z.string().min(1, "Description is required").transform(val => val.trim()),
+  material: z.string().min(1, "Material is required").transform(val => val.trim()),
+  features: z.array(z.string().min(1, "Feature cannot be empty").transform(val => val.trim())),
   usages: z.array(z.string().min(1, "At least one usage is required")).min(1, "Select at least one option"),
   isotopes: z.array(z.string().min(1, "At least one isotope is required")).min(1, "Select at least one option"),
   shields: z.array(z.string().min(1, "At least one shield is required")).min(1, "Select at least one option"),
   accessories: z.array(z.string().min(1, "At least one accessory is required")).min(1, "Select at least one option"),
   volumes: z.array(z.string().min(1, "At least one volume is required")).min(1, "Select at least one option"),
   images: z.array(productImageSchema).min(1, "At least one image is required"),
-  specifications: z.record(z.string(), volumeFormSchema),
+  specifications: z.array(volumeFormSchema).min(1, "At least one volume is required"),
   faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required"),
-  relatedProducts: z.array(z.string())
+  relatedProducts: z.array(z.string()).optional()
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -84,7 +134,6 @@ export default function NewProductForm({
   filters
 }: NewProductFormProps) {
 
-  const [features, setFeatures] = useState<string[]>([""]);
   const [selectedVolume, setSelectedVolume] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -93,22 +142,22 @@ export default function NewProductForm({
       name: "",
       description: "",
       material: "",
-      features: [],
+      features: [""],
       usages: [],
       isotopes: [],
       shields: [],
       accessories: [],
       volumes: [],
       images: [],
-      specifications: {},
+      specifications: [],
       faqs: [{question: "", answer: ""}],
       relatedProducts: []
-    }
+    },
   });
 
   const images = form.watch("images");
+  const formFeatures = form.watch("features")
   const formVolumes = form.watch("volumes");
-  const specifications = form.watch("specifications");
   const faqs = form.watch("faqs");
 
   useEffect(() => {
@@ -127,31 +176,40 @@ export default function NewProductForm({
       src: ""
     }));
     form.setValue("images", [...images, ...newImages]);
+    event.target.value = "";
+    if (newImages.length > 0) {
+      form.clearErrors("images");
+    }
+    if (newImages.length === 0) {
+      form.setError("images", {
+        type: "manual",
+        message: "At least one image is required",
+      });
+    }
   };
 
   function handleAddVolume(name: string): void {
     const specifications = form.getValues("specifications");
-    const newSpecifications = {[name]: {
-      weight: undefined,
-      height: undefined,
-      innerDiamter: undefined,
-      outerDiamter: undefined,
-      shieldingSide: undefined,
-      shieldingSidePbEquiv: undefined,
-      topShield: undefined,
-      topShieldPbEquiv: undefined,
-      bottom: undefined,
-      bottomPbEquiv: undefined
-    }} as unknown as Specifications;
-    form.setValue("specifications", {...specifications, ...newSpecifications})
+    const newSpecifications: z.infer<typeof volumeFormSchema> = {
+      volume: name,
+      weight: "",
+      height: "",
+      innerDiameter: "",
+      outerDiameter: "",
+      shieldingSide: "",
+      shieldingSidePbEquiv: "",
+      topShield: "",
+      topShieldPbEquiv: "",
+      bottom: "",
+      bottomPbEquiv: ""
+     }
+    form.setValue("specifications", [...specifications, newSpecifications])
   }
 
   function handleRemoveVolume(name: string): void {
     const specifications = form.getValues("specifications");
-    const updatedSpecifications = Object.fromEntries(
-      Object.entries(specifications).filter(([key]) => key !== name)
-    );
-    form.setValue("specifications", updatedSpecifications);
+    specifications.filter(spec => spec.volume !== name);
+    form.setValue("specifications", specifications);
   }
 
   async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
@@ -188,9 +246,9 @@ export default function NewProductForm({
     formData.append("shieldFilterId", getIdFromName("Shields", filters));
     formData.append("accessories", JSON.stringify(getAttributeIds(data.accessories, accessoryOptions)));
     formData.append("accessoryFilterId", getIdFromName("Accessories", filters));
-    formData.append("specifications", JSON.stringify(getSpecificationsArray(data.specifications)));
+    formData.append("specifications", JSON.stringify(data.specifications));
     formData.append("faqs", JSON.stringify(data.faqs));
-    formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts, productOptions)));
+    formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts || [], productOptions)));
     formData.append("images", JSON.stringify(data.images));
 
     if (data.images && data.images.length > 0) {
@@ -213,13 +271,6 @@ export default function NewProductForm({
       .map((attr) => ({ name: attr.name, id: attr.id }));
   }
 
-  function getSpecificationsArray(specifications: Specifications) {
-    return Object.entries(specifications).map(([key, dataObject]) => ({
-      volumeId: volumeOptions.find(volume => volume.name === key)?.id,
-      ...dataObject,
-    }));
-  }
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     await postProduct(form);
@@ -234,10 +285,13 @@ export default function NewProductForm({
             <DescriptionField control={form.control} formSpacing={formSpacing}/>
             <MaterialField control={form.control} formSpacing={formSpacing}/>
             <FeaturesField
-              control={form.control}
+              form={form}
+              formFeatures={formFeatures}
               formSpacing={formSpacing}
-              features={features}
-              setFeatures={setFeatures}
+            />
+            <FaqsFields
+              mainForm={form}
+              faqs={faqs}
             />
             <UsagesField
               control={form.control}
@@ -276,13 +330,8 @@ export default function NewProductForm({
               form={form}
               formSpacing={formSpacing}
               formVolumes={formVolumes}
-              specifications={specifications}
               selectedVolume={selectedVolume}
               setSelectedVolume={setSelectedVolume}
-            />
-            <FaqsFields 
-              mainForm={form}
-              faqs={faqs}            
             />
             <RelatedProducts 
               form={form}
@@ -359,22 +408,21 @@ function MaterialField<T extends FieldValues>({ control, formSpacing }: FormFiel
   );
 }
 
-type FeaturesFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type FeaturesFieldProps = {
+  form: UseFormReturn<FormValues>;
+  formFeatures: string[];
   formSpacing: string;
-  features: string[];
-  setFeatures: (features: string[]) => void;
 };
 
-function FeaturesField<T extends FieldValues>({ control, formSpacing, features, setFeatures }: FeaturesFieldProps<T>) {
+function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) {
   return (
     <div className="grid gap-2">
       <FormLabel>Features</FormLabel>
-      {features.map((_, index) => (
+      {formFeatures.map((_, index) => (
         <FormField
           key={index}
-          control={control}
-          name={`features.${index}` as Path<T>}
+          control={form.control}
+          name={`features.${index}`}
           render={({ field }) => (
             <FormItem>
               <FormMessage />
@@ -387,8 +435,12 @@ function FeaturesField<T extends FieldValues>({ control, formSpacing, features, 
                   variant="destructive"
                   size="icon"
                   className="cursor-pointer"
-                  onClick={() => setFeatures(features.filter((_, i) => i !== index))}
-                  disabled={features.length === 1}
+                  onClick={() => {
+                    const features = form.getValues("features");
+                    features.splice(index, 1);
+                    form.setValue("features", features);
+                  }}
+                  disabled={formFeatures.length === 1}
                 >
                   <Trash className="w-4 h-4" />
                 </Button>
@@ -401,7 +453,7 @@ function FeaturesField<T extends FieldValues>({ control, formSpacing, features, 
         type="button"
         variant="secondary"
         size="sm"
-        onClick={() => setFeatures([...features, ""])}
+        onClick={() => form.setValue("features", [...formFeatures, ""])}
         className={`flex items-center gap-2 cursor-pointer ${formSpacing}`}
       >
         <Plus className="w-4 h-4" /> Add Feature
@@ -591,41 +643,68 @@ interface SpecificationsFieldProps {
   formSpacing: string;
   formVolumes: string[];
   selectedVolume: string;
-  specifications: Record<string, z.infer<typeof volumeFormSchema>>;
   setSelectedVolume: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SpecificationsField({ form, formSpacing, formVolumes, specifications, selectedVolume, setSelectedVolume }: SpecificationsFieldProps) {
+function SpecificationsField({ form, formSpacing, formVolumes, selectedVolume, setSelectedVolume }: SpecificationsFieldProps) {
+
+  const index = form.getValues("specifications").findIndex(spec => spec.volume === selectedVolume);
+  const specificationErrors = form.formState.errors.specifications;
+
   return (
     <>
-      <FormLabel className="mb-1">Volume Specifications</FormLabel>
-        <div className={`flex gap-x-2`}>
-          {formVolumes.map((volume) => (
-            <button
-              key={volume}
-              type="button"
-                onClick={() => setSelectedVolume(volume)}
-            >
-              <Badge 
-                className={`cursor-pointer ${selectedVolume === volume ? "border-white" : ""}`} 
-                variant="secondary">{volume}
-              </Badge>
-            </button>
-          ))}
-        </div>
-        {
-          selectedVolume
-            ? <VolumeForm 
-                mainForm={form} 
-                formSchema={volumeFormSchema}
-                selectedVolume={selectedVolume}
-                formSpacing={formSpacing}
-                values={specifications[selectedVolume] ?? {}}
-              />
-            : <div className={`text-sm ${formSpacing}`}>Add Volumes to Access Specifications</div>
-        }
+      <FormField
+        control={form.control}
+        name="specifications"
+        render={() => {
+          const hasError = form.formState.errors.specifications;
+
+          return (
+            <FormItem>
+              <FormLabel className="mb-1">Volume Specifications</FormLabel>
+              {formVolumes.length ? (
+                <div className={`flex gap-x-2`}>
+                  {formVolumes.map((volume, volumeIndex) => (
+                    <button
+                      key={volume}
+                      type="button"
+                      onClick={() => {
+                        setSelectedVolume(volume);
+                      }}
+                    >
+                      <Badge
+                        className={`cursor-pointer ${selectedVolume === volume ? "border-white" : ""} ${specificationErrors && specificationErrors[volumeIndex] ? "text-red-500" : "text-white"}`}
+                        variant="secondary"
+                      >
+                        {volume}
+                      </Badge>
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+
+              {!selectedVolume && (
+                <div
+                  className={`text-sm ${formSpacing} ${hasError ? "text-red-500" : "text-white"}`}
+                >
+                  <div>Add Volumes to Access Specifications</div>
+                </div>
+              )}
+            </FormItem>
+          );
+        }}
+      />
+      {selectedVolume && (
+        <VolumeForm
+          mainForm={form}
+          formSchema={volumeFormSchema}
+          index={index}
+          formSpacing={formSpacing}
+          className={selectedVolume ? "block" : "hidden"}
+        />
+      )}
     </>
-  )
+  );
 }
 
 interface RelatedProductsProps {

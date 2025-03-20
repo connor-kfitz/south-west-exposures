@@ -1,28 +1,37 @@
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
-import { z } from "zod";
+import { UseFormReturn } from "react-hook-form";
 import { FormValues, volumeFormSchema } from "./NewProductForm";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 interface VolumeFormProps {
   mainForm: UseFormReturn<FormValues>;
   formSchema: typeof volumeFormSchema;
-  selectedVolume: string;
+  index: number;
   formSpacing: string;
-  values: z.infer<typeof volumeFormSchema>;
+  className: string;
 }
 
-export function VolumeForm({ mainForm, formSchema, selectedVolume, formSpacing, values }: VolumeFormProps) {
-
-  const form = useForm<z.infer<typeof volumeFormSchema>>({
-    resolver: zodResolver(formSchema)
-  });
+export function VolumeForm({ mainForm, index, formSpacing, className }: VolumeFormProps) {
+  const values = useMemo(() => mainForm.watch(`specifications.${index}`), [mainForm, index]);
 
   useEffect(() => {
-    form.reset(values);
-  }, [form, values])
+    if (values) {
+      mainForm.reset(
+        {
+          ...mainForm.getValues(),
+          specifications: mainForm.getValues().specifications.map((spec, i) =>
+            i === index ? values : spec
+          ),
+        },
+        {
+          keepErrors: true,
+          keepDirty: true,
+          keepTouched: true
+        }
+      );
+    }
+  }, [values, mainForm, index]);
 
   const fields = [
     { name: "weight", label: "Weight" },
@@ -38,25 +47,23 @@ export function VolumeForm({ mainForm, formSchema, selectedVolume, formSpacing, 
   ];
 
   return (
-    <div className={`space-y-5 mt-4 ${formSpacing}`}>
+    <div className={`space-y-5 mt-4 ${formSpacing + " " + className}`}>
       {fields.map(({ name, label }) => (
         <FormField
           key={name}
-          control={form.control}
-          name={name as keyof z.infer<typeof volumeFormSchema>}
-          render={({ field }) => (
+          control={mainForm.control}
+          name={`specifications.${index}.${name}` as keyof FormValues}
+          render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel>{label}</FormLabel>
-              <FormMessage/>
+              <FormMessage>{fieldState?.error?.message}</FormMessage>
               <Input
-                type="number"
+                type="text"
                 placeholder={label}
                 {...field}
-                value={field.value || ""}
+                value={String(field.value)}
                 onChange={(e) => {
-                  const updatedValue = Number(e.target.value);
-                  field.onChange(updatedValue);
-                  mainForm.setValue(`specifications.${selectedVolume}.${name}` as keyof FormValues, String(updatedValue));
+                  field.onChange(e.target.value);
                 }}
               />
             </FormItem>
