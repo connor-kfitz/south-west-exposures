@@ -18,13 +18,36 @@ export type ProductFaq = {
 
 export type Product = {
   id: string;
-  name: string;
+  accessories: ProductAttribute[];
   description: string;
+  faqs: ProductFaq[];
   features: string[];
+  images: ProductImage[];
+  isotopes: ProductAttribute[];
   material: string;
+  name: string;
+  relatedProducts: string[];
+  shields: ProductAttribute[];
+  specifications: ProductSpecification[];
+  usages: ProductAttribute[];
+  volumes: ProductAttribute[];
 }
 
 export type Filter = {
   id: string;
   name: string;
+}
+
+export type ProductSpecification = {
+  volumeId: string;
+  bottom: number;
+  bottomPbEquiv: number;
+  height: number;
+  innerDiameter: number;
+  outerDiameter: number;
+  shieldingSide: number;
+  shieldingSidePbEquiv: number;
+  topShield: number;
+  topShieldPbEquiv: number;
+  weight: number;
 }

@@ -1,29 +1,11 @@
 
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
 import { ProductsTable } from "./ProductsTable"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Product } from "@/types/admin-products"
-
-export const columns: ColumnDef<Product>[] = [
-  {
-    accessorKey: "name",
-    header: "Name"
-  },
-  {
-    accessorKey: "shield",
-    header: "Shields"
-  },
-  {
-    accessorKey: "volumes",
-    header: "Volumes"
-  },
-  {
-    accessorKey: "isotopes",
-    header: "Isotopes"
-  },
-];
+import { useState } from "react";
+import SearchInput from "./SearchInput";
 
 interface ProductsProps {
   products: Product[];
@@ -31,13 +13,29 @@ interface ProductsProps {
 
 export default function Products({ products }: ProductsProps) {
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const filteredData = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.shields.some(shield => shield.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    product.volumes.some(volume => volume.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    product.isotopes.some(isotope => isotope.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   return (
     <Card className="p-6 mb-6">
       <CardHeader className="p-0 mb-6 font-bold flex-row justify-between">
         <h2>Products</h2>
       </CardHeader>
       <CardContent className="p-0">
-        <ProductsTable columns={columns} data={products}/>
+        {products.length ? 
+          <>
+            <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <ProductsTable data={filteredData}/>
+          </> 
+          : 
+          <div>No Products Available</div>
+        }
       </CardContent>
     </Card>
   )
