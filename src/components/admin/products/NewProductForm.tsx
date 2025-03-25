@@ -7,10 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelect } from "@/components/shared/MultiSelect";
-import { Filter, Product, ProductAttribute, ProductImage } from "@/types/admin-products";
+import { Filter, Product, ProductAttribute, ProductImage, ProductSpecification } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
 import { SortableImages } from "./SortableImages";
-import { generateUUID } from "@/lib/utils";
 import { VolumeForm } from "./VolumeForm";
 import { FaqsFields } from "./FaqsFields";
 import z from "zod";
@@ -85,15 +84,11 @@ export const faqFormSchema = z.object({
 
 const productImageSchema = z.object({
   id: z.string().optional(),
-  file: z.unknown().refine((value: unknown) => {
-    if (typeof window !== 'undefined') {
-      return value instanceof File;
-    }
-    return true;
-  }, {
-    message: 'File must be a valid File object in the browser or a string on the server',
-  }),
-  src: z.string().optional()
+  file: z.unknown().optional(),
+  src: z.string().optional(),
+}).refine((data) => data.file !== undefined || data.src !== undefined, {
+  message: "Image is required",
+  path: ["file", "src"]
 });
 
 const formSchema = z.object({
@@ -122,6 +117,9 @@ interface NewProductFormProps {
   volumeOptions: ProductAttribute[];
   productOptions: Product[];
   filters: Filter[];
+  editProduct: Product | null;
+  fetchProducts: () => Promise<void>;
+  setEditProduct: (product: Product | null) => void;
 }
 
 export default function NewProductForm({ 
@@ -131,29 +129,85 @@ export default function NewProductForm({
   accessoryOptions,
   volumeOptions,
   productOptions,
-  filters
+  filters,
+  editProduct,
+  fetchProducts,
+  setEditProduct
 }: NewProductFormProps) {
 
   const [selectedVolume, setSelectedVolume] = useState<string>("");
 
+  const defaultFormValues = {
+    name: "",
+    description: "",
+    material: "",
+    features: [""],
+    usages: [],
+    isotopes: [],
+    shields: [],
+    accessories: [],
+    volumes: [],
+    images: [],
+    specifications: [],
+    faqs: [{ question: "", answer: "" }],
+    relatedProducts: []
+  }
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-      material: "",
-      features: [""],
-      usages: [],
-      isotopes: [],
-      shields: [],
-      accessories: [],
-      volumes: [],
-      images: [],
-      specifications: [],
-      faqs: [{question: "", answer: ""}],
-      relatedProducts: []
-    },
+    defaultValues: defaultFormValues
   });
+
+  useEffect(() => {
+    if (!editProduct) return;
+
+    function setFormValues(product: Product) {
+      form.setValue("name", product.name);
+      form.setValue("description", product.description);
+      form.setValue("material", product.material);
+      form.setValue("features", product.features);
+      form.setValue("usages", product.usages.map((usage => usage.name)));
+      form.setValue("isotopes", product.isotopes.map((isotope => isotope.name)));
+      form.setValue("shields", product.shields.map((shield => shield.name)));
+      form.setValue("accessories", product.accessories.map((accessory => accessory.name)));
+      form.setValue("volumes", product.volumes.map((volume => volume.name)));
+      form.setValue("images", product.images.map((image) => ({
+        id: image.id,
+        file: null,
+        src: image.src
+      })));
+      form.setValue(
+        "specifications",
+        product.specifications.map((specification) => getSpecification(specification, volumeOptions))
+      );
+      form.setValue("faqs", product.faqs);
+      form.setValue("relatedProducts", product.relatedProducts.map(product => product.name));
+    }
+
+    function getSpecification(
+      specification: ProductSpecification,
+      volumeOptions: ProductAttribute[]
+    ): z.infer<typeof volumeFormSchema> {
+      const volume = volumeOptions.find(v => v.id === specification.volumeId);
+      const modifiedSpecification: z.infer<typeof volumeFormSchema> = {
+        volume: volume?.name ?? "",
+        weight: String(specification.weight),
+        height: String(specification.height),
+        innerDiameter: String(specification.innerDiameter),
+        outerDiameter: String(specification.outerDiameter),
+        shieldingSide: String(specification.shieldingSide),
+        shieldingSidePbEquiv: String(specification.shieldingSidePbEquiv),
+        topShield: String(specification.topShield),
+        topShieldPbEquiv: String(specification.topShieldPbEquiv),
+        bottom: String(specification.bottom),
+        bottomPbEquiv: String(specification.bottomPbEquiv)
+      }
+      return modifiedSpecification
+    }
+
+    setFormValues(editProduct);
+
+  }, [editProduct, form, volumeOptions, productOptions]);
 
   const images = form.watch("images");
   const formFeatures = form.watch("features")
@@ -171,7 +225,7 @@ export default function NewProductForm({
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const newImages = files.map((file) => ({
-      id: generateUUID(),
+      id: "",
       file: file,
       src: ""
     }));
@@ -203,26 +257,31 @@ export default function NewProductForm({
       bottom: "",
       bottomPbEquiv: ""
      }
-    form.setValue("specifications", [...specifications, newSpecifications])
+    form.setValue("specifications", [...specifications, newSpecifications]);
   }
 
   function handleRemoveVolume(name: string): void {
     const specifications = form.getValues("specifications");
-    specifications.filter(spec => spec.volume !== name);
-    form.setValue("specifications", specifications);
+    const updatedSpecifications = specifications.filter(spec => spec.volume !== name);
+    form.setValue("specifications", updatedSpecifications);
   }
 
   async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
     const formData = prepareFormData();
 
+    const endpoint = editProduct ? "/api/admin/products/updateProduct" : "/api/admin/products/postProduct";
+    const method = editProduct ? "PUT" : "POST";
+
     try {
-      const response = await fetch("/api/admin/products/postProduct", {
-        method: "POST",
+      const response = await fetch(endpoint, {
+        method: method,
         body: formData
       });
 
       if (!response.ok) throw new Error();
-      form.reset();
+      if (editProduct) setEditProduct(null);
+      form.reset(defaultFormValues);
+      fetchProducts();
     } catch (error) {
       console.error("Error posting product:", error);
     }
@@ -250,6 +309,7 @@ export default function NewProductForm({
     formData.append("faqs", JSON.stringify(data.faqs));
     formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts || [], productOptions)));
     formData.append("images", JSON.stringify(data.images));
+    formData.append("productId", editProduct?.id ?? "");
 
     if (data.images && data.images.length > 0) {
       data.images.forEach((image) => {
@@ -278,8 +338,7 @@ export default function NewProductForm({
     });
   }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit() {
     await postProduct(form);
   }
 
@@ -301,27 +360,27 @@ export default function NewProductForm({
               faqs={faqs}
             />
             <UsagesField
-              control={form.control}
+              form={form}
               formSpacing={formSpacing}
               usageOptions={usageOptions}
             />
             <IsotopesField
-              control={form.control}
+              form={form}
               formSpacing={formSpacing}
               isotopeOptions={isotopeOptions}
             />
             <ShieldsField
-              control={form.control}
+              form={form}
               formSpacing={formSpacing}
               shieldOptions={shieldOptions}
             />
             <AccessoriesField
-              control={form.control}
+              form={form}
               formSpacing={formSpacing}
               accessoryOptions={accessoryOptions}
             />
             <VolumesField
-              control={form.control}
+              form={form}
               volumeOptions={volumeOptions}
               handleRemoveVolume={handleRemoveVolume}
               handleAddVolume={handleAddVolume}
@@ -342,7 +401,7 @@ export default function NewProductForm({
             />
             <RelatedProducts 
               form={form}
-              productOptions={productOptions}
+              productOptions={productOptions.filter(product => product.id !== editProduct?.id).map(product => product.name)}
             />
           </section>
         </div>
@@ -469,26 +528,27 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
   );
 }
 
-type UsagesFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type UsagesFieldProps = {
+  form: UseFormReturn<FormValues>;
   formSpacing: string;
   usageOptions: ProductAttribute[];
 };
 
-function UsagesField<T extends FieldValues>({ control, formSpacing, usageOptions }: UsagesFieldProps<T>) {
+function UsagesField({ form, formSpacing, usageOptions }: UsagesFieldProps) {
+
   return (
     <FormField
-      control={control}
-      name={`usages` as Path<T>}
-      render={({ field }) => (
+      control={form.control}
+      name="usages"
+      render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Usages</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
-              options={usageOptions}
+              form={form}
+              options={usageOptions.map(obj => obj.name)}
               type="Usages"
-              onValueChange={field.onChange}
             />
           </FormControl>
         </FormItem>
@@ -497,26 +557,26 @@ function UsagesField<T extends FieldValues>({ control, formSpacing, usageOptions
   );
 }
 
-type IsotopesFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type IsotopesFieldProps = {
+  form: UseFormReturn<FormValues>;
   formSpacing: string;
   isotopeOptions: ProductAttribute[];
 };
 
-function IsotopesField<T extends FieldValues>({ control, formSpacing, isotopeOptions }: IsotopesFieldProps<T>) {
+function IsotopesField({ form, formSpacing, isotopeOptions }: IsotopesFieldProps) {
   return (
     <FormField
-      control={control}
-      name={`isotopes` as Path<T>}
-      render={({ field }) => (
+      control={form.control}
+      name="isotopes"
+      render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Isotopes</FormLabel>
           <FormMessage />
           <FormControl>
             <MultiSelect
-              options={isotopeOptions}
+              form={form}
+              options={isotopeOptions.map(obj => obj.name)}
               type="Isotopes"
-              onValueChange={field.onChange}
             />
           </FormControl>
         </FormItem>
@@ -525,26 +585,26 @@ function IsotopesField<T extends FieldValues>({ control, formSpacing, isotopeOpt
   );
 }
 
-type ShieldsFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type ShieldsFieldProps = {
+  form: UseFormReturn<FormValues>;
   formSpacing: string;
   shieldOptions: ProductAttribute[];
 };
 
-function ShieldsField<T extends FieldValues>({ control, formSpacing, shieldOptions }: ShieldsFieldProps<T>) {
+function ShieldsField({ form, formSpacing, shieldOptions }: ShieldsFieldProps) {
   return (
     <FormField
-      control={control}
-      name={`shields` as Path<T>}
-      render={({ field }) => (
+      control={form.control}
+      name="shields"
+      render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Shields</FormLabel>
           <FormMessage />
           <FormControl>
             <MultiSelect
-              options={shieldOptions}
+              form={form}
+              options={shieldOptions.map(obj => obj.name)}
               type="Shields"
-              onValueChange={field.onChange}
             />
           </FormControl>
         </FormItem>
@@ -553,26 +613,26 @@ function ShieldsField<T extends FieldValues>({ control, formSpacing, shieldOptio
   );
 }
 
-type AccessoriesFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type AccessoriesFieldProps = {
+  form: UseFormReturn<FormValues>;
   formSpacing: string;
   accessoryOptions: ProductAttribute[];
 };
 
-function AccessoriesField<T extends FieldValues>({ control, formSpacing, accessoryOptions }: AccessoriesFieldProps<T>) {
+function AccessoriesField({ form, formSpacing, accessoryOptions }: AccessoriesFieldProps) {
   return (
     <FormField
-      control={control}
-      name={`accessories` as Path<T>}
-      render={({ field }) => (
+      control={form.control}
+      name="accessories"
+      render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Accessories</FormLabel>
           <FormMessage />
           <FormControl>
             <MultiSelect
-              options={accessoryOptions}
+              form={form}
+              options={accessoryOptions.map(obj => obj.name)}
               type="Accessories"
-              onValueChange={field.onChange}
             />
           </FormControl>
         </FormItem>
@@ -581,27 +641,27 @@ function AccessoriesField<T extends FieldValues>({ control, formSpacing, accesso
   );
 }
 
-type VolumesFieldProps<T extends FieldValues> = {
-  control: Control<T>;
+type VolumesFieldProps = {
+  form: UseFormReturn<FormValues>;
   volumeOptions: ProductAttribute[];
   handleRemoveVolume: (name: string) => void;
   handleAddVolume: (name: string) => void;
 };
 
-function VolumesField<T extends FieldValues>({ control, volumeOptions, handleRemoveVolume, handleAddVolume }: VolumesFieldProps<T>) {
+function VolumesField({ form, volumeOptions, handleRemoveVolume, handleAddVolume }: VolumesFieldProps) {
   return (
     <FormField
-      control={control}
-      name={`volumes` as Path<T>}
-      render={({ field }) => (
+      control={form.control}
+      name="volumes"
+      render={() => (
         <FormItem>
           <FormLabel>Volumes</FormLabel>
           <FormMessage />
           <FormControl>
             <MultiSelect
-              options={volumeOptions}
+              form={form}
+              options={volumeOptions.map(obj => obj.name)}
               type="Volumes"
-              onValueChange={field.onChange}
               addSpecification={handleAddVolume}
               removeSpecifcation={handleRemoveVolume}
             />
@@ -716,23 +776,24 @@ function SpecificationsField({ form, formSpacing, formVolumes, selectedVolume, s
 
 interface RelatedProductsProps {
   form: UseFormReturn<FormValues>;
-  productOptions: ProductAttribute[];
+  productOptions: string[];
 }
 
 function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
+
   return (
     <FormField
       control={form.control}
       name="relatedProducts"
-      render={({ field }) => (
+      render={() => (
         <FormItem>
           <FormLabel>Related Products</FormLabel>
           <FormMessage />
           <FormControl>
             <MultiSelect
+              form={form}
               options={productOptions}
               type="Related Products"
-              onValueChange={field.onChange}
             />
           </FormControl>
         </FormItem>

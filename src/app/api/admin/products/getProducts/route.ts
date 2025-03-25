@@ -5,7 +5,7 @@ export async function GET() {
 
   try {
     const query = `
-      SELECT 
+      SELECT
         p.product_id AS id,
         p.name,
         p.description,
@@ -57,38 +57,39 @@ export async function GET() {
         )) FILTER (WHERE pf.question IS NOT NULL), '[]') AS faqs,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
-          'id', pr.related_product_id
-        )) FILTER (WHERE pr.related_product_id IS NOT NULL), '[]') AS relatedProducts,
+          'id', pr.related_product_id,
+          'name', rp.name
+        )) FILTER (WHERE pr.related_product_id IS NOT NULL), '[]') AS "relatedProducts",
 
         COALESCE(
-          jsonb_agg(image_data ORDER BY image_data->>'display_order' ASC), 
-          '[]'
+          (SELECT jsonb_agg(image_data ORDER BY image_data->>'display_order' ASC)
+          FROM (
+            SELECT DISTINCT ON (src) image_id AS id, jsonb_build_object(
+              'id', image_id,
+              'src', src,
+              'display_order', display_order
+            ) AS image_data
+            FROM product_images
+            WHERE product_id = p.product_id
+            ORDER BY src, display_order
+          ) subquery), '[]'
         ) AS images
 
       FROM products p
       LEFT JOIN products_usages pu ON p.product_id = pu.product_id
-      LEFT JOIN usages u ON pu.usage_id = u.usage_id  -- Usages Join
+      LEFT JOIN usages u ON pu.usage_id = u.usage_id
       LEFT JOIN products_isotopes pi ON p.product_id = pi.product_id
-      LEFT JOIN isotopes iso ON pi.isotope_id = iso.isotope_id  -- Isotopes Join
+      LEFT JOIN isotopes iso ON pi.isotope_id = iso.isotope_id
       LEFT JOIN products_volumes pv ON p.product_id = pv.product_id
-      LEFT JOIN volumes v ON pv.volume_id = v.volume_id  -- Volumes Join
+      LEFT JOIN volumes v ON pv.volume_id = v.volume_id
       LEFT JOIN products_shields ps ON p.product_id = ps.product_id
-      LEFT JOIN shields s ON ps.shield_id = s.shield_id  -- Shields Join
+      LEFT JOIN shields s ON ps.shield_id = s.shield_id
       LEFT JOIN products_accessories pa ON p.product_id = pa.product_id
-      LEFT JOIN accessories a ON pa.accessory_id = a.accessory_id  -- Accessories Join
+      LEFT JOIN accessories a ON pa.accessory_id = a.accessory_id
       LEFT JOIN products_volume_metrics pvm ON p.product_id = pvm.product_id
       LEFT JOIN products_faqs pf ON p.product_id = pf.product_id
       LEFT JOIN products_related pr ON p.product_id = pr.product_id
-      LEFT JOIN (
-        SELECT 
-          product_id,
-          jsonb_build_object(
-            'src', src,
-            'display_order', display_order
-          ) AS image_data
-        FROM product_images
-      ) pi2 ON p.product_id = pi2.product_id
-
+      LEFT JOIN products rp ON pr.related_product_id = rp.product_id
       GROUP BY p.product_id
       ORDER BY p.product_id ASC;
     `;

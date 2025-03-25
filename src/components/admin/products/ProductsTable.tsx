@@ -10,11 +10,13 @@ import { MoreHorizontal } from "lucide-react"
 import { Product } from "@/types/admin-products"
 
 interface ProductsTableProps<TData> {
-  data: TData[]
+  data: TData[];
+  setEditProduct: (product: Product | null) => void;
 }
 
 export function ProductsTable<TData extends Product>({
-  data
+  data,
+  setEditProduct
 }: ProductsTableProps<TData>) {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -75,6 +77,7 @@ export function ProductsTable<TData extends Product>({
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </TableHead>
               ))}
+              <TableHead className="w-[45px]"></TableHead>
             </TableRow>
           ))}
         </TableHeader>
@@ -106,7 +109,7 @@ export function ProductsTable<TData extends Product>({
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => console.log("Edit", row.original)}>
+                        <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => console.log("Delete", row.original)}>

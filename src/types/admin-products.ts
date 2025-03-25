@@ -26,7 +26,7 @@ export type Product = {
   isotopes: ProductAttribute[];
   material: string;
   name: string;
-  relatedProducts: string[];
+  relatedProducts: ProductAttribute[];
   shields: ProductAttribute[];
   specifications: ProductSpecification[];
   usages: ProductAttribute[];

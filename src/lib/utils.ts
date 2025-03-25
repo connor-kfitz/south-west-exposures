@@ -23,3 +23,12 @@ export function generateUUID(): string {
 
   return uuid.slice(0, 8) + '-' + uuid.slice(8, 12) + '-' + uuid.slice(12, 16) + '-' + uuid.slice(16, 20) + '-' + uuid.slice(20);
 }
+
+export function toCamelCase(str: string): string {
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+|\_|\-)/g, (match, index) =>
+      index === 0 ? match.toLowerCase() : match.toUpperCase()
+    )
+    .replace(/\s+/g, '')
+    .replace(/[-_]/g, '');
+}

@@ -7,6 +7,7 @@ interface useProductsReturn {
   error: string;
   addError: string;
   postProduct: (value?: string) => Promise<boolean>;
+  fetchProducts: () => Promise<void>;
   deleteProduct: (id: string) => Promise<boolean>;
 }
 
@@ -84,6 +85,7 @@ export function useProducts(): useProductsReturn {
     error,
     addError,
     postProduct,
+    fetchProducts,
     deleteProduct
   }
 }
