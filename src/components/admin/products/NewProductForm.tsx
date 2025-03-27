@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { SortableImages } from "./SortableImages";
 import { VolumeForm } from "./VolumeForm";
 import { FaqsFields } from "./FaqsFields";
+import { generateUUID } from "@/lib/utils";
 import z from "zod";
 
 export const volumeFormSchema = z.object({
@@ -225,7 +226,7 @@ export default function NewProductForm({
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const newImages = files.map((file) => ({
-      id: "",
+      id: generateUUID(),
       file: file,
       src: ""
     }));
@@ -311,11 +312,16 @@ export default function NewProductForm({
     formData.append("images", JSON.stringify(data.images));
     formData.append("productId", editProduct?.id ?? "");
 
-    if (data.images && data.images.length > 0) {
-      data.images.forEach((image) => {
-        formData.append(`imageFiles`, image.file as File);
-      });
-    }
+    data.images.forEach((image) => {
+      let fileToAppend: File;
+      if (image.file === null) {
+        const emptyFile = new File([], "empty-file.txt", { type: "text/plain" }); // Empty file with a text type
+        fileToAppend = emptyFile;
+      } else {
+        fileToAppend = image.file as File; // Use the existing file if available
+      }
+      formData.append(`imageFiles`, fileToAppend);
+    });
 
     return formData;
   }
