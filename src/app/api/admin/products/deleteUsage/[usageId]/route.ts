@@ -2,7 +2,7 @@ import pool from "@/lib/db";
 
 export async function DELETE(req: Request, { params }: { params: { usageId: string } }) {
 
-  const { usageId } = params;
+  const { usageId } = await params;
 
   if (!usageId) {
     return new Response(JSON.stringify({ message: 'Usage Id is required.' }), {
@@ -11,6 +11,19 @@ export async function DELETE(req: Request, { params }: { params: { usageId: stri
   }
 
   try {
+    const checkQuery = 'SELECT COUNT(*) FROM products_usages WHERE usage_id = $1';
+    const checkValues = [usageId];
+
+    const checkResult = await pool.query(checkQuery, checkValues);
+
+    if (parseInt(checkResult.rows[0].count) > 0) {
+      return new Response(
+        JSON.stringify(
+          { message: 'This usage is currently in use by one or more products. Please remove it from all products before proceeding with the deletion.' }),
+        { status: 400 }
+      );
+    }
+
     const query = 'DELETE FROM usages WHERE usage_id = $1 RETURNING *';
     const values = [usageId];
 

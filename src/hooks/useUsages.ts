@@ -1,17 +1,17 @@
-import { Usage } from "@/types/admin-products";
+import { ProductAttribute } from "@/types/admin-products";
 import { useState, useEffect } from "react";
 
 interface useUsagesReturn {
-  usages: Usage[];
+  usages: ProductAttribute[];
   loading: boolean;
   error: string;
   addError: string;
   postUsage: (name?: string) => Promise<boolean>;
-  deleteUsage: (id: string) => Promise<boolean>;
+  deleteUsage: (id: string) => Promise<string>;
 }
 
 export function useUsages(): useUsagesReturn {
-  const [usages, setUsages] = useState<Usage[]>([]);
+  const [usages, setUsages] = useState<ProductAttribute[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
@@ -64,17 +64,24 @@ export function useUsages(): useUsagesReturn {
     }
   }
 
-  async function deleteUsage(id: string): Promise<boolean> {
-    if (!id) return false;
+  async function deleteUsage(id: string): Promise<string> {
+    if (!id) return "The Id for this Usage was not found.";
     try {
       const response = await fetch(`/api/admin/products/deleteUsage/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error(`${response.status}`);
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
       await fetchUsages();
-      return true;
-    } catch {
-      return false;
+      return "";
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      } else {
+        return "An unknown error occurred";
+      }
     }
   }
 
