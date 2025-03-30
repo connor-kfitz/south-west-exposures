@@ -63,6 +63,7 @@ export default function Dashboard() {
             addError={shieldsAddError}
             addAttribute={postShield}
             deleteAttribute={deleteShield}
+            setAlertDialog={setAlertDialog}
           />
           <AddAttribute
             type="Volumes"
@@ -72,6 +73,7 @@ export default function Dashboard() {
             addError={volumesAddError}
             addAttribute={postVolume}
             deleteAttribute={deleteVolume}
+            setAlertDialog={setAlertDialog}
           />
           <AddAttribute
             type="Isotopes"
@@ -91,6 +93,7 @@ export default function Dashboard() {
             addError={accessoriesAddError}
             addAttribute={postAccessory}
             deleteAttribute={deleteAccessory}
+            setAlertDialog={setAlertDialog}
           />
           <AddAttribute
             type="Usages"
@@ -99,6 +102,7 @@ export default function Dashboard() {
             addError={usagesAddError}
             addAttribute={postUsage}
             deleteAttribute={deleteUsage}
+            setAlertDialog={setAlertDialog}
           />
         </section>
       </section>

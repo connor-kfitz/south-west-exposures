@@ -76,7 +76,7 @@ export function useIsotopes(): useIsotopesReturn {
       }
       await fetchIsotopes();
       return "";
-    } catch (error: unknown) {
+    } catch (error) {
       if (error instanceof Error) {
         return error.message;
       } else {
