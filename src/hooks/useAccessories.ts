@@ -1,17 +1,17 @@
-import { Accessory } from "@/types/admin-products";
+import { ProductAttribute } from "@/types/admin-products";
 import { useState, useEffect } from "react";
 
 interface useAccessoriesReturn {
-  accessories: Accessory[];
+  accessories: ProductAttribute[];
   loading: boolean;
   error: string;
   addError: string;
   postAccessory: (name?: string) => Promise<boolean>;
-  deleteAccessory: (id: string) => Promise<boolean>;
+  deleteAccessory: (id: string) => Promise<string>;
 }
 
 export function useAccessories(): useAccessoriesReturn {
-  const [accessories, setAccessories] = useState<Accessory[]>([]);
+  const [accessories, setAccessories] = useState<ProductAttribute[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
@@ -64,17 +64,24 @@ export function useAccessories(): useAccessoriesReturn {
     }
   }
 
-  async function deleteAccessory(id: string): Promise<boolean> {
-    if (!id) return false;
+  async function deleteAccessory(id: string): Promise<string> {
+    if (!id) return "The Id for this Accessory was not found.";
     try {
       const response = await fetch(`/api/admin/products/deleteAccessory/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error(`${response.status}`);
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
       await fetchAccessories();
-      return true;
-    } catch {
-      return false;
+      return "";
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      } else {
+        return "An unknown error occurred";
+      }
     }
   }
 
