@@ -8,8 +8,12 @@ import {
 } from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 export default function SideNav() {
+
+  const pathname = usePathname();
+  if (!pathname.includes("admin")) return;
 
   const mainlinks: SideNavLink[] = [
     {
@@ -45,7 +49,7 @@ export default function SideNav() {
     <Sidebar className="font-[Inter] border-none">
       <SidebarContent>
         <Header/>
-        <Main links={mainlinks}/>
+        <Main links={mainlinks} pathname={pathname}/>
         <Footer/>
       </SidebarContent>
     </Sidebar>
@@ -72,12 +76,11 @@ function Header() {
 }
 
 interface MainProps {
-  links: SideNavLink[]
+  links: SideNavLink[];
+  pathname: string;
 }
 
-function Main({ links }: MainProps) {
-
-  const pathname = usePathname();
+function Main({ links, pathname }: MainProps) {
 
   function isActiveLink(link: string): boolean {
     return pathname === link;
@@ -118,6 +121,7 @@ function Footer() {
           className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
           width={40}
           height={40}
+          onClick={() => signOut({ callbackUrl: "/auth" })}
         />
       <div>
         <h1 className="text">Robert Kamen</h1>

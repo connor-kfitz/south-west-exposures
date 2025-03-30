@@ -98,7 +98,7 @@ export default function AddAttribute({
         <CardFooter className="flex-col items-start p-0">
           {addError && <label className="text-xs italic mb-2 ml-1">{addError}</label>}
           <Input className="mb-4" placeholder={`New ${getPlaceholderValue()}`} ref={inputRef} />
-          <Button className="w-full cursor-pointer" onClick={addOnClick}>
+          <Button className="w-full" onClick={addOnClick}>
             {loadingAddAttribute ? <LoadingSpinner /> : "Add"}
           </Button>
         </CardFooter>
@@ -146,7 +146,7 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
           <TableRow key={index}>
             <TableCell>{item.name}</TableCell>
             <TableCell>
-              <Button variant="ghost" className="block ml-auto px-2 cursor-pointer" onClick={() => deleteOnClick(item.id)}>
+              <Button variant="ghost" className="block ml-auto px-2" onClick={() => deleteOnClick(item.id)}>
                 <Image
                   src="/images/admin/products/delete.svg"
                   alt="delete"

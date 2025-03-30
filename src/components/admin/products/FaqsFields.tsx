@@ -44,7 +44,6 @@ export function FaqsFields({ mainForm, faqs }: FaqsFieldsProps) {
                       type="button"
                       variant="destructive"
                       size="icon"
-                      className="cursor-pointer"
                       onClick={() => deleteFaq(index)}
                       disabled={faqs.length === 1}
                     >
@@ -78,7 +77,7 @@ export function FaqsFields({ mainForm, faqs }: FaqsFieldsProps) {
         variant="secondary"
         size="sm"
         onClick={addFaq}
-        className={`flex items-center gap-2 cursor-pointer`}
+        className="flex items-center gap-2"
       >
         <Plus className="w-4 h-4" /> Add FAQ
       </Button>

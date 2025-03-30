@@ -411,7 +411,7 @@ export default function NewProductForm({
             />
           </section>
         </div>
-        <Button className="block ml-auto mt-4 cursor-pointer" type="submit">Submit</Button>
+        <Button className="block ml-auto mt-4" type="submit">Submit</Button>
       </form>
     </Form>
   )
@@ -506,7 +506,6 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
                   type="button"
                   variant="destructive"
                   size="icon"
-                  className="cursor-pointer"
                   onClick={() => {
                     const features = form.getValues("features");
                     features.splice(index, 1);
@@ -526,7 +525,7 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
         variant="secondary"
         size="sm"
         onClick={() => form.setValue("features", [...formFeatures, ""])}
-        className={`flex items-center gap-2 cursor-pointer ${formSpacing}`}
+        className={`flex items-center gap-2 ${formSpacing}`}
       >
         <Plus className="w-4 h-4" /> Add Feature
       </Button>

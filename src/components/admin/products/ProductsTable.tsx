@@ -106,7 +106,7 @@ export function ProductsTable<TData extends Product>({
                   <TableCell className="flex justify-end">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button className="cursor-pointer" variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon">
                           <MoreHorizontal className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -148,7 +148,7 @@ export function ProductsTable<TData extends Product>({
         <div>
           <Button
             variant="outline"
-            className="mr-4 cursor-pointer"
+            className="mr-4"
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -157,7 +157,6 @@ export function ProductsTable<TData extends Product>({
           </Button>
           <Button
             variant="outline"
-            className="cursor-pointer"
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
