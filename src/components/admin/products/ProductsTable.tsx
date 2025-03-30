@@ -12,11 +12,13 @@ import { Product } from "@/types/admin-products"
 interface ProductsTableProps<TData> {
   data: TData[];
   setEditProduct: (product: Product | null) => void;
+  deleteProduct: (id: string) => Promise<boolean>;
 }
 
 export function ProductsTable<TData extends Product>({
   data,
-  setEditProduct
+  setEditProduct,
+  deleteProduct
 }: ProductsTableProps<TData>) {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -112,7 +114,7 @@ export function ProductsTable<TData extends Product>({
                         <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => console.log("Delete", row.original)}>
+                        <DropdownMenuItem onClick={() => deleteProduct(row.original.id)}>
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -125,6 +127,7 @@ export function ProductsTable<TData extends Product>({
                   {table.getAllColumns().map((column) => (
                     <TableCell key={`empty-cell-${index}-${column.id}`}>&nbsp;</TableCell>
                   ))}
+                  <TableCell></TableCell>
                 </TableRow>
               ))}
             </>

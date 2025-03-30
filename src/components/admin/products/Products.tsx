@@ -10,9 +10,10 @@ import SearchInput from "./SearchInput";
 interface ProductsProps {
   products: Product[];
   setEditProduct: (product: Product | null) => void;
+  deleteProduct: (id: string) => Promise<boolean>;
 }
 
-export default function Products({ products, setEditProduct }: ProductsProps) {
+export default function Products({ products, setEditProduct, deleteProduct }: ProductsProps) {
 
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -35,6 +36,7 @@ export default function Products({ products, setEditProduct }: ProductsProps) {
             <ProductsTable 
               data={filteredData}
               setEditProduct={setEditProduct}
+              deleteProduct={deleteProduct}
             />
           </> 
           : 

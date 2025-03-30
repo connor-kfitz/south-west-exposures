@@ -20,7 +20,7 @@ export default function Dashboard() {
   const { isotopes, loading: isotopesLoading, error: isotopesError, addError: isotopesAddError, postIsotope, deleteIsotope } = useIsotopes();
   const { accessories, loading: accessoriesLoading, error: accessoriesError, addError: accessoriesAddError, postAccessory, deleteAccessory } = useAccessories();
   const { usages, loading: usagesLoading, error: usagesError, addError: usagesAddError, postUsage, deleteUsage } = useUsages();
-  const { products, loading: loadingProducts, fetchProducts } = useProducts();
+  const { products, loading: loadingProducts, fetchProducts, deleteProduct } = useProducts();
   const { filters, loading: loadingFilters } = useFilters();
 
   const [editProduct, setEditProduct] = useState<Product | null>(null);
@@ -32,9 +32,10 @@ export default function Dashboard() {
     <section className="flex gap-5">
       <section className="flex-1">
         <section>
-          <Products 
+          <Products
             products={products}
             setEditProduct={setEditProduct}
+            deleteProduct={deleteProduct}
           />
           <AddProduct
             shields={shields}
