@@ -1,17 +1,17 @@
-import { Volume } from "@/types/admin-products";
+import { ProductAttribute } from "@/types/admin-products";
 import { useState, useEffect } from "react";
 
 interface useVolumesReturn {
-  volumes: Volume[];
+  volumes: ProductAttribute[];
   loading: boolean;
   error: string;
   addError: string;
   postVolume: (name?: string) => Promise<boolean>;
-  deleteVolume: (id: string) => Promise<boolean>;
+  deleteVolume: (id: string) => Promise<string>;
 }
 
 export function useVolumes(): useVolumesReturn {
-  const [volumes, setVolumes] = useState<Volume[]>([]);
+  const [volumes, setVolumes] = useState<ProductAttribute[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
@@ -64,17 +64,24 @@ export function useVolumes(): useVolumesReturn {
     }
   }
 
-  async function deleteVolume(id: string): Promise<boolean> {
-    if (!id) return false;
+  async function deleteVolume(id: string): Promise<string> {
+    if (!id) return "The Id for this Volume was not found.";
     try {
       const response = await fetch(`/api/admin/products/deleteVolume/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error(`${response.status}`);
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
       await fetchVolumes();
-      return true;
-    } catch {
-      return false;
+      return "";
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      } else {
+        return "An unknown error occurred";
+      }
     }
   }
 
