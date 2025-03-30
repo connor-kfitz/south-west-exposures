@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
-import { ProductAttribute, ProductAttributeTypes } from "@/types/admin-products";
+import { DashboardAlert, ProductAttribute, ProductAttributeTypes } from "@/types/admin-products";
 
 interface AttributeCard {
   className?: string;
@@ -17,7 +17,8 @@ interface AttributeCard {
   error: string;
   addError: string;
   addAttribute: (value?: string) => Promise<boolean>;
-  deleteAttribute: (id: string) => Promise<boolean>;
+  deleteAttribute: (id: string) => Promise<string>;
+  setAlertDialog: React.Dispatch<React.SetStateAction<DashboardAlert>>;
 }
 
 export default function AddAttribute({
@@ -27,7 +28,8 @@ export default function AddAttribute({
   error,
   addError,
   addAttribute,
-  deleteAttribute
+  deleteAttribute,
+  setAlertDialog
 }: AttributeCard) {
 
   const [loadingAddAttribute, setLoadingAddAttribute] = useState<boolean>(false);
@@ -45,7 +47,8 @@ export default function AddAttribute({
 
   async function deleteOnClick(id: string): Promise<void> {
     if (!id) return;
-    await deleteAttribute(id);
+    const errorResponse = await deleteAttribute(id);
+    if (errorResponse) setAlertDialog({title: "Error", description: errorResponse, open: true});
   }
 
   function getHeader(): string {

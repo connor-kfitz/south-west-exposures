@@ -1,17 +1,17 @@
-import { Isotope } from "@/types/admin-products";
+import { ProductAttribute } from "@/types/admin-products";
 import { useState, useEffect } from "react";
 
 interface useIsotopesReturn {
-  isotopes: Isotope[];
+  isotopes: ProductAttribute[];
   loading: boolean;
   error: string;
   addError: string;
   postIsotope: (value?: string) => Promise<boolean>;
-  deleteIsotope: (id: string) => Promise<boolean>;
+  deleteIsotope: (id: string) => Promise<string>;
 }
 
 export function useIsotopes(): useIsotopesReturn {
-  const [isotopes, setIsotopes] = useState<Isotope[]>([]);
+  const [isotopes, setIsotopes] = useState<ProductAttribute[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
@@ -64,17 +64,24 @@ export function useIsotopes(): useIsotopesReturn {
     }
   }
 
-  async function deleteIsotope(id: string): Promise<boolean> {
-    if (!id) return false;
+  async function deleteIsotope(id: string): Promise<string> {
+    if (!id) return "The Id for this Isotope was not found.";
     try {
       const response = await fetch(`/api/admin/products/deleteIsotope/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error(`${response.status}`);
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
       await fetchIsotopes();
-      return true;
-    } catch {
-      return false;
+      return "";
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return error.message;
+      } else {
+        return "An unknown error occurred";
+      }
     }
   }
 

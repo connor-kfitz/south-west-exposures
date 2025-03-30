@@ -51,3 +51,9 @@ export type ProductSpecification = {
   topShieldPbEquiv: number;
   weight: number;
 }
+
+export type DashboardAlert = {
+  title: string;
+  description: string;
+  open: boolean;
+}
