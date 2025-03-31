@@ -18,6 +18,8 @@ interface MultiSelectProps {
   removeSpecifcation?: (name: string) => void;
 }
 
+const InputComponent = CommandPrimitive.Input as React.ElementType;
+
 export function MultiSelect({ form, options, type, addSpecification, removeSpecifcation }: MultiSelectProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -90,13 +92,13 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
               </Badge>
             );
           })}
-          <CommandPrimitive.Input
+          <InputComponent
             ref={inputRef}
             value={inputValue}
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder={selected.length ?  "" : `Add ${type} Before Using...`}
+            placeholder={selected.length ? "" : `Add ${type} Before Using...`}
             className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>
