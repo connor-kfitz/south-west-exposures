@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { MultiSelect } from "@/components/shared/MultiSelect";
 import { Filter, Product, ProductAttribute, ProductImage, ProductSpecification } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
-import { SortableImages } from "./SortableImages";
+// import { SortableImages } from "./SortableImages";
 import { VolumeForm } from "./VolumeForm";
 import { FaqsFields } from "./FaqsFields";
 import { generateUUID } from "@/lib/utils";
@@ -684,6 +684,7 @@ type ImagesFieldProps = {
 };
 
 function ImagesField({ form, images, handleUpload }: ImagesFieldProps) {
+  console.log(images)
   return (
     <FormField
       control={form.control}
@@ -701,7 +702,7 @@ function ImagesField({ form, images, handleUpload }: ImagesFieldProps) {
                   onChange={handleUpload}
                   className="mb-2 block max-w-[212px] cursor-pointer"
                 />
-                <SortableImages form={form} images={images} />
+                {/* <SortableImages form={form} images={images} /> */}
               </div>
             </FormControl>
         </FormItem>
