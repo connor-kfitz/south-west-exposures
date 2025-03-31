@@ -13,11 +13,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
+interface CommandProps {
+  children?: React.ReactNode;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  className?: string;
+}
+
 function Command({
-  className,
   children,
+  className,
+  onKeyDown,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+}: CommandProps) {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -25,6 +32,7 @@ function Command({
         "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
         className
       )}
+      onKeyDown={onKeyDown}
       {...props}
     >
       {children}
