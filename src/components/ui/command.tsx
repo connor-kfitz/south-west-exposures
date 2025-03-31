@@ -13,24 +13,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
-interface CommandProps {
-  children: React.ReactNode;  // Ensure that 'children' is explicitly defined
-  className: string;
-}
-
 function Command({
-  children,
   className,
   ...props
-}: CommandProps) {
+}: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       data-slot="command"
-      className={`bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md ${className}`}
+      className={cn(
+        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
+        className
+      )}
       {...props}
-    >
-      {children} {/* Make sure children are passed correctly */}
-    </CommandPrimitive>
+    />
   )
 }
 
