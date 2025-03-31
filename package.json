@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npm install --legacy-peer-deps"
   },
   "dependencies": {
     "@dnd-kit/accessibility": "^3.1.1",
@@ -35,8 +36,8 @@
     "next-auth": "^4.24.11",
     "pg": "^8.13.3",
     "postcss": "^8.5.3",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-hook-form": "^7.54.2",
     "react-select": "^5.10.1",
     "react-sortable-hoc": "^2.0.0",
