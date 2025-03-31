@@ -15,6 +15,7 @@ import {
 
 function Command({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
@@ -25,7 +26,9 @@ function Command({
         className
       )}
       {...props}
-    />
+    >
+    {children}
+    </CommandPrimitive>
   )
 }
 
