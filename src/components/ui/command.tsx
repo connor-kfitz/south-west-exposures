@@ -15,8 +15,9 @@ import {
 
 function Command({
   className,
+  children,
   ...props
-}: any) {
+}: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -25,7 +26,9 @@ function Command({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </CommandPrimitive>
   )
 }
 
