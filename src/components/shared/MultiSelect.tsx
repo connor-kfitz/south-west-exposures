@@ -130,7 +130,7 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
                 })}
               </CommandGroup>
             </div>
-          ) : null}
+          ) : <></>}
         </CommandList>
       </div>
     </Command>
