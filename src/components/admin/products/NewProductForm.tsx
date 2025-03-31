@@ -6,7 +6,7 @@ import { Control, FieldValues, Path, useForm, UseFormReturn } from "react-hook-f
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { MultiSelect } from "@/components/shared/MultiSelect";
+// import { MultiSelect } from "@/components/shared/MultiSelect";
 import { Filter, Product, ProductAttribute, ProductImage, ProductSpecification } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
 // import { SortableImages } from "./SortableImages";
@@ -243,29 +243,29 @@ export default function NewProductForm({
     }
   };
 
-  function handleAddVolume(name: string): void {
-    const specifications = form.getValues("specifications");
-    const newSpecifications: z.infer<typeof volumeFormSchema> = {
-      volume: name,
-      weight: "",
-      height: "",
-      innerDiameter: "",
-      outerDiameter: "",
-      shieldingSide: "",
-      shieldingSidePbEquiv: "",
-      topShield: "",
-      topShieldPbEquiv: "",
-      bottom: "",
-      bottomPbEquiv: ""
-     }
-    form.setValue("specifications", [...specifications, newSpecifications]);
-  }
+  // function handleAddVolume(name: string): void {
+  //   const specifications = form.getValues("specifications");
+  //   const newSpecifications: z.infer<typeof volumeFormSchema> = {
+  //     volume: name,
+  //     weight: "",
+  //     height: "",
+  //     innerDiameter: "",
+  //     outerDiameter: "",
+  //     shieldingSide: "",
+  //     shieldingSidePbEquiv: "",
+  //     topShield: "",
+  //     topShieldPbEquiv: "",
+  //     bottom: "",
+  //     bottomPbEquiv: ""
+  //    }
+  //   form.setValue("specifications", [...specifications, newSpecifications]);
+  // }
 
-  function handleRemoveVolume(name: string): void {
-    const specifications = form.getValues("specifications");
-    const updatedSpecifications = specifications.filter(spec => spec.volume !== name);
-    form.setValue("specifications", updatedSpecifications);
-  }
+  // function handleRemoveVolume(name: string): void {
+  //   const specifications = form.getValues("specifications");
+  //   const updatedSpecifications = specifications.filter(spec => spec.volume !== name);
+  //   form.setValue("specifications", updatedSpecifications);
+  // }
 
   async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
     const formData = prepareFormData();
@@ -365,7 +365,7 @@ export default function NewProductForm({
               mainForm={form}
               faqs={faqs}
             />
-            <UsagesField
+            {/* <UsagesField
               form={form}
               formSpacing={formSpacing}
               usageOptions={usageOptions}
@@ -390,7 +390,7 @@ export default function NewProductForm({
               volumeOptions={volumeOptions}
               handleRemoveVolume={handleRemoveVolume}
               handleAddVolume={handleAddVolume}
-            />
+            /> */}
           </section>
           <section className="w-1/2">
             <ImagesField
@@ -405,10 +405,10 @@ export default function NewProductForm({
               selectedVolume={selectedVolume}
               setSelectedVolume={setSelectedVolume}
             />
-            <RelatedProducts 
+            {/* <RelatedProducts 
               form={form}
               productOptions={productOptions.filter(product => product.id !== editProduct?.id).map(product => product.name)}
-            />
+            /> */}
           </section>
         </div>
         <Button className="block ml-auto mt-4" type="submit">Submit</Button>
@@ -533,149 +533,149 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
   );
 }
 
-type UsagesFieldProps = {
-  form: UseFormReturn<FormValues>;
-  formSpacing: string;
-  usageOptions: ProductAttribute[];
-};
+// type UsagesFieldProps = {
+//   form: UseFormReturn<FormValues>;
+//   formSpacing: string;
+//   usageOptions: ProductAttribute[];
+// };
 
-function UsagesField({ form, formSpacing, usageOptions }: UsagesFieldProps) {
+// function UsagesField({ form, formSpacing, usageOptions }: UsagesFieldProps) {
 
-  return (
-    <FormField
-      control={form.control}
-      name="usages"
-      render={() => (
-        <FormItem className={`${formSpacing}`}>
-          <FormLabel>Usages</FormLabel>
-          <FormMessage/>
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={usageOptions.map(obj => obj.name)}
-              type="Usages"
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-}
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="usages"
+//       render={() => (
+//         <FormItem className={`${formSpacing}`}>
+//           <FormLabel>Usages</FormLabel>
+//           <FormMessage/>
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={usageOptions.map(obj => obj.name)}
+//               type="Usages"
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   );
+// }
 
-type IsotopesFieldProps = {
-  form: UseFormReturn<FormValues>;
-  formSpacing: string;
-  isotopeOptions: ProductAttribute[];
-};
+// type IsotopesFieldProps = {
+//   form: UseFormReturn<FormValues>;
+//   formSpacing: string;
+//   isotopeOptions: ProductAttribute[];
+// };
 
-function IsotopesField({ form, formSpacing, isotopeOptions }: IsotopesFieldProps) {
-  return (
-    <FormField
-      control={form.control}
-      name="isotopes"
-      render={() => (
-        <FormItem className={`${formSpacing}`}>
-          <FormLabel>Isotopes</FormLabel>
-          <FormMessage />
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={isotopeOptions.map(obj => obj.name)}
-              type="Isotopes"
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-}
+// function IsotopesField({ form, formSpacing, isotopeOptions }: IsotopesFieldProps) {
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="isotopes"
+//       render={() => (
+//         <FormItem className={`${formSpacing}`}>
+//           <FormLabel>Isotopes</FormLabel>
+//           <FormMessage />
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={isotopeOptions.map(obj => obj.name)}
+//               type="Isotopes"
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   );
+// }
 
-type ShieldsFieldProps = {
-  form: UseFormReturn<FormValues>;
-  formSpacing: string;
-  shieldOptions: ProductAttribute[];
-};
+// type ShieldsFieldProps = {
+//   form: UseFormReturn<FormValues>;
+//   formSpacing: string;
+//   shieldOptions: ProductAttribute[];
+// };
 
-function ShieldsField({ form, formSpacing, shieldOptions }: ShieldsFieldProps) {
-  return (
-    <FormField
-      control={form.control}
-      name="shields"
-      render={() => (
-        <FormItem className={`${formSpacing}`}>
-          <FormLabel>Shields</FormLabel>
-          <FormMessage />
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={shieldOptions.map(obj => obj.name)}
-              type="Shields"
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-}
+// function ShieldsField({ form, formSpacing, shieldOptions }: ShieldsFieldProps) {
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="shields"
+//       render={() => (
+//         <FormItem className={`${formSpacing}`}>
+//           <FormLabel>Shields</FormLabel>
+//           <FormMessage />
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={shieldOptions.map(obj => obj.name)}
+//               type="Shields"
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   );
+// }
 
-type AccessoriesFieldProps = {
-  form: UseFormReturn<FormValues>;
-  formSpacing: string;
-  accessoryOptions: ProductAttribute[];
-};
+// type AccessoriesFieldProps = {
+//   form: UseFormReturn<FormValues>;
+//   formSpacing: string;
+//   accessoryOptions: ProductAttribute[];
+// };
 
-function AccessoriesField({ form, formSpacing, accessoryOptions }: AccessoriesFieldProps) {
-  return (
-    <FormField
-      control={form.control}
-      name="accessories"
-      render={() => (
-        <FormItem className={`${formSpacing}`}>
-          <FormLabel>Accessories</FormLabel>
-          <FormMessage />
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={accessoryOptions.map(obj => obj.name)}
-              type="Accessories"
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-}
+// function AccessoriesField({ form, formSpacing, accessoryOptions }: AccessoriesFieldProps) {
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="accessories"
+//       render={() => (
+//         <FormItem className={`${formSpacing}`}>
+//           <FormLabel>Accessories</FormLabel>
+//           <FormMessage />
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={accessoryOptions.map(obj => obj.name)}
+//               type="Accessories"
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   );
+// }
 
-type VolumesFieldProps = {
-  form: UseFormReturn<FormValues>;
-  volumeOptions: ProductAttribute[];
-  handleRemoveVolume: (name: string) => void;
-  handleAddVolume: (name: string) => void;
-};
+// type VolumesFieldProps = {
+//   form: UseFormReturn<FormValues>;
+//   volumeOptions: ProductAttribute[];
+//   handleRemoveVolume: (name: string) => void;
+//   handleAddVolume: (name: string) => void;
+// };
 
-function VolumesField({ form, volumeOptions, handleRemoveVolume, handleAddVolume }: VolumesFieldProps) {
-  return (
-    <FormField
-      control={form.control}
-      name="volumes"
-      render={() => (
-        <FormItem>
-          <FormLabel>Volumes</FormLabel>
-          <FormMessage />
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={volumeOptions.map(obj => obj.name)}
-              type="Volumes"
-              addSpecification={handleAddVolume}
-              removeSpecifcation={handleRemoveVolume}
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-}
+// function VolumesField({ form, volumeOptions, handleRemoveVolume, handleAddVolume }: VolumesFieldProps) {
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="volumes"
+//       render={() => (
+//         <FormItem>
+//           <FormLabel>Volumes</FormLabel>
+//           <FormMessage />
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={volumeOptions.map(obj => obj.name)}
+//               type="Volumes"
+//               addSpecification={handleAddVolume}
+//               removeSpecifcation={handleRemoveVolume}
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   );
+// }
 
 type ImagesFieldProps = {
   form: UseFormReturn<FormValues>;
@@ -780,30 +780,30 @@ function SpecificationsField({ form, formSpacing, formVolumes, selectedVolume, s
   );
 }
 
-interface RelatedProductsProps {
-  form: UseFormReturn<FormValues>;
-  productOptions: string[];
-}
+// interface RelatedProductsProps {
+//   form: UseFormReturn<FormValues>;
+//   productOptions: string[];
+// }
 
-function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
+// function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
 
-  return (
-    <FormField
-      control={form.control}
-      name="relatedProducts"
-      render={() => (
-        <FormItem>
-          <FormLabel>Related Products</FormLabel>
-          <FormMessage />
-          <FormControl>
-            <MultiSelect
-              form={form}
-              options={productOptions}
-              type="Related Products"
-            />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  )
-}
+//   return (
+//     <FormField
+//       control={form.control}
+//       name="relatedProducts"
+//       render={() => (
+//         <FormItem>
+//           <FormLabel>Related Products</FormLabel>
+//           <FormMessage />
+//           <FormControl>
+//             <MultiSelect
+//               form={form}
+//               options={productOptions}
+//               type="Related Products"
+//             />
+//           </FormControl>
+//         </FormItem>
+//       )}
+//     />
+//   )
+// }
