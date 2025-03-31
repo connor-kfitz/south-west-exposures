@@ -41,8 +41,8 @@ async function deleteProduct(client: PoolClient, productId: string) {
   await client.query("DELETE FROM products WHERE product_id = $1", [productId]);
 }
 
-export async function DELETE(req: Request, { params }: { params: { productId: string } }) {
-  const { productId } = params;
+export async function DELETE(req: Request, { params }: { params: Promise<{ productId: string }> }) {
+  const { productId } = await params;
 
   if (!productId) {
     return new Response(JSON.stringify({ message: "Product Id is required." }), {

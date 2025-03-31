@@ -80,11 +80,11 @@ export const volumeFormSchema = z.object({
 
 export const faqFormSchema = z.object({
   question: z.string().min(1, "Question is required"),
-  answer: z.string().min(1, "Answer is required"),
+  answer: z.string().min(1, "Answer is required")
 });
 
 const productImageSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   file: z.unknown().optional(),
   src: z.string().optional(),
 }).refine((data) => data.file !== undefined || data.src !== undefined, {

@@ -6,7 +6,7 @@ export type ProductAttribute = {
 }
 
 export type ProductImage = {
-  id?: string;
+  id: string;
   file?: File | string | unknown;
   src?: string;
 };

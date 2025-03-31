@@ -1,6 +1,6 @@
 import pool from "@/lib/db";
 
-export async function DELETE(req: Request, { params }: { params: { shieldId: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ shieldId: string }> }) {
   
   const { shieldId } = await params; 
 
