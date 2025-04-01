@@ -99,7 +99,7 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
             placeholder={selected.length ? "" : `Add ${type} Before Using...`}
-            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+            className="flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>
       </div>
@@ -134,5 +134,5 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
         </CommandList>
       </div>
     </Command>
-  );
+  )
 }
