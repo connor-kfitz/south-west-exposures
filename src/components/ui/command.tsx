@@ -19,27 +19,26 @@ interface CommandProps {
   className?: string;
 }
 
-const Command = React.forwardRef<HTMLDivElement, CommandProps>(
-  ({ children, className, onKeyDown, ...props }, ref) => {
-    return (
-      <CommandRoot
-        ref={ref} // Forward the ref to the CommandRoot component
-        data-slot="command"
-        className={cn(
-          "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
-          className
-        )}
-        onKeyDown={onKeyDown}
-        {...props}
-      >
-        {children}
-      </CommandRoot>
-    );
-  }
-);
-
-Command.displayName = "Command";
-
+function Command({
+  children,
+  className,
+  onKeyDown,
+  ...props
+}: CommandProps) {
+  return (
+    <CommandRoot
+      data-slot="command"
+      className={cn(
+        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
+        className
+      )}
+      onKeyDown={onKeyDown}
+      {...props}
+    >
+      {children}
+    </CommandRoot>
+  ) as React.JSX.Element
+}
 
 function CommandDialog({
   title = "Command Palette",
