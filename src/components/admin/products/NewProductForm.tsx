@@ -163,6 +163,7 @@ export default function NewProductForm({
     if (!editProduct) return;
 
     function setFormValues(product: Product) {
+      form.reset();
       form.setValue("name", product.name);
       form.setValue("description", product.description);
       form.setValue("material", product.material);
