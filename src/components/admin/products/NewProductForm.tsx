@@ -349,6 +349,11 @@ export default function NewProductForm({
     await postProduct(form);
   }
 
+  function cancelEdit() {
+    setEditProduct(null)
+    form.reset(defaultFormValues);
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -412,7 +417,10 @@ export default function NewProductForm({
             />
           </section>
         </div>
-        <Button className="block ml-auto mt-4" type="submit">Submit</Button>
+        <div className="flex justify-end mt-4">
+          {editProduct && <Button className="block mr-4" variant="outline" onClick={cancelEdit}>Cancel</Button>}
+          <Button className="block" type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   )
