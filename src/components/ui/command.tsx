@@ -19,19 +19,15 @@ interface CommandProps {
   className?: string;
 }
 
-const Command = React.forwardRef<HTMLDivElement, CommandProps>((
-  {
-    children,
-    className,
-    onKeyDown,
-    ...props
-  }: CommandProps,
-  ref // Ref is now typed as HTMLDivElement
-) => {
+function Command({
+  children,
+  className,
+  onKeyDown,
+  ...props
+}: CommandProps) {
   return (
     <CommandRoot
       data-slot="command"
-      ref={ref} // Pass the ref to CommandRoot
       className={cn(
         "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
         className
@@ -41,10 +37,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((
     >
       {children}
     </CommandRoot>
-  );
-});
-
-Command.displayName = "Command";
+  )
+}
 
 function CommandDialog({
   title = "Command Palette",
