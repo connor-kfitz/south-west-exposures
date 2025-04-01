@@ -35,7 +35,7 @@ function Command({
       onKeyDown={onKeyDown}
       {...props}
     >
-      {children}
+      <>{children}</>
     </CommandRoot>
   )
 }
