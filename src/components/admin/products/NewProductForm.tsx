@@ -693,7 +693,6 @@ type ImagesFieldProps = {
 };
 
 function ImagesField({ form, images, handleUpload }: ImagesFieldProps) {
-  console.log(images)
   return (
     <FormField
       control={form.control}

@@ -14,13 +14,11 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        console.log("authorize", credentials)
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password are required");
         }
 
         const user = await getUserByEmail(credentials.email);
-        console.log("User ", user)
         if (user) {
           const isValid = await bcrypt.compare(credentials.password, user.password);
 
@@ -63,7 +61,6 @@ export const authOptions: NextAuthOptions = {
 async function getUserByEmail(email: string): Promise<User | null> {
   const query = "SELECT * FROM users WHERE email = $1";
   const result = await pool.query(query, [email]);
-  console.log(query, result)
   if (result?.rowCount && result.rowCount > 0) {
     return result.rows[0];
   }

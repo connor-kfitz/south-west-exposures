@@ -14,6 +14,7 @@ import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import AddProduct from "./AddProduct";
 import Products from "./Products";
 import AlertDialog from "./DashboardAlertDialog";
+import Header from "./Header";
 
 export default function Dashboard() {
   const { shields, loading: shieldsLoading, error: shieldsError, addError: shieldsAddError, postShield, deleteShield } = useShields();
@@ -32,6 +33,7 @@ export default function Dashboard() {
 
   return (
     <>
+      <Header page="Products"/>
       <section className="flex gap-5">
         <section className="flex-1">
           <section>
