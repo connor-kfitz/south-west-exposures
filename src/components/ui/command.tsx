@@ -88,8 +88,9 @@ function CommandInput({
 
 function CommandList({
   className,
+  children,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.List>) {
+}: React.ComponentProps<typeof CommandPrimitive.List> & { children?: React.ReactNode }) {
   return (
     <CommandPrimitive.List
       data-slot="command-list"
@@ -98,8 +99,10 @@ function CommandList({
         className
       )}
       {...props}
-    />
-  )
+    >
+      {children}
+    </CommandPrimitive.List>
+  );
 }
 
 function CommandEmpty({
