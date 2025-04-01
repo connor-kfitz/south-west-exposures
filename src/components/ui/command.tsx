@@ -117,11 +117,12 @@ function CommandEmpty({
   )
 }
 
-function CommandGroup({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Group> & { children?: React.ReactNode }) {
+interface CommandGroupProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+function CommandGroup({ children, className, ...props }: CommandGroupProps) {
   return (
     <CommandPrimitive.Group
       data-slot="command-group"
