@@ -119,8 +119,9 @@ function CommandEmpty({
 
 function CommandGroup({
   className,
+  children,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Group>) {
+}: React.ComponentProps<typeof CommandPrimitive.Group> & { children?: React.ReactNode }) {
   return (
     <CommandPrimitive.Group
       data-slot="command-group"
@@ -129,8 +130,10 @@ function CommandGroup({
         className
       )}
       {...props}
-    />
-  )
+    >
+      {children}
+    </CommandPrimitive.Group>
+  );
 }
 
 function CommandSeparator({
