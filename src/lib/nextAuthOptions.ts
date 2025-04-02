@@ -1,6 +1,6 @@
 import { NextAuthOptions, Session, User as AuthUser } from "next-auth";
 import { JWT } from "next-auth/jwt";
-import { User } from "@/types/admin";
+import { NextAuthUser } from "@/types/admin";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import pool from "@/lib/db";
@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
   }
 }
 
-async function getUserByEmail(email: string): Promise<User | null> {
+async function getUserByEmail(email: string): Promise<NextAuthUser | null> {
   const query = "SELECT * FROM users WHERE email = $1";
   const result = await pool.query(query, [email]);
   if (result?.rowCount && result.rowCount > 0) {

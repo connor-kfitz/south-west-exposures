@@ -6,9 +6,10 @@ import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, 
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem
 } from "../ui/sidebar";
+import { signOut } from "next-auth/react";
+import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
 
 export default function SideNav() {
 
@@ -113,19 +114,29 @@ function Main({ links, pathname }: MainProps) {
 }
 
 function Footer() {
+
+  const { user, loading } = useUser();
+
   return (
     <SidebarFooter className="flex-row items-center p-4 mt-auto">
-        <Image
-          src="/images/side-nav/rob.png"
-          alt="blocks"
-          className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
-          width={40}
-          height={40}
-        />
-      <div>
-        <h1 className="text">Robert Kamen</h1>
-        <button className="text-sm cursor-pointer block" onClick={() => signOut({ callbackUrl: "/auth" })}>Logout</button>
-      </div>
+      {loading 
+        ? 
+          <div className="w-full h-[44px] bg-[#2a2a2a] rounded animate-pulse"></div>
+        :
+        <>
+          <Image
+            src={user.profileImage ?? "/images/side-nav/default-profile.jpg"}
+            alt="blocks"
+            className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
+            width={40}
+            height={40}
+          />
+          <div>
+            <h1 className="text">{user.name}</h1>
+            <button className="text-sm cursor-pointer block" onClick={() => signOut({ callbackUrl: "/auth" })}>Logout</button>
+          </div>
+        </>
+      }
     </SidebarFooter>
   )
 }
