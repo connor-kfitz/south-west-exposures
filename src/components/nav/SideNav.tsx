@@ -121,11 +121,10 @@ function Footer() {
           className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
           width={40}
           height={40}
-          onClick={() => signOut({ callbackUrl: "/auth" })}
         />
       <div>
         <h1 className="text">Robert Kamen</h1>
-        <h2 className="text-sm">Owner</h2>
+        <button className="text-sm cursor-pointer block" onClick={() => signOut({ callbackUrl: "/auth" })}>Logout</button>
       </div>
     </SidebarFooter>
   )
