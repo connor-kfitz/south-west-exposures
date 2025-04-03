@@ -117,26 +117,28 @@ function Footer() {
 
   const { user, loading } = useUser();
 
+  if (loading)
+    return (
+      <SidebarFooter className="flex-row items-center p-4 mt-auto">
+        <div className="w-full h-[44px] bg-[#222222] rounded animate-pulse"></div>
+      </SidebarFooter>
+    )
+
   return (
     <SidebarFooter className="flex-row items-center p-4 mt-auto">
-      {loading 
-        ? 
-          <div className="w-full h-[44px] bg-[#2a2a2a] rounded animate-pulse"></div>
-        :
-        <>
-          <Image
-            src={user.profileImage ?? "/images/side-nav/default-profile.jpg"}
-            alt="blocks"
-            className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
-            width={40}
-            height={40}
-          />
-          <div>
-            <h1 className="text">{user.name}</h1>
-            <button className="text-sm cursor-pointer block" onClick={() => signOut({ callbackUrl: "/auth" })}>Logout</button>
-          </div>
-        </>
-      }
+      <>
+        <Image
+          src={user.profileImage ?? "/images/side-nav/default-profile.jpg"}
+          alt="blocks"
+          className="flex justify-center items-center bg-[#FED3BC] rounded-[8px]"
+          width={40}
+          height={40}
+        />
+        <div>
+          <h1 className="text">{user.name}</h1>
+          <button className="text-sm cursor-pointer block" onClick={() => signOut({ callbackUrl: "/auth" })}>Logout</button>
+        </div>
+      </>
     </SidebarFooter>
   )
 }

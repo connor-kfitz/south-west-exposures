@@ -43,7 +43,7 @@ export default function Dashboard() {
           </section>
         </section>
       </div>
-    );
+    )
 
   return (
     <>
