@@ -10,7 +10,6 @@ import { useFilters } from "@/hooks/useFilters";
 import { useState } from "react";
 import { DashboardAlert, Product } from "@/types/admin-products";
 import AddAttribute from "@/components/admin/products/AddAttribute";
-import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import AddProduct from "./AddProduct";
 import Products from "./Products";
 import AlertDialog from "./DashboardAlertDialog";
@@ -29,7 +28,22 @@ export default function Dashboard() {
   const [alertDialog, setAlertDialog] = useState<DashboardAlert>({title: "", description: "", open: false});
 
   if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters) 
-    return <LoadingSpinner/>;
+    return (
+      <div className="flex flex-col h-full">
+        <Header page="Products"/>
+        <section className="flex flex-col h-full gap-5 2xl:flex-row">
+          <section className="flex-1 flex flex-col gap-5">
+            <div className="w-full basis-1/2 bg-[#222222] rounded animate-pulse [animation-delay:0s]"></div>
+            <div className="w-full basis-1/2 bg-[#222222] rounded animate-pulse [animation-delay:0.5s]"></div>
+          </section>
+          <section className="basis-1/5 flex-col gap-5 h-full hidden min-w-[400px] 2xl:flex">
+            <div className="w-full basis-1/3 bg-[#222222] rounded animate-pulse [animation-delay:1s]"></div>
+            <div className="w-full basis-1/3 bg-[#222222] rounded animate-pulse [animation-delay:1.5s]"></div>
+            <div className="w-full basis-1/3 bg-[#222222] rounded animate-pulse [animation-delay:2s]"></div>
+          </section>
+        </section>
+      </div>
+    );
 
   return (
     <>
@@ -110,5 +124,5 @@ export default function Dashboard() {
       </section>
       <AlertDialog alertDialog={alertDialog} setAlertDialog={setAlertDialog}/>
     </>
-  );
+  )
 }
