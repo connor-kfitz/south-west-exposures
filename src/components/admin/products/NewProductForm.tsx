@@ -357,8 +357,8 @@ export default function NewProductForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex gap-x-5">
-          <section className="w-1/2">
+        <div className="flex flex-col gap-x-5 lg:flex-row">
+          <section className="w-full lg:w-1/2">
             <NameField control={form.control} formSpacing={formSpacing}/>
             <DescriptionField control={form.control} formSpacing={formSpacing}/>
             <MaterialField control={form.control} formSpacing={formSpacing}/>
@@ -439,7 +439,7 @@ function NameField<T extends FieldValues>({ control, formSpacing }: FormFieldPro
       render={({ field }) => (
         <FormItem className={formSpacing}>
           <FormLabel>Name</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <Input placeholder="Product Name" {...field} />
           </FormControl>
@@ -457,7 +457,7 @@ function DescriptionField<T extends FieldValues>({ control, formSpacing }: FormF
       render={({ field }) => (
         <FormItem className={formSpacing}>
           <FormLabel>Description</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <Textarea
               className="max-h-[80px] resize-none bg-[transparent]"
@@ -479,7 +479,7 @@ function MaterialField<T extends FieldValues>({ control, formSpacing }: FormFiel
       render={({ field }) => (
         <FormItem className={formSpacing}>
           <FormLabel>Material</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <Input placeholder="Material Type" {...field} />
           </FormControl>
@@ -506,7 +506,7 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
           name={`features.${index}`}
           render={({ field }) => (
             <FormItem>
-              <FormMessage />
+              <FormMessage/>
               <div className="flex gap-x-2">
                 <FormControl>
                   <Input placeholder={`Feature ${index + 1}`} {...field} />
@@ -585,7 +585,7 @@ function IsotopesField({ form, formSpacing, isotopeOptions }: IsotopesFieldProps
       render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Isotopes</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
               form={form}
@@ -613,7 +613,7 @@ function ShieldsField({ form, formSpacing, shieldOptions }: ShieldsFieldProps) {
       render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Shields</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
               form={form}
@@ -641,7 +641,7 @@ function AccessoriesField({ form, formSpacing, accessoryOptions }: AccessoriesFi
       render={() => (
         <FormItem className={`${formSpacing}`}>
           <FormLabel>Accessories</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
               form={form}
@@ -668,9 +668,9 @@ function VolumesField({ form, volumeOptions, handleRemoveVolume, handleAddVolume
       control={form.control}
       name="volumes"
       render={() => (
-        <FormItem>
+        <FormItem className="mb-4 lg:mb-0">
           <FormLabel>Volumes</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
               form={form}
@@ -700,7 +700,7 @@ function ImagesField({ form, images, handleUpload }: ImagesFieldProps) {
       render={() => (
         <FormItem>
             <FormLabel>Product Images</FormLabel>
-            <FormMessage />
+            <FormMessage/>
             <FormControl>
               <div>
                 <Input
@@ -802,7 +802,7 @@ function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
       render={() => (
         <FormItem>
           <FormLabel>Related Products</FormLabel>
-          <FormMessage />
+          <FormMessage/>
           <FormControl>
             <MultiSelect
               form={form}

@@ -68,7 +68,7 @@ export function ProductsTable<TData extends Product>({
 
   return (
     <div className="rounded-md border border-border p-4">
-      <Table className="table-fixed">
+      <Table className="table-fixed min-w-[500px] md:min-w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

@@ -34,7 +34,7 @@ export default function Dashboard() {
   return (
     <>
       <Header page="Products"/>
-      <section className="flex gap-5">
+      <section className="flex flex-col gap-5 2xl:flex-row">
         <section className="flex-1">
           <section>
             <Products
@@ -56,7 +56,7 @@ export default function Dashboard() {
             />
           </section>
         </section>
-        <section className="basis-1/5 min-w-[400px]">
+        <section className="basis-1/5 md:min-w-[400px]">
           <AddAttribute
             type="Shields"
             className="mb-5"

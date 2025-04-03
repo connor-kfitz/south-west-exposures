@@ -33,13 +33,15 @@ export default function Products({ products, setEditProduct, deleteProduct }: Pr
         {products.length ? 
           <>
             <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <ProductsTable 
-              data={filteredData}
-              setEditProduct={setEditProduct}
-              deleteProduct={deleteProduct}
-            />
-          </> 
-          : 
+            <div className="overflow-x-auto">
+              <ProductsTable
+                data={filteredData}
+                setEditProduct={setEditProduct}
+                deleteProduct={deleteProduct}
+              />
+            </div>
+          </>
+         : 
           <div>No Products Available</div>
         }
       </CardContent>

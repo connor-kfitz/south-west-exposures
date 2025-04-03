@@ -13,7 +13,7 @@ export default function SearchInput({ searchTerm, setSearchTerm }: SearchTermPro
       placeholder="Search..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      className="border p-2 rounded w-full mb-4 max-w-[300px]"
+      className="border p-2 rounded w-full mb-4 max-w-full sm:max-w-[300px]"
     />
   )
 }
