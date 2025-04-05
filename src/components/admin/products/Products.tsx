@@ -3,8 +3,9 @@
 
 import { ProductsTable } from "./ProductsTable"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { DashboardAlert, Product } from "@/types/admin-products"
+import { Product } from "@/types/admin-products"
 import { useState } from "react";
+import { DashboardAlert } from "@/types/admin";
 import SearchInput from "./SearchInput";
 
 interface ProductsProps {

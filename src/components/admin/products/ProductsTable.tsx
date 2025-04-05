@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
-import { DashboardAlert, Product } from "@/types/admin-products"
+import { Product } from "@/types/admin-products"
+import { DashboardAlert } from "@/types/admin"
 
 interface ProductsTableProps<TData> {
   data: TData[];

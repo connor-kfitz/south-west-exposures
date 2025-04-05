@@ -6,9 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
+import { ProductAttribute, ProductAttributeTypes } from "@/types/admin-products";
+import { DashboardAlert } from "@/types/admin";
 import Image from "next/image";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
-import { DashboardAlert, ProductAttribute, ProductAttributeTypes } from "@/types/admin-products";
+
 
 interface AttributeCard {
   className?: string;

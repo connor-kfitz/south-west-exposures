@@ -10,3 +10,11 @@ export type User = {
   name: string;
   profileImage: string;
 }
+
+export interface DashboardAlert {
+  open: boolean;
+  title: string;
+  description: string;
+  deleteId?: string;
+  onConfirm?: (id: string) => Promise<boolean>;
+}

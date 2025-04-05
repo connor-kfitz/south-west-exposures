@@ -51,11 +51,3 @@ export type ProductSpecification = {
   topShieldPbEquiv: number;
   weight: number;
 }
-
-export interface DashboardAlert {
-  open: boolean;
-  title: string;
-  description: string;
-  deleteId?: string;
-  onConfirm?: (id: string) => void;
-}
