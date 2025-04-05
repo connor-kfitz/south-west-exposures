@@ -7,7 +7,7 @@ import { Command as CommandPrimitive } from "cmdk";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { ProductAttributeTypes } from "@/types/admin-products";
 import { UseFormReturn } from "react-hook-form";
-import { FormValues } from "../admin/products/NewProductForm";
+import { FormValues } from "./NewProductForm";
 import { toCamelCase } from "@/lib/utils";
 
 interface MultiSelectProps {
@@ -68,7 +68,7 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
       onKeyDown={handleKeyDown}
       className="overflow-visible bg-transparent"
     >
-      <div className="group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+      <div className="group min-h-[40px] rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
           {selected?.map((framework, index) => {
             return (

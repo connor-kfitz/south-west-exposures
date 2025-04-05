@@ -6,7 +6,7 @@ import { Control, FieldValues, Path, useForm, UseFormReturn } from "react-hook-f
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { MultiSelect } from "@/components/shared/MultiSelect";
+import { MultiSelect } from "@/components/admin/products/MultiSelect";
 import { Filter, Product, ProductAttribute, ProductImage, ProductSpecification } from "@/types/admin-products";
 import { Badge } from "@/components/ui/badge";
 import { SortableImages } from "./SortableImages";
