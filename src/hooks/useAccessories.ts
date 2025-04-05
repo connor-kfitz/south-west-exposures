@@ -22,7 +22,7 @@ export function useAccessories(): useAccessoriesReturn {
 
   async function fetchAccessories(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getAccessories");
+      const response = await fetch("/api/admin/products/accessories/get");
       if (!response.ok) throw new Error(`${response.status}`);
       const accessories = await response.json();
       setAccessories(accessories);
@@ -39,7 +39,7 @@ export function useAccessories(): useAccessoriesReturn {
 
   async function postAccessory(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/postAccessory", {
+      const response = await fetch("/api/admin/products/accessories/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -67,7 +67,7 @@ export function useAccessories(): useAccessoriesReturn {
   async function deleteAccessory(id: string): Promise<string> {
     if (!id) return "The Id for this Accessory was not found.";
     try {
-      const response = await fetch(`/api/admin/products/deleteAccessory/${id}`, {
+      const response = await fetch(`/api/admin/products/accessories/delete/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

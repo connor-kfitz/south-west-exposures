@@ -18,7 +18,7 @@ export function useFilters(): useFiltersReturn {
 
   async function fetchFilters(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getFilters");
+      const response = await fetch("/api/admin/products/filters/get");
       if (!response.ok) throw new Error(`${response.status}`);
       const filters = await response.json();
       setFilters(filters);

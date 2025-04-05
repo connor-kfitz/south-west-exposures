@@ -22,7 +22,7 @@ export function useUsages(): useUsagesReturn {
 
   async function fetchUsages(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getUsages");
+      const response = await fetch("/api/admin/products/usages/get");
       if (!response.ok) throw new Error(`${response.status}`);
       const usages = await response.json();
       setUsages(usages);
@@ -39,7 +39,7 @@ export function useUsages(): useUsagesReturn {
 
   async function postUsage(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/postUsage", {
+      const response = await fetch("/api/admin/products/usages/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -67,7 +67,7 @@ export function useUsages(): useUsagesReturn {
   async function deleteUsage(id: string): Promise<string> {
     if (!id) return "The Id for this Usage was not found.";
     try {
-      const response = await fetch(`/api/admin/products/deleteUsage/${id}`, {
+      const response = await fetch(`/api/admin/products/usages/delete/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

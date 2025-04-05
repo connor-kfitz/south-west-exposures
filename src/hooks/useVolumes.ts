@@ -22,7 +22,7 @@ export function useVolumes(): useVolumesReturn {
 
   async function fetchVolumes(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getVolumes");
+      const response = await fetch("/api/admin/products/volumes/get");
       if (!response.ok) throw new Error(`${response.status}`);
       const volumes = await response.json();
       setVolumes(volumes);
@@ -39,7 +39,7 @@ export function useVolumes(): useVolumesReturn {
 
   async function postVolume(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/postVolume", {
+      const response = await fetch("/api/admin/products/volumes/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -67,7 +67,7 @@ export function useVolumes(): useVolumesReturn {
   async function deleteVolume(id: string): Promise<string> {
     if (!id) return "The Id for this Volume was not found.";
     try {
-      const response = await fetch(`/api/admin/products/deleteVolume/${id}`, {
+      const response = await fetch(`/api/admin/products/volumes/delete/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

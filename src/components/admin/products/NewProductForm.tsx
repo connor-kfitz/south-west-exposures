@@ -271,7 +271,7 @@ export default function NewProductForm({
   async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
     const formData = prepareFormData();
 
-    const endpoint = editProduct ? "/api/admin/products/updateProduct" : "/api/admin/products/postProduct";
+    const endpoint = editProduct ? "/api/admin/products/put" : "/api/admin/products/post";
     const method = editProduct ? "PUT" : "POST";
 
     try {

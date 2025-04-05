@@ -22,7 +22,7 @@ export function useShields(): useShieldsReturn {
 
   async function fetchShields(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/products/getShields");
+      const response = await fetch("/api/admin/products/shields/get");
       if (!response.ok) throw new Error(`${response.status}`);
       const shields = await response.json();
       setShields(shields);
@@ -39,7 +39,7 @@ export function useShields(): useShieldsReturn {
 
   async function postShield(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/postShield", {
+      const response = await fetch("/api/admin/products/shields/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -67,7 +67,7 @@ export function useShields(): useShieldsReturn {
   async function deleteShield(id: string): Promise<string> {
     if (!id) return "The Id for this Shield was not found.";
     try {
-      const response = await fetch(`/api/admin/products/deleteShield/${id}`, {
+      const response = await fetch(`/api/admin/products/shields/delete/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
