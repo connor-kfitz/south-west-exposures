@@ -7,22 +7,23 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react"
-import { Product } from "@/types/admin-products"
+import { DashboardAlert, Product } from "@/types/admin-products"
 
 interface ProductsTableProps<TData> {
   data: TData[];
   setEditProduct: (product: Product | null) => void;
   deleteProduct: (id: string) => Promise<boolean>;
+  setAlertDialog: React.Dispatch<React.SetStateAction<DashboardAlert>>;
 }
 
 export function ProductsTable<TData extends Product>({
   data,
   setEditProduct,
-  deleteProduct
+  deleteProduct,
+  setAlertDialog
 }: ProductsTableProps<TData>) {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-
   const columns: ColumnDef<Product>[] = [
     {
       accessorKey: "name",
@@ -114,7 +115,14 @@ export function ProductsTable<TData extends Product>({
                         <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => deleteProduct(row.original.id)}>
+                        <DropdownMenuItem 
+                          onClick={() => setAlertDialog({ 
+                            title: `Delete ${data.find(item => item.id === row.original.id)?.name}?`, 
+                            description: "This action is irreversible. The product and all related data will be lost forever.",
+                            open: true,
+                            deleteId: row.original.id,
+                            onConfirm: deleteProduct
+                          })}>
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>

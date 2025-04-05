@@ -25,7 +25,7 @@ export default function Dashboard() {
   const { filters, loading: loadingFilters } = useFilters();
 
   const [editProduct, setEditProduct] = useState<Product | null>(null);
-  const [alertDialog, setAlertDialog] = useState<DashboardAlert>({title: "", description: "", open: false});
+  const [alertDialog, setAlertDialog] = useState<DashboardAlert>({ title: "", description: "", open: false });
 
   if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters) 
     return (
@@ -55,6 +55,7 @@ export default function Dashboard() {
               products={products}
               setEditProduct={setEditProduct}
               deleteProduct={deleteProduct}
+              setAlertDialog={setAlertDialog}
             />
             <AddProduct
               shields={shields}
@@ -122,7 +123,7 @@ export default function Dashboard() {
           />
         </section>
       </section>
-      <AlertDialog alertDialog={alertDialog} setAlertDialog={setAlertDialog}/>
+      <AlertDialog alertDialog={alertDialog} setAlertDialog={setAlertDialog} setEditProduct={setEditProduct}/>
     </>
   )
 }

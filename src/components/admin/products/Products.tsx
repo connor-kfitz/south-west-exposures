@@ -3,7 +3,7 @@
 
 import { ProductsTable } from "./ProductsTable"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Product } from "@/types/admin-products"
+import { DashboardAlert, Product } from "@/types/admin-products"
 import { useState } from "react";
 import SearchInput from "./SearchInput";
 
@@ -11,9 +11,10 @@ interface ProductsProps {
   products: Product[];
   setEditProduct: (product: Product | null) => void;
   deleteProduct: (id: string) => Promise<boolean>;
+  setAlertDialog: React.Dispatch<React.SetStateAction<DashboardAlert>>;
 }
 
-export default function Products({ products, setEditProduct, deleteProduct }: ProductsProps) {
+export default function Products({ products, setEditProduct, deleteProduct, setAlertDialog }: ProductsProps) {
 
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -38,6 +39,7 @@ export default function Products({ products, setEditProduct, deleteProduct }: Pr
                 data={filteredData}
                 setEditProduct={setEditProduct}
                 deleteProduct={deleteProduct}
+                setAlertDialog={setAlertDialog}
               />
             </div>
           </>

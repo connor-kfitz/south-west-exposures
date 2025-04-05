@@ -52,8 +52,10 @@ export type ProductSpecification = {
   weight: number;
 }
 
-export type DashboardAlert = {
+export interface DashboardAlert {
+  open: boolean;
   title: string;
   description: string;
-  open: boolean;
+  deleteId?: string;
+  onConfirm?: (id: string) => void;
 }
