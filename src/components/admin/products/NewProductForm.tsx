@@ -14,6 +14,7 @@ import { VolumeForm } from "./VolumeForm";
 import { FaqsFields } from "./FaqsFields";
 import { generateUUID } from "@/lib/utils";
 import z from "zod";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
 export const volumeFormSchema = z.object({
   volume: z.string(),
@@ -137,6 +138,7 @@ export default function NewProductForm({
 }: NewProductFormProps) {
 
   const [selectedVolume, setSelectedVolume] = useState<string>("");
+  const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
 
   const defaultFormValues = {
     name: "",
@@ -346,7 +348,10 @@ export default function NewProductForm({
   }
 
   async function onSubmit() {
+    if (loadingSubmit) return;
+    setLoadingSubmit(true);
     await postProduct(form);
+    setLoadingSubmit(false);
   }
 
   function cancelEdit() {
@@ -419,7 +424,9 @@ export default function NewProductForm({
         </div>
         <div className="flex justify-end mt-4">
           {editProduct && <Button className="block mr-4" variant="outline" onClick={cancelEdit}>Cancel</Button>}
-          <Button className="block" type="submit">Submit</Button>
+          <Button className="flex justify-center items-center w-[80px]" type="submit">
+            {loadingSubmit ? <LoadingSpinner /> : editProduct ? "Update" : "Submit"}
+          </Button>
         </div>
       </form>
     </Form>

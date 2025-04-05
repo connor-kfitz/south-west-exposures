@@ -99,7 +99,7 @@ export default function AddAttribute({
           {addError && <label className="text-xs italic mb-2 ml-1">{addError}</label>}
           <Input className="mb-4" placeholder={`New ${getPlaceholderValue()}`} ref={inputRef} />
           <Button className="w-full" onClick={addOnClick}>
-            {loadingAddAttribute ? <LoadingSpinner /> : "Add"}
+            {loadingAddAttribute ? <LoadingSpinner/> : "Add"}
           </Button>
         </CardFooter>
       </>)}
