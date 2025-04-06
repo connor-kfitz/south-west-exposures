@@ -1,6 +1,20 @@
+import { Product } from "@/types/admin-products";
+import type { Metadata } from 'next'
+
 export const revalidate = 0;
 
-import { Product } from "@/types/admin-products";
+// Todo: Add metadata
+export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
+
+  const { productId } = await params
+
+  const product = await fetch(`http://localhost:3000/api/admin/products/get${productId}`).then((res) => res.json())
+
+  return {
+    title: product.name,
+    description: ""
+  }
+}
 
 export async function generateStaticParams() {
   try {

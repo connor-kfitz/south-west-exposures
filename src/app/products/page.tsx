@@ -1,6 +1,13 @@
+import { Product } from "@/types/admin-products";
+import type { Metadata } from 'next'
+
 export const revalidate = 0;
 
-import { Product } from "@/types/admin-products";
+// Todo: Add metadata
+export const metadata: Metadata = {
+  title: '...',
+  description: '...',
+}
 
 export default async function ProductsPage() {
   try {
