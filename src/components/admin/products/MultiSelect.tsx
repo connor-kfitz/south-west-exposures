@@ -25,7 +25,7 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
 
-  const selected = form.watch(toCamelCase(type) as keyof FormValues) as string[];;
+  const selected = form.watch(toCamelCase(type) as keyof FormValues) as string[];
 
   const handleUnselect = React.useCallback((framework: string) => {
     const values = form.getValues(toCamelCase(type) as keyof FormValues);
@@ -63,6 +63,16 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
     (framework) => !selected?.includes(framework),
   );
 
+  function getPlaceholderText(): string {
+    if (selected.length) return "";
+
+    const isProductType = type === "Related Products" || type === "Purchased Together";
+
+    if (options.length) return isProductType ? "Add Products" : `Add ${type}`;
+    
+    return isProductType ? "Add Products Before Using" : `Add ${type} Before Using...`;
+  }
+
   return (
     <Command
       onKeyDown={handleKeyDown}
@@ -98,7 +108,7 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder={selected.length ? "" : `Add ${type} Before Using...`}
+            placeholder={getPlaceholderText()}
             className="flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>

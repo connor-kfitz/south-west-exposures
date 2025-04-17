@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     const specifications = JSON.parse(formData.get('specifications') as string || '[]');
     const faqs = JSON.parse(formData.get('faqs') as string || '[]');
     const relatedProducts = JSON.parse(formData.get('relatedProducts') as string || '[]');
+    const purchasedTogether = JSON.parse(formData.get('purchasedTogether') as string || '[]');
     let images = JSON.parse(formData.get('images') as string || '[]');
     const imageFiles = formData.getAll('imageFiles');
 
@@ -150,6 +151,17 @@ export async function POST(req: Request) {
       }
     }
 
+    if (purchasedTogether && Array.isArray(purchasedTogether)) {
+      for (const item of purchasedTogether) {
+        const { id } = item;
+        await client.query(
+          `INSERT INTO products_purchased_together (product_id, purchased_together_product_id)
+       VALUES ($1, $2);`,
+          [productId, id]
+        );
+      }
+    }
+
     if (images && Array.isArray(images)) {
       for (const [index, image] of images.entries()) {
         const {file} = image;
@@ -183,7 +195,11 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: 'Product created',
-        product: { productId, name, description, features, material, usages, isotopes, volumes, shields, accessories, specifications, faqs, relatedProducts }
+        product: {
+          productId, name, description, features, material,
+          usages, isotopes, volumes, shields, accessories,
+          specifications, faqs, relatedProducts, purchasedTogether
+        }
       },
       { status: 201 }
     );

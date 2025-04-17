@@ -106,7 +106,8 @@ const formSchema = z.object({
   images: z.array(productImageSchema).min(1, "At least one image is required"),
   specifications: z.array(volumeFormSchema).min(1, "At least one volume is required"),
   faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required"),
-  relatedProducts: z.array(z.string()).optional()
+  relatedProducts: z.array(z.string()).optional(),
+  purchasedTogether: z.array(z.string()).optional()
 });
 
 export type FormValues = z.infer<typeof formSchema>;
@@ -153,7 +154,8 @@ export default function NewProductForm({
     images: [],
     specifications: [],
     faqs: [{ question: "", answer: "" }],
-    relatedProducts: []
+    relatedProducts: [],
+    purchasedTogether: []
   }
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -186,6 +188,7 @@ export default function NewProductForm({
       );
       form.setValue("faqs", product.faqs);
       form.setValue("relatedProducts", product.relatedProducts.map(product => product.name));
+      form.setValue("purchasedTogether", product.purchasedTogether.map(product => product.name));
     }
 
     function getSpecification(
@@ -312,6 +315,7 @@ export default function NewProductForm({
     formData.append("specifications", JSON.stringify(updateSpecifcationIds(data.specifications, volumeOptions)));
     formData.append("faqs", JSON.stringify(data.faqs));
     formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts || [], productOptions)));
+    formData.append("purchasedTogether", JSON.stringify(getAttributeIds(data.purchasedTogether || [], productOptions)));
     formData.append("images", JSON.stringify(data.images));
     formData.append("productId", editProduct?.id ?? "");
 
@@ -417,6 +421,10 @@ export default function NewProductForm({
               setSelectedVolume={setSelectedVolume}
             />
             <RelatedProducts 
+              form={form}
+              productOptions={productOptions.filter(product => product.id !== editProduct?.id).map(product => product.name)}
+            />
+            <PurchasedTogether
               form={form}
               productOptions={productOptions.filter(product => product.id !== editProduct?.id).map(product => product.name)}
             />
@@ -748,7 +756,7 @@ function SpecificationsField({ form, formSpacing, formVolumes, selectedVolume, s
           const hasError = form.formState.errors.specifications;
 
           return (
-            <FormItem>
+            <FormItem className="mb-4">
               <FormLabel className="mb-1">Volume Specifications</FormLabel>
               {formVolumes.length ? (
                 <div className={`flex gap-x-2`}>
@@ -807,7 +815,7 @@ function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
       control={form.control}
       name="relatedProducts"
       render={() => (
-        <FormItem>
+        <FormItem className="mb-4">
           <FormLabel>Related Products</FormLabel>
           <FormMessage/>
           <FormControl>
@@ -815,6 +823,34 @@ function RelatedProducts({ form, productOptions }: RelatedProductsProps) {
               form={form}
               options={productOptions}
               type="Related Products"
+            />
+          </FormControl>
+        </FormItem>
+      )}
+    />
+  )
+}
+
+interface PurchasedTogetherProps {
+  form: UseFormReturn<FormValues>;
+  productOptions: string[];
+}
+
+function PurchasedTogether({ form, productOptions }: PurchasedTogetherProps) {
+
+  return (
+    <FormField
+      control={form.control}
+      name="purchasedTogether"
+      render={() => (
+        <FormItem>
+          <FormLabel>Frequently Purchased Together</FormLabel>
+          <FormMessage />
+          <FormControl>
+            <MultiSelect
+              form={form}
+              options={productOptions}
+              type="Purchased Together"
             />
           </FormControl>
         </FormItem>

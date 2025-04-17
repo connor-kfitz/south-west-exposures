@@ -63,6 +63,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
           'name', rp.name
         )) FILTER (WHERE pr.related_product_id IS NOT NULL), '[]') AS "relatedProducts",
 
+        COALESCE(json_agg(DISTINCT jsonb_build_object(
+          'id', pt.purchased_together_product_id,
+          'name', ptp.name
+        )) FILTER (WHERE pt.purchased_together_product_id IS NOT NULL), '[]') AS "purchasedTogether",
+
         COALESCE(
           (SELECT jsonb_agg(image_data ORDER BY image_data->>'display_order' ASC)
           FROM (
@@ -92,6 +97,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
       LEFT JOIN products_faqs pf ON p.product_id = pf.product_id
       LEFT JOIN products_related pr ON p.product_id = pr.product_id
       LEFT JOIN products rp ON pr.related_product_id = rp.product_id
+      LEFT JOIN products_purchased_together pt ON p.product_id = pt.product_id
+      LEFT JOIN products ptp ON pt.purchased_together_product_id = ptp.product_id
       WHERE p.product_id = $1
       GROUP BY p.product_id
     `;

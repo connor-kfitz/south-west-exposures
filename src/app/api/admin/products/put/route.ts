@@ -37,6 +37,7 @@ export async function PUT(req: Request) {
     await updateImages(client, formData);
     await updateSpecifications(client, formData);
     await updateRealtedProducts(client, formData);
+    await updatePurchasedTogether(client, formData);
 
     await client.query('COMMIT');
 
@@ -74,6 +75,7 @@ async function parseFormData(req: Request) {
     specifications: JSON.parse(formData.get('specifications') as string || '[]'),
     faqs: JSON.parse(formData.get('faqs') as string || '[]'),
     relatedProducts: JSON.parse(formData.get('relatedProducts') as string || '[]'),
+    purchasedTogether: JSON.parse(formData.get('purchasedTogether') as string || '[]'),
     images: images.map((image: ProductImage, index: number) => ({
       ...image,
       file: imageFiles[index]
@@ -287,6 +289,35 @@ async function updateRealtedProducts(client: PoolClient, formData: ProductFormDa
   }
 }
 
+async function updatePurchasedTogether(client: PoolClient, formData: ProductFormData) {
+  if (formData.purchasedTogether && Array.isArray(formData.purchasedTogether)) {
+    const existing = await client.query(
+      `SELECT product_purchased_together_id, purchased_together_product_id FROM products_purchased_together WHERE product_id = $1;`,
+      [formData.productId]
+    );
+
+    const existingIds = existing.rows.map((row) => row.purchased_together_product_id);
+    const newIds = formData.purchasedTogether.map((item) => item.id).filter((id) => id);
+    const toDelete = existingIds.filter((id) => !newIds.includes(id));
+
+    if (toDelete.length > 0) {
+      await client.query(
+        `DELETE FROM products_purchased_together WHERE product_id = $1 AND purchased_together_product_id = ANY($2::uuid[]);`,
+        [formData.productId, toDelete]
+      );
+    }
+
+    for (const item of formData.purchasedTogether) {
+      if (!existingIds.includes(item.id)) {
+        await client.query(
+          `INSERT INTO products_purchased_together (product_id, purchased_together_product_id) VALUES ($1, $2);`,
+          [formData.productId, item.id]
+        );
+      }
+    }
+  }
+}
+
 type ProductFormData = {
   productId: FormDataEntryValue | null;
   name: FormDataEntryValue | null;
@@ -306,6 +337,7 @@ type ProductFormData = {
   specifications: ProductSpecification[];
   faqs: ProductFaq[];
   relatedProducts: ProductAttribute[];
+  purchasedTogether: ProductAttribute[];
   images: ProductImageWithFile[];
 };
 

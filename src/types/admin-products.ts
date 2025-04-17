@@ -1,4 +1,4 @@
-export type ProductAttributeTypes = "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages" | "Related Products";
+export type ProductAttributeTypes = "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages" | "Related Products" | "Purchased Together";
 
 export type ProductAttribute = {
   id: string;
@@ -27,6 +27,7 @@ export type Product = {
   material: string;
   name: string;
   relatedProducts: ProductAttribute[];
+  purchasedTogether: ProductAttribute[];
   shields: ProductAttribute[];
   specifications: ProductSpecification[];
   usages: ProductAttribute[];

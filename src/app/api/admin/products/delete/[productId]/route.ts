@@ -33,6 +33,10 @@ async function deleteRelatedProducts(client: PoolClient, productId: string) {
   await client.query("DELETE FROM products_related WHERE product_id = $1 OR related_product_id = $1", [productId]);
 }
 
+async function deletePurchasedTogetherProducts(client: PoolClient, productId: string) {
+  await client.query("DELETE FROM products_purchased_together WHERE product_id = $1 OR purchased_together_product_id = $1", [productId]);
+}
+
 async function deleteProductImages(client: PoolClient, productId: string) {
   await client.query("DELETE FROM product_images WHERE product_id = $1", [productId]);
 }
@@ -63,6 +67,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ produ
     await deleteProductVolumeMetrics(client, productId);
     await deleteProductVolumes(client, productId);
     await deleteRelatedProducts(client, productId);
+    await deletePurchasedTogetherProducts(client, productId);
     await deleteProductImages(client, productId);
     await deleteProduct(client, productId);
 
