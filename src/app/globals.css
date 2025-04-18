@@ -6,6 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --font-main: var(--font-jakarta);
+  --color-gray-600: #4B5563;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(4.57, -0.27, 0.73);
@@ -38,9 +40,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --color-blue-800: #1E40AF;
 }
 
 .dark {
+  --font-main: var(--font-jakarta);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(4.57, -0.27, 0.73);
@@ -73,9 +77,13 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --color-gray-600: #4B5563;
+  --color-blue-600: #2563EB;
+  --color-blue-800: #1E40AF;
 }
 
 @theme inline {
+  --font-main: var(--font-jakarta);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

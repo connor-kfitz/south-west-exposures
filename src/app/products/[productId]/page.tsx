@@ -1,3 +1,4 @@
+import ProductOverview from "@/components/products/overview/ProductOverview";
 import { Product } from "@/types/admin-products";
 import type { Metadata } from 'next'
 
@@ -5,10 +6,9 @@ export const revalidate = 0;
 
 // Todo: Add metadata
 export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
-
   const { productId } = await params
 
-  const product = await fetch(`http://localhost:3000/api/admin/products/get${productId}`).then((res) => res.json())
+  const product = await fetch(`http://localhost:3000/api/admin/products/get/${productId}`).then((res) => res.json())
 
   return {
     title: product.name,
@@ -46,9 +46,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   
     const product = await response.json();
 
-    return (
-      <div>{product.name}</div>
-    )
+    return <ProductOverview product={product}/>
 
   } catch (error) {
      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
