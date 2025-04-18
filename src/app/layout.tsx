@@ -1,8 +1,7 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
-import { Theme } from "@radix-ui/themes";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import SideNav from "@/components/nav/SideNav";
+import "./globals.css";
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -24,12 +23,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jakarta.variable} antialiased`}
       >
-        <Theme appearance="dark" accentColor="orange">
-          <SidebarProvider>
-            <SideNav/>
-            {children}
-          </SidebarProvider>
-        </Theme>
+        <SidebarProvider>
+          <SideNav/>
+          {children}
+        </SidebarProvider>
       </body>
     </html>
   )

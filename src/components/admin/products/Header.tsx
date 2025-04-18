@@ -7,10 +7,10 @@ interface HeaderProps {
 
 export default function Header({ page }: HeaderProps) {
   return (
-    <header className="flex pb-5 shrink-0 items-center gap-2 md:px-4">
-      <SidebarTrigger className="-ml-1" />
+    <header className="flex pb-5 shrink-0 items-center gap-2 md:px-3">
+      <SidebarTrigger className="text-[#eeeeec]"/>
       <Breadcrumb>
-        <BreadcrumbList>
+        <BreadcrumbList className='gap-2.5'>
           <BreadcrumbItem className="hidden md:block">
             Admin
           </BreadcrumbItem>
