@@ -8,7 +8,7 @@ interface BreadCrumbsProps {
 
 export default function BreadCrumbs({ breadCrumbs }: BreadCrumbsProps) {
   return (
-    <Breadcrumb className="px-[140px]">
+    <Breadcrumb>
       <BreadcrumbList className="flex items-center leading-[20px]">
         {breadCrumbs.map((crumb, index) => {
           const isLast = index === breadCrumbs.length - 1;
