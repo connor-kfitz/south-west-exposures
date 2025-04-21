@@ -2,7 +2,6 @@ import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/for
 import { Input } from "@/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
 import { FormValues, volumeFormSchema } from "./NewProductForm";
-import { useEffect, useMemo } from "react";
 
 interface VolumeFormProps {
   mainForm: UseFormReturn<FormValues>;
@@ -13,25 +12,6 @@ interface VolumeFormProps {
 }
 
 export function VolumeForm({ mainForm, index, formSpacing, className }: VolumeFormProps) {
-  const values = useMemo(() => mainForm.watch(`specifications.${index}`), [mainForm, index]);
-
-  useEffect(() => {
-    if (values) {
-      mainForm.reset(
-        {
-          ...mainForm.getValues(),
-          specifications: mainForm.getValues().specifications.map((spec, i) =>
-            i === index ? values : spec
-          ),
-        },
-        {
-          keepErrors: true,
-          keepDirty: true,
-          keepTouched: true
-        }
-      );
-    }
-  }, [values, mainForm, index]);
 
   const fields = [
     { name: "weight", label: "Weight" },

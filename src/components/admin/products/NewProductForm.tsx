@@ -792,6 +792,7 @@ function SpecificationsField({ form, formSpacing, formVolumes, selectedVolume, s
       />
       {selectedVolume && (
         <VolumeForm
+          key={selectedVolume}
           mainForm={form}
           formSchema={volumeFormSchema}
           index={index}
