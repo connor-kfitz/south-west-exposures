@@ -17,11 +17,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pco.customization_option_id,
           'name', co.name
-        )) FILTER (WHERE pco.customization_option_id IS NOT NULL), '[]') AS customizationOptions,
+        )) FILTER (WHERE pco.customization_option_id IS NOT NULL), '[]') AS "customizationOptions",
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pu.usage_id,
-          'name', u.name
+          'name', u.name,
+          'image', u.image
         )) FILTER (WHERE pu.usage_id IS NOT NULL), '[]') AS usages,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(

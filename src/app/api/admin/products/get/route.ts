@@ -19,7 +19,8 @@ export async function GET() {
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pu.usage_id,
-          'name', u.name
+          'name', u.name,
+          'image', u.image
         )) FILTER (WHERE pu.usage_id IS NOT NULL), '[]') AS usages,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(

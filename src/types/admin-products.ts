@@ -5,6 +5,7 @@ export type ProductAttributeTypes =
 export type ProductAttribute = {
   id: string;
   name: string;
+  image?: string;
 }
 
 export type ProductImage = {

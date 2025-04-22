@@ -9,6 +9,7 @@ interface MetadataProps {
 }
 
 export default function Metadata({ product, className }: MetadataProps) {
+
   return (
     <section className={className}>
       <h1 className="text-[40px] text-gray-900 font-semibold leading-[44px] mb-4">{product.name}</h1>
@@ -19,7 +20,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           <li className="flex items-center" key={index}>
             <div className="flex justify-center items-center w-[32px] h-[32px] mr-2 rounded-[20px] bg-gray-100">
               <Image
-                src="/images/products/overview/test-tube.png"
+                src={usage.image || "/images/products/overview/test-tube.png"}
                 alt={usage.name}
                 width={20}
                 height={20}
@@ -48,24 +49,25 @@ export default function Metadata({ product, className }: MetadataProps) {
         {product.volumes.map((volume, index) => (
           <li
             key={index}
-            className="inline after:content-[','] last:after:content-['']"
+            className="inline after:content-[',\00a0'] last:after:content-['']"
           >
             {volume.name}
           </li>
         ))}
       </ul>
       <h3 className="font-semibold leading-[24px] mb-1">Customization options</h3>
-      <ul className="flex text-gray-600 mb-6">
-        {/* Todo: Add field to backend and update with dynamic data*/}
-        {/* {product.customizationOptions.map((volume, index) => (
-          <li key={index}>
-            {volume.name}
-          </li>
-        ))} */}
-        <li className="inline after:content-[','] last:after:content-['']">Size</li> &nbsp;
-        <li className="inline after:content-[','] last:after:content-['']">materials</li> &nbsp;
-        <li className="inline after:content-[','] last:after:content-['']">isotopes</li> &nbsp;
-        <li className="inline after:content-[','] last:after:content-['']">activity level</li>
+      <ul className="flex flex-wrap text-gray-600 mb-6">
+        {product.customizationOptions.map((volume, index) => {
+          const name = index === 0
+            ? volume.name.charAt(0).toUpperCase() + volume.name.slice(1).toLowerCase()
+            : volume.name.toLowerCase();
+
+          return (
+            <li key={index} className="inline after:content-[',\00a0'] last:after:content-['']">
+              {name}
+            </li>
+          )
+        })}
       </ul>
       <Button variant="primary" size="primaryDefault">Inquire about this product</Button>
     </section>
