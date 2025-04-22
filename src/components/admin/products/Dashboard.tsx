@@ -15,6 +15,7 @@ import AddProduct from "./AddProduct";
 import Products from "./Products";
 import AlertDialog from "./DashboardAlertDialog";
 import Header from "./Header";
+import { useCustomizationOptions } from "@/hooks/useCustomizationOptions";
 
 export default function Dashboard() {
   const { shields, loading: shieldsLoading, error: shieldsError, addError: shieldsAddError, postShield, deleteShield } = useShields();
@@ -22,13 +23,14 @@ export default function Dashboard() {
   const { isotopes, loading: isotopesLoading, error: isotopesError, addError: isotopesAddError, postIsotope, deleteIsotope } = useIsotopes();
   const { accessories, loading: accessoriesLoading, error: accessoriesError, addError: accessoriesAddError, postAccessory, deleteAccessory } = useAccessories();
   const { usages, loading: usagesLoading, error: usagesError, addError: usagesAddError, postUsage, deleteUsage } = useUsages();
+  const { customizationOptions, loading: customizationOptionsLoading, error: customizationOptionsError, addError: customizationOptionsAddError, postCustomizationOption, deleteCustomizationOption } = useCustomizationOptions();
   const { products, loading: loadingProducts, fetchProducts, deleteProduct } = useProducts();
   const { filters, loading: loadingFilters } = useFilters();
 
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [alertDialog, setAlertDialog] = useState<DashboardAlert>({ title: "", description: "", open: false });
 
-  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters) 
+  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters || customizationOptionsLoading) 
     return (
       <div className="flex flex-col h-full">
         <Header page="Products"/>
@@ -115,11 +117,21 @@ export default function Dashboard() {
           />
           <AddAttribute
             type="Usages"
+            className="mb-5"
             data={usages}
             error={usagesError}
             addError={usagesAddError}
             addAttribute={postUsage}
             deleteAttribute={deleteUsage}
+            setAlertDialog={setAlertDialog}
+          />
+          <AddAttribute
+            type="Customization Options"
+            data={customizationOptions}
+            error={customizationOptionsError}
+            addError={customizationOptionsAddError}
+            addAttribute={postCustomizationOption}
+            deleteAttribute={deleteCustomizationOption}
             setAlertDialog={setAlertDialog}
           />
         </section>

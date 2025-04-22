@@ -65,6 +65,8 @@ export default function AddAttribute({
         return "Accessories";
       case "Usages":
         return "Usages";
+      case "Customization Options":
+        return "Customization Options";
       default:
         return "";
     }

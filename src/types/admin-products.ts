@@ -1,4 +1,6 @@
-export type ProductAttributeTypes = "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages" | "Related Products" | "Purchased Together";
+export type ProductAttributeTypes = 
+  "Shields" | "Volumes" | "Isotopes" | "Accessories" | "Usages" | 
+  "Related Products" | "Purchased Together" | "Customization Options";
 
 export type ProductAttribute = {
   id: string;
