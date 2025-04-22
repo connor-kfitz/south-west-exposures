@@ -11,6 +11,8 @@ export async function POST(req: Request) {
     const description = formData.get('description');
     const features = JSON.parse((formData.get("features") as string) || "[]");
     const material = formData.get('material');
+    const customizationOptions = JSON.parse(formData.get('customizationOptions') as string || '[]');
+    const customizationOptionFilterId = formData.get('customizationOptionFilterId');
     const usages = JSON.parse(formData.get('usages') as string || '[]');
     const usageFilterId = formData.get('usageFilterId');
     const isotopes = JSON.parse(formData.get('isotopes') as string || '[]');
@@ -49,6 +51,17 @@ export async function POST(req: Request) {
     );
 
     const productId = productResult.rows[0].product_id;
+
+    if (customizationOptions && Array.isArray(customizationOptions)) {
+      for (const customizationOption of customizationOptions) {
+        const { id } = customizationOption;
+        await client.query(
+          `INSERT INTO products_customization_options (product_id, customization_option_id, filter_id)
+       VALUES ($1, $2, $3);`,
+          [productId, id, customizationOptionFilterId]
+        );
+      }
+    }
 
     if (usages && Array.isArray(usages)) {
       for (const usage of usages) {
@@ -197,7 +210,7 @@ export async function POST(req: Request) {
         message: 'Product created',
         product: {
           productId, name, description, features, material,
-          usages, isotopes, volumes, shields, accessories,
+          customizationOptions, usages, isotopes, volumes, shields, accessories,
           specifications, faqs, relatedProducts, purchasedTogether
         }
       },

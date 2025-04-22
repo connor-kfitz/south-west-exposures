@@ -15,6 +15,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
         p.material,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
+          'id', pco.customization_option_id,
+          'name', co.name
+        )) FILTER (WHERE pco.customization_option_id IS NOT NULL), '[]') AS customizationOptions,
+
+        COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pu.usage_id,
           'name', u.name
         )) FILTER (WHERE pu.usage_id IS NOT NULL), '[]') AS usages,
@@ -83,6 +88,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
         ) AS images
 
       FROM products p
+      LEFT JOIN products_customization_options pco ON p.product_id = pco.product_id
+      LEFT JOIN customization_options co ON pco.customization_option_id = co.customization_option_id
       LEFT JOIN products_usages pu ON p.product_id = pu.product_id
       LEFT JOIN usages u ON pu.usage_id = u.usage_id
       LEFT JOIN products_isotopes pi ON p.product_id = pi.product_id

@@ -32,6 +32,7 @@ export type Product = {
   purchasedTogether: ProductAttribute[];
   shields: ProductAttribute[];
   specifications: ProductSpecification[];
+  customizationOptions: ProductAttribute[];
   usages: ProductAttribute[];
   volumes: ProductAttribute[];
 }

@@ -98,6 +98,7 @@ const formSchema = z.object({
   description: z.string().min(1, "Description is required").transform(val => val.trim()),
   material: z.string().min(1, "Material is required").transform(val => val.trim()),
   features: z.array(z.string().min(1, "Feature cannot be empty").transform(val => val.trim())),
+  customizationOptions: z.array(z.string().min(1, "At least one customization option is required")).min(1, "Select at least one option"),
   usages: z.array(z.string().min(1, "At least one usage is required")).min(1, "Select at least one option"),
   isotopes: z.array(z.string().min(1, "At least one isotope is required")).min(1, "Select at least one option"),
   shields: z.array(z.string().min(1, "At least one shield is required")).min(1, "Select at least one option"),
@@ -113,6 +114,7 @@ const formSchema = z.object({
 export type FormValues = z.infer<typeof formSchema>;
 
 interface NewProductFormProps {
+  customizationOptions: ProductAttribute[];
   usageOptions: ProductAttribute[];
   isotopeOptions: ProductAttribute[];
   shieldOptions: ProductAttribute[];
@@ -125,7 +127,8 @@ interface NewProductFormProps {
   setEditProduct: (product: Product | null) => void;
 }
 
-export default function NewProductForm({ 
+export default function NewProductForm({
+  customizationOptions,
   usageOptions,
   isotopeOptions,
   shieldOptions,
@@ -146,6 +149,7 @@ export default function NewProductForm({
     description: "",
     material: "",
     features: [""],
+    customizationOptions: [],
     usages: [],
     isotopes: [],
     shields: [],
@@ -172,6 +176,7 @@ export default function NewProductForm({
       form.setValue("description", product.description);
       form.setValue("material", product.material);
       form.setValue("features", product.features);
+      form.setValue("customizationOptions", product.customizationOptions.map((customizationOption => customizationOption.name)));
       form.setValue("usages", product.usages.map((usage => usage.name)));
       form.setValue("isotopes", product.isotopes.map((isotope => isotope.name)));
       form.setValue("shields", product.shields.map((shield => shield.name)));
@@ -302,6 +307,8 @@ export default function NewProductForm({
     formData.append("description", data.description);
     formData.append("features", JSON.stringify(data.features));
     formData.append("material", data.material);
+    formData.append("customizationOptions", JSON.stringify(getAttributeIds(data.customizationOptions, customizationOptions)));
+    formData.append("customizationOptionFilterId", getIdFromName("Customization Options", filters));
     formData.append("usages", JSON.stringify(getAttributeIds(data.usages, usageOptions)));
     formData.append("usageFilterId", getIdFromName("Usages", filters));
     formData.append("isotopes", JSON.stringify(getAttributeIds(data.isotopes, isotopeOptions)));
@@ -322,10 +329,10 @@ export default function NewProductForm({
     data.images.forEach((image) => {
       let fileToAppend: File;
       if (image.file === null) {
-        const emptyFile = new File([], "empty-file.txt", { type: "text/plain" }); // Empty file with a text type
+        const emptyFile = new File([], "empty-file.txt", { type: "text/plain" });
         fileToAppend = emptyFile;
       } else {
-        fileToAppend = image.file as File; // Use the existing file if available
+        fileToAppend = image.file as File;
       }
       formData.append(`imageFiles`, fileToAppend);
     });
@@ -379,6 +386,11 @@ export default function NewProductForm({
             <FaqsFields
               mainForm={form}
               faqs={faqs}
+            />
+            <CustomizationOptionsField
+              form={form}
+              formSpacing={formSpacing}
+              customizationOptions={customizationOptions}
             />
             <UsagesField
               form={form}
@@ -557,6 +569,36 @@ function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) 
   );
 }
 
+type CustomizationOptionsFieldProps = {
+  form: UseFormReturn<FormValues>;
+  formSpacing: string;
+  customizationOptions: ProductAttribute[];
+};
+
+function CustomizationOptionsField({ form, formSpacing, customizationOptions }: CustomizationOptionsFieldProps) {
+
+  return (
+    <FormField
+      control={form.control}
+      name="customizationOptions"
+      render={() => (
+        <FormItem className={`${formSpacing}`}>
+          <FormLabel>Customization Options</FormLabel>
+          <FormMessage />
+          <FormControl>
+            <MultiSelect
+              form={form}
+              options={customizationOptions.map(obj => obj.name)}
+              type="Customization Options"
+            />
+          </FormControl>
+        </FormItem>
+      )}
+    />
+  )
+}
+
+
 type UsagesFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
@@ -583,7 +625,7 @@ function UsagesField({ form, formSpacing, usageOptions }: UsagesFieldProps) {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 type IsotopesFieldProps = {

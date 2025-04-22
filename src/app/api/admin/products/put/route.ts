@@ -28,6 +28,7 @@ export async function PUT(req: Request) {
       [formData.name, formData.description, formData.features, formData.material, formData.productId]
     );
 
+    await updateAttribute(client, formData.productId, formData.customizationOptions, 'products_customization_options', ['product_id', 'customization_option_id', 'filter_id'], formData.customizationOptionFilterId);
     await updateAttribute(client, formData.productId, formData.usages, 'products_usages', ['product_id', 'usage_id', 'filter_id'], formData.usageFilterId);
     await updateAttribute(client, formData.productId, formData.isotopes, 'products_isotopes', ['product_id', 'isotope_id', 'filter_id'], formData.isotopeFilterId);
     await updateAttribute(client, formData.productId, formData.volumes, 'products_volumes', ['product_id', 'volume_id', 'filter_id'], formData.volumeFilterId);
@@ -62,6 +63,8 @@ async function parseFormData(req: Request) {
     description: formData.get('description'),
     features: JSON.parse((formData.get('features') as string) || '[]'),
     material: formData.get('material'),
+    customizationOptions: JSON.parse(formData.get('customizationOptions') as string || '[]'),
+    customizationOptionFilterId: formData.get('customizationOptionFilterId'),
     usages: JSON.parse(formData.get('usages') as string || '[]'),
     usageFilterId: formData.get('usageFilterId'),
     isotopes: JSON.parse(formData.get('isotopes') as string || '[]'),
@@ -324,6 +327,8 @@ type ProductFormData = {
   description: FormDataEntryValue | null;
   features: string[];
   material: FormDataEntryValue | null;
+  customizationOptions: ProductAttribute[];
+  customizationOptionFilterId: FormDataEntryValue | null;
   usages: ProductAttribute[];
   usageFilterId: FormDataEntryValue | null;
   isotopes: ProductAttribute[];

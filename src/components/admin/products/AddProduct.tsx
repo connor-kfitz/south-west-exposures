@@ -11,6 +11,7 @@ interface AddProductProps {
   volumes: ProductAttribute[];
   isotopes: ProductAttribute[];
   accessories: ProductAttribute[];
+  customizationOptions: ProductAttribute[];
   usages: ProductAttribute[];
   products: Product[];
   filters: Filter[];
@@ -25,6 +26,7 @@ export default function AddProduct({
   volumes,
   isotopes,
   accessories,
+  customizationOptions,
   usages,
   products,
   filters,
@@ -41,6 +43,7 @@ export default function AddProduct({
       <CardContent className="p-0">
         <NewProductForm 
           isotopeOptions={isotopes}
+          customizationOptions={customizationOptions}
           usageOptions={usages}
           shieldOptions={shields}
           accessoryOptions={accessories}

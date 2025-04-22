@@ -17,6 +17,10 @@ async function deleteProductShields(client: PoolClient, productId: string) {
   await client.query("DELETE FROM products_shields WHERE product_id = $1", [productId]);
 }
 
+async function deleteProductCustomizationOptions(client: PoolClient, productId: string) {
+  await client.query("DELETE FROM products_customization_options WHERE product_id = $1", [productId]);
+}
+
 async function deleteProductUsages(client: PoolClient, productId: string) {
   await client.query("DELETE FROM products_usages WHERE product_id = $1", [productId]);
 }
@@ -63,6 +67,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ produ
     await deleteProductFaqs(client, productId);
     await deleteProductIsotopes(client, productId);
     await deleteProductShields(client, productId);
+    await deleteProductCustomizationOptions(client, productId);
     await deleteProductUsages(client, productId);
     await deleteProductVolumeMetrics(client, productId);
     await deleteProductVolumes(client, productId);

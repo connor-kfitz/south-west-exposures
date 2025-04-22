@@ -65,6 +65,7 @@ export default function Dashboard() {
               volumes={volumes}
               isotopes={isotopes}
               accessories={accessories}
+              customizationOptions={customizationOptions}
               usages={usages}
               products={products}
               filters={filters}

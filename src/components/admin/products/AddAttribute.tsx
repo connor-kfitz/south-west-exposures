@@ -132,6 +132,8 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
         return "Name";
       case "Usages":
         return "Name";
+      case "Customization Options":
+        return "Name";
       default:
         return "";
     }
