@@ -1,27 +1,27 @@
 "use client";
 
-import { Product } from "@/types/admin-products";
 import { useState } from "react";
+import { ProductImage } from "@/types/admin-products";
 import Image from "next/image";
 
 interface ImageCarouselProps {
-  product: Product;
+  images: ProductImage[];
   className: string;
 }
 
-export default function ImageCarousel({ product, className }: ImageCarouselProps) {
+export default function ImageCarousel({ images, className }: ImageCarouselProps) {
 
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   function cycleImages(direction: number) {
-    const newIndex = (selectedImageIndex + direction + product.images.length) % product.images.length;
+    const newIndex = (selectedImageIndex + direction + images.length) % images.length;
     setSelectedImageIndex(newIndex);
   }
 
   return (
     <section className={className}>
       <ul className="flex flex-col gap-4">
-        {product.images.map((image, index) => (
+        {images.map((image, index) => (
           image.src && 
             <li
               key={index}
@@ -48,9 +48,9 @@ export default function ImageCarousel({ product, className }: ImageCarouselProps
         ))}
       </ul>
       <div className="relative flex justify-center items-center w-[564px] h-[564px] bg-gray-100 rounded-[16px]">
-        {product.images[selectedImageIndex].src && 
+        {images[selectedImageIndex].src && 
           <Image 
-            src={product.images[selectedImageIndex].src}
+            src={images[selectedImageIndex].src}
             alt="Main"
             layout="intrinsic"
             className="contain"
