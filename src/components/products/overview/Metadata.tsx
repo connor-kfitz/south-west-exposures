@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Product } from "@/types/admin-products";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,7 +69,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           )
         })}
       </ul>
-      <Button variant="primary" size="primaryDefault">Inquire about this product</Button>
+      {/* <Button variant="primary" size="primaryDefault">Inquire about this product</Button> */}
     </section>
   )
 }

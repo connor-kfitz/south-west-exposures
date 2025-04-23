@@ -32,7 +32,7 @@ export default function BreadCrumbs({ breadCrumbs }: BreadCrumbsProps) {
               {!isLast && (
                 <div className="flex justify-center items-center w-[16px] h-[16px] mx-[3px]">
                   <Image
-                    src="/images/products/overview/right-chevron.svg"
+                    src="/images/top-nav/right-chevron.svg"
                     alt="Right Chevron"
                     width={6}
                     height={8}
