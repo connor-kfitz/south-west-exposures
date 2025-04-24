@@ -4,6 +4,7 @@ import ImageCarousel from "./ImageCarousel";
 import Metadata from "./Metadata";
 import Features from "./Features";
 import Specifications from "./Specifications/Specifications";
+import Faqs from "./Faqs";
 
 interface ProductOverviewProps {
   product: Product;
@@ -30,8 +31,11 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
             <Metadata product={product} className="w-full"/>
           </div>
         </div>
-        <Features className="max-w-[663px] mb-[64px]" features={product.features}/>
-        <Specifications specifications={product.specifications} material={product.material} className="mb-[64px]"/>
+          <div className="max-w-[663px]">
+          <Features className="mb-[64px]" features={product.features} />
+          <Specifications specifications={product.specifications} material={product.material} className="mb-[64px]" />
+          <Faqs faqs={product.faqs} className="mb-[96px]" />
+        </div>
         </div>
       </div>
     </main>
