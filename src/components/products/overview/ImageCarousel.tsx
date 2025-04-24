@@ -37,7 +37,6 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
                 <Image
                   src={image.src}
                   alt="Main"
-                  layout="intrinsic"
                   className="contain"
                   width={47}
                   height={63}
@@ -47,12 +46,11 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
             </li>
         ))}
       </ul>
-      <div className="relative flex justify-center items-center w-[564px] h-[564px] bg-gray-100 rounded-[16px]">
+      <div className="relative flex justify-center items-center min-w-[564px] min-h-[564px] bg-gray-100 rounded-[16px]">
         {images[selectedImageIndex].src && 
           <Image 
             src={images[selectedImageIndex].src}
             alt="Main"
-            layout="intrinsic"
             className="contain"
             width={354}
             height={485}

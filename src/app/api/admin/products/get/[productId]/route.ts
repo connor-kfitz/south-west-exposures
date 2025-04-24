@@ -47,6 +47,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'volumeId', pvm.volume_id,
+          'volume', v2.name,
           'weight', pvm.weight,
           'height', pvm.height,
           'innerDiameter', pvm.inner_diameter,
@@ -102,6 +103,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
       LEFT JOIN products_accessories pa ON p.product_id = pa.product_id
       LEFT JOIN accessories a ON pa.accessory_id = a.accessory_id
       LEFT JOIN products_volume_metrics pvm ON p.product_id = pvm.product_id
+      LEFT JOIN volumes v2 ON pvm.volume_id = v2.volume_id
       LEFT JOIN products_faqs pf ON p.product_id = pf.product_id
       LEFT JOIN products_related pr ON p.product_id = pr.product_id
       LEFT JOIN products rp ON pr.related_product_id = rp.product_id
