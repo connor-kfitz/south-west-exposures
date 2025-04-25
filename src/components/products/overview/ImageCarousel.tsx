@@ -28,9 +28,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
             >
               <button
                 className="relative flex justify-center items-center bg-gray-100 w-[67px] h-[67px] rounded-[8px] 
-                overflow-hidden group focus-visible:text-blue-800 focus-visible:ring-offset-2 
-                focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white 
-                focus-visible:outline-none"
+                overflow-hidden group focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none"
                 onMouseEnter={() => setSelectedImageIndex(index)}
                 onClick={() => setSelectedImageIndex(index)}
               >

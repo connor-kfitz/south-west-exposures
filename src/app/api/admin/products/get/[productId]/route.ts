@@ -66,8 +66,44 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
         )) FILTER (WHERE pf.question IS NOT NULL), '[]') AS faqs,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
-          'id', pr.related_product_id,
-          'name', rp.name
+          'id', rp.product_id,
+          'name', rp.name,
+          'images', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', rpi.image_id,
+              'src', rpi.src,
+              'display_order', rpi.display_order
+            ))
+            FROM product_images rpi
+            WHERE rpi.product_id = rp.product_id
+          ),
+          'isotopes', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', iso.isotope_id,
+              'name', iso.name
+            ))
+            FROM products_isotopes pi
+            JOIN isotopes iso ON pi.isotope_id = iso.isotope_id
+            WHERE pi.product_id = rp.product_id
+          ),
+          'shields', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', s.shield_id,
+              'name', s.name
+            ))
+            FROM products_shields ps
+            JOIN shields s ON ps.shield_id = s.shield_id
+            WHERE ps.product_id = rp.product_id
+          ),
+          'volumes', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', v.volume_id,
+              'name', v.name
+            ))
+            FROM products_volumes pv
+            JOIN volumes v ON pv.volume_id = v.volume_id
+            WHERE pv.product_id = rp.product_id
+          )
         )) FILTER (WHERE pr.related_product_id IS NOT NULL), '[]') AS "relatedProducts",
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(

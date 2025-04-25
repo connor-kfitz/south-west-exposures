@@ -10,7 +10,7 @@ interface SpecificationsTableProps {
 }
 
 export function SpecificationsTable({ specifications }: SpecificationsTableProps) {
-  const [tableData, setTableData] = useState<(string[])[][]>([]);
+  const [tableData, setTableData] = useState<(string[][][])>([]);
 
   useEffect(() => {
     if (!specifications.length) return;

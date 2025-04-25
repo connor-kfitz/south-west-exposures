@@ -29,12 +29,21 @@ export type Product = {
   isotopes: ProductAttribute[];
   material: string;
   name: string;
-  relatedProducts: ProductAttribute[];
+  relatedProducts: ProductPreview[];
   purchasedTogether: ProductAttribute[];
   shields: ProductAttribute[];
   specifications: ProductSpecification[];
   customizationOptions: ProductAttribute[];
   usages: ProductAttribute[];
+  volumes: ProductAttribute[];
+}
+
+export type ProductPreview = {
+  id: string;
+  name: string;
+  images: ProductImage[];
+  isotopes: ProductAttribute[];
+  shields: ProductAttribute[];
   volumes: ProductAttribute[];
 }
 

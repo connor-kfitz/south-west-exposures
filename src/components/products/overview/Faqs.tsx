@@ -12,7 +12,7 @@ export default function Faqs({faqs, className}: FaqsProps) {
       <ul className="flex flex-col gap-6 text-gray-600">
         {faqs.map((faq, index) => (
           <li key={index}>
-            <h3 className="font-semibold leading-[24px] mb-1 ">{faq.question}</h3>
+            <h3 className="font-semibold leading-[24px] mb-1 text-gray-900">{faq.question}</h3>
             <p className="leading-[24px]">{faq.answer}</p>
           </li>
         ))}
