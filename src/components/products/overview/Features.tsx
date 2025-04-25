@@ -4,6 +4,9 @@ interface FeaturesProps {
 }
 
 export default function Features({features, className}: FeaturesProps) {
+
+  if (!features || features.length === 0) return null;
+
   return (
     <section className={className}>
       <h2 className="text-[32px] text-gray-900 font-semibold leading-[40px] mb-4">Features</h2>

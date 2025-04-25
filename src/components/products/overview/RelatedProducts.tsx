@@ -8,6 +8,8 @@ interface RelatedProductsProps {
 
 export default function RelatedProducts({relatedProducts, className}: RelatedProductsProps) {
 
+  if (!relatedProducts || relatedProducts.length === 0) return null;
+
   const expanded = relatedProducts.flatMap(obj => Array(4).fill({ ...obj }));
 
   return (

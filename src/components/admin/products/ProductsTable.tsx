@@ -73,7 +73,7 @@ export function ProductsTable<TData extends Product>({
       <Table className="table-fixed min-w-[500px] md:min-w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow className="border-border" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
@@ -89,7 +89,7 @@ export function ProductsTable<TData extends Product>({
           {table.getRowModel().rows.length ? (
             <>
               {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow className="border-border" key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {Array.isArray(cell.getValue()) ? (
@@ -132,7 +132,7 @@ export function ProductsTable<TData extends Product>({
                 </TableRow>
               ))}
               {Array.from({ length: pageSize - table.getRowModel().rows.length }).map((_, index) => (
-                <TableRow key={`empty-${index}`} className="h-[53px] w-full">
+                <TableRow key={`empty-${index}`} className="h-[53px] w-full border-border">
                   {table.getAllColumns().map((column) => (
                     <TableCell key={`empty-cell-${index}-${column.id}`}>&nbsp;</TableCell>
                   ))}
@@ -141,7 +141,7 @@ export function ProductsTable<TData extends Product>({
               ))}
             </>
           ) : (
-            <TableRow>
+            <TableRow className="border-border">
               <TableCell colSpan={columns.length + 1} className="h-24 text-center">
                 No results.
               </TableCell>

@@ -6,6 +6,9 @@ interface FaqsProps {
 }
 
 export default function Faqs({faqs, className}: FaqsProps) {
+
+  if (!faqs || faqs.length === 0) return null;
+
   return (
     <section className={className}>
       <h2 className="text-[32px] text-gray-900 font-semibold leading-[40px] mb-4">FAQs</h2>
