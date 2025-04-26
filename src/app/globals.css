@@ -46,6 +46,11 @@
   --color-blue-800: #1E40AF;
 }
 
+@theme {
+  --breakpoint-tableBpSm: 34.875rem;
+  --breakpoint-tableBpMd: 44.5rem;
+}
+
 @theme inline {
   --font-main: var(--font-jakarta);
   --color-background: var(--background);

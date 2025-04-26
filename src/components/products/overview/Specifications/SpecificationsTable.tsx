@@ -53,16 +53,18 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
   if (!tableData.length) return null;
 
   return (
-    <div className="inline-block rounded-[8px] border border-gray-300">
-      <Table>
+    <div className="inline-block w-full tableBpSm:w-auto rounded-[8px] border border-gray-300">
+      <Table className="w-full tableBpSm:w-auto">
         <TableHeader>
           <TableRow className="bg-gray-100">
             {tableData[0].map((cell, index) => (
               <TableHead
                 key={index}
-                className={`text-[16px] leading-[24px] text-black font-medium pt-[15px] pb-[17px] px-[24px] w-[154px]
-                  ${index === 0 ? "rounded-tl-[8px] w-[200px]" : ""}
+                className={`text-[16px] leading-[24px] text-black font-medium pt-[15px] pb-[17px] px-[24px] tableBpSm:min-w-[154px]
+                  ${index === 0 ? "rounded-tl-[8px] tableBpSm:min-w-[200px]" : ""}
                   ${index === tableData[0].length - 1 ? "rounded-tr-[8px]" : ""}
+                  ${index === 2 ? "hidden tableBpSm:table-cell" : ""}
+                  ${index === 3 ? "hidden tableBpMd:table-cell" : ""}
                 `}
               >
                 {Array.isArray(cell) ? cell.map((line, i) => <div key={i}>{line}</div>) : cell}
@@ -79,6 +81,8 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
                   className={`text-[16px] leading-[24px] text-black pt-[15px] pb-[17px] px-[24px]
                     ${colIndex === 0 ? "font-medium" : ""}
                     ${colIndex > 0 ? "text-gray-600" : "text-black"}
+                    ${colIndex === 2 ? "hidden tableBpSm:table-cell" : ""}
+                    ${colIndex === 3 ? "hidden tableBpMd:table-cell" : ""}
                     ${rowIndex === tableData.length - 2 && colIndex === 0
                       ? "rounded-bl-[8px]"
                       : ""

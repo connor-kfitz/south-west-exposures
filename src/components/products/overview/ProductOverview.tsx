@@ -29,12 +29,12 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
   return (
     <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
       <div className="pt-6 flex justify-center xl:pt-[45px]">
-        <div className="max-w-[500px] w-full xl:max-w-[1160px]">
+        <div className="max-w-[556px] w-full xl:max-w-[1160px]">
           <div className="flex flex-col-reverse w-full mb-[64px] xl:flex-row xl:gap-8">
           <div className="flex-1 flex-col">
             <ImageCarousel images={product.images} className="w-full flex gap-4 flex-col sm:flex-row xl:gap-8"/>
           </div>
-          <div className="flex-1 max-w-[465]">
+          <div className="flex-1 xl:max-w-[465px]">
             <Metadata product={product} className="w-full"/>
           </div>
         </div>

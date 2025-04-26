@@ -15,7 +15,7 @@ export default function TopNav() {
 
   return (
     <nav className="w-full px-6">
-      <div className="flex justify-start max-w-[500px] xl:max-w-[1160px] mx-auto">
+      <div className="flex justify-start max-w-[556px] xl:max-w-[1160px] mx-auto">
         <BreadCrumbs breadCrumbs={breadcrumbs} />
       </div>
     </nav>
