@@ -1,6 +1,4 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import SideNav from "@/components/nav/SideNav";
 import "./globals.css";
 
 export const inter = Inter({
