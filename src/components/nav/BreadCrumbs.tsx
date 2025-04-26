@@ -1,5 +1,5 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbLink } from "../ui/breadcrumb";
-import { BreadCrumb as BreadCrumbType } from "../../types/global";
+import { Breadcrumb as BreadCrumbType } from "../../types/global";
 import Image from "next/image";
 
 interface BreadCrumbsProps {
@@ -8,7 +8,7 @@ interface BreadCrumbsProps {
 
 export default function BreadCrumbs({ breadCrumbs }: BreadCrumbsProps) {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="pt-4">
       <BreadcrumbList className="flex items-center leading-[20px]">
         {breadCrumbs.map((crumb, index) => {
           const isLast = index === breadCrumbs.length - 1;

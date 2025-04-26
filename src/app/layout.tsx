@@ -1,4 +1,6 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import TopNav from "@/components/nav/TopNav";
+import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
 import "./globals.css";
 
 export const inter = Inter({
@@ -16,12 +18,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${jakarta.variable} antialiased`}
       >
-        {children}
+        <BreadcrumbProvider>
+          <TopNav/>
+          {children}
+        </BreadcrumbProvider>
       </body>
     </html>
   )

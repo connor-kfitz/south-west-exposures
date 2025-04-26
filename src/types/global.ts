@@ -1,4 +1,4 @@
-export type BreadCrumb = {
+export type Breadcrumb = {
   name: string;
   link: string;
 }

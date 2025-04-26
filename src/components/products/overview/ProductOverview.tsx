@@ -1,11 +1,14 @@
+"use client";
+
 import { Product } from "@/types/admin-products";
-import BreadCrumbs from "../../nav/BreadCrumbs";
 import ImageCarousel from "./ImageCarousel";
 import Metadata from "./Metadata";
 import Features from "./Features";
 import Specifications from "./Specifications/Specifications";
 import Faqs from "./Faqs";
 import RelatedProducts from "./RelatedProducts";
+import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
+import { useEffect } from "react";
 
 interface ProductOverviewProps {
   product: Product;
@@ -13,16 +16,18 @@ interface ProductOverviewProps {
 
 export default function ProductOverview({ product }: ProductOverviewProps) {
 
-  const breadCrumbs = [
-    { name: "Home", link: "/" },
-    { name: "Products", link: "/products" },
-    { name: product.name, link: "" }
-  ]
+  const { setBreadcrumbs } = useBreadcrumbs();
+
+  useEffect(() => {
+    setBreadcrumbs([
+      { name: "Home", link: "/" },
+      { name: "Products", link: "/products" },
+      { name: product.name, link: "" }
+    ])
+  }, [product, setBreadcrumbs]);
 
   return (
-    <main className="font-main pt-4 bg-white pb-6 xl:pb-[96px] px-6 mx-auto">
-      {/* Todo: Move Breadcrumbs to Nav */}
-      <BreadCrumbs breadCrumbs={breadCrumbs}/>
+    <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
       <div className="pt-6 flex justify-center xl:pt-[45px]">
         <div className="max-w-[500px] w-full xl:max-w-[1160px]">
           <div className="flex flex-col-reverse w-full mb-[64px] xl:flex-row xl:gap-8">
