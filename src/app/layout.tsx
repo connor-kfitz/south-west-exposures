@@ -23,10 +23,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jakarta.variable} antialiased`}
       >
-        <SidebarProvider>
-          <SideNav/>
-          {children}
-        </SidebarProvider>
+        {children}
       </body>
     </html>
   )
