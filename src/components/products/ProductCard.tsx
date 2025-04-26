@@ -11,10 +11,14 @@ interface ProductCardProps {
 export default function ProductCard({product, className}: ProductCardProps) {
   return (
     <Link 
-      className={cn("block cursor-pointer rounded-[10px] overflow-hidden focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 focus-visible:ring-offset-white focus-visible:outline-none", className)}
+      className={cn(`
+        block cursor-pointer rounded-[10px] overflow-hidden focus-visible:ring-2
+        focus-visible:ring-blue-600 focus-visible:ring-offset-4 focus-visible:ring-offset-white 
+        focus-visible:outline-none
+      `, className)}
       href={`/products/${product.id}`}
     >
-      <div className="relative w-[277px] h-[277px] bg-gray-100 rounded-[8px] mb-2 overflow-hidden group">
+      <div className="relative aspect-[1/1] w-full bg-gray-100 rounded-[8px] mb-2 overflow-hidden group">
         {product.images[0].src && (
           <Image
             src={product.images[0].src}

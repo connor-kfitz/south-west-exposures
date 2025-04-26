@@ -12,7 +12,7 @@ export default function Metadata({ product, className }: MetadataProps) {
 
   return (
     <section className={className}>
-      <h1 className="text-[40px] text-gray-900 font-semibold leading-[44px] mb-4">{product.name}</h1>
+      <h1 className="text-gray-900 font-semibold leading-[44px] mb-4 text-[36px] sm:text-[40px]">{product.name}</h1>
       <p className="text-gray-600 leading-[24px] mb-4">{product.description}</p>
       <h3 className="font-semibold leading-[24px] mb-1">Usage</h3>
       <ul className="mb-4 flex flex-col gap-3 text-gray-600"> 

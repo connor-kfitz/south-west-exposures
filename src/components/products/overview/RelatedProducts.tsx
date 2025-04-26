@@ -15,9 +15,9 @@ export default function RelatedProducts({relatedProducts, className}: RelatedPro
   return (
     <section className={className}>
       <h2 className="text-[32px] text-gray-900 font-semibold leading-[40px] mb-4">Related Products</h2>
-      <ul className="flex gap-4 justify-between">
+      <ul className="flex flex-wrap gap-4">
         {expanded.map((product, index) => (
-          <ProductCard product={product} className="basis-1/4 max-w-[277px]" key={index}/>
+          <ProductCard product={product} className="basis-full sm:basis-[calc(50%-0.5rem)] sm:max-w-[277px] xl:basis-1/4" key={index}/>
         ))}
       </ul>
     </section>
