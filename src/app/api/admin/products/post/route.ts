@@ -53,6 +53,8 @@ export async function POST(req: Request) {
 
     const productId = productResult.rows[0].product_id;
     console.log("Customization Options", customizationOptions);
+    console.log(customizationOptionFilterId)
+
     if (customizationOptions && Array.isArray(customizationOptions)) {
       for (const customizationOption of customizationOptions) {
         const { id } = customizationOption;
