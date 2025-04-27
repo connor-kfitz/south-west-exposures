@@ -29,6 +29,7 @@ export async function POST(req: Request) {
     const purchasedTogether = JSON.parse(formData.get('purchasedTogether') as string || '[]');
     let images = JSON.parse(formData.get('images') as string || '[]');
     const imageFiles = formData.getAll('imageFiles');
+    console.log("Customization Options", customizationOptions);
 
     images = images.map((image: ProductImage, index: number) => ({
       ...image,
