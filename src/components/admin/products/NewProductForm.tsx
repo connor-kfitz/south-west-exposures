@@ -326,6 +326,8 @@ export default function NewProductForm({
     formData.append("images", JSON.stringify(data.images));
     formData.append("productId", editProduct?.id ?? "");
 
+    console.log("Filters", filters, getIdFromName("Customization Options", filters))
+
     data.images.forEach((image) => {
       let fileToAppend: File;
       if (image.file === null) {
