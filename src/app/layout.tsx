@@ -1,14 +1,14 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import TopNav from "@/components/nav/TopNav";
 import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
+import TopNav from "@/components/nav/TopNav";
 import "./globals.css";
 
-export const inter = Inter({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
-export const jakarta = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-jakarta',
 })
