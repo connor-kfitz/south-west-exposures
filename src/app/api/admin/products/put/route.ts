@@ -117,7 +117,7 @@ async function updateImages(client: PoolClient, formData: ProductFormData) {
         );
       } else if (file) {
         const uploadResponse = await fetch(
-          `${process.env.VERCEL_URL}/api/vercel/uploadBlob?filename=${file.name}`,
+          `${process.env.DOMAIN_NAME}/api/vercel/uploadBlob?filename=${file.name}`,
           { method: 'POST', body: file }
         );
 
