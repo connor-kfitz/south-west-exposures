@@ -29,7 +29,6 @@ export async function POST(req: Request) {
     const purchasedTogether = JSON.parse(formData.get('purchasedTogether') as string || '[]');
     let images = JSON.parse(formData.get('images') as string || '[]');
     const imageFiles = formData.getAll('imageFiles');
-    console.log("Customization Options", customizationOptions);
 
     images = images.map((image: ProductImage, index: number) => ({
       ...image,
@@ -52,8 +51,6 @@ export async function POST(req: Request) {
     );
 
     const productId = productResult.rows[0].product_id;
-    console.log("Customization Options", customizationOptions);
-    console.log("Filter ID", customizationOptionFilterId)
 
     if (customizationOptions && Array.isArray(customizationOptions)) {
       for (const customizationOption of customizationOptions) {
