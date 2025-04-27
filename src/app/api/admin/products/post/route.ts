@@ -182,7 +182,7 @@ export async function POST(req: Request) {
       for (const [index, image] of images.entries()) {
         const {file} = image;
         const uploadResponse = await fetch(
-          `${process.env.VERCEL_URL}/api/vercel/uploadBlob?filename=${file.name}`,
+          `${process.env.DOMAIN_NAME}/api/vercel/uploadBlob?filename=${file.name}`,
           {
             method: 'POST',
             body: file,

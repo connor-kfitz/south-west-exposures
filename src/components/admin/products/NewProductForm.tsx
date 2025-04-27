@@ -339,6 +339,7 @@ export default function NewProductForm({
       formData.append(`imageFiles`, fileToAppend);
     });
 
+
     return formData;
   }
 
