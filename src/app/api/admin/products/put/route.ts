@@ -254,6 +254,8 @@ async function updateFaqs(client: PoolClient, formData: ProductFormData) {
           [faq.question, faq.answer, faq.id]
         );
       } else {
+        if (!faq.question || !faq.answer) return;
+        
         await client.query(
           `INSERT INTO products_faqs (product_id, question, answer) VALUES ($1, $2, $3);`,
           [formData.productId, faq.question, faq.answer]

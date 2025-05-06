@@ -80,8 +80,8 @@ export const volumeFormSchema = z.object({
 });
 
 export const faqFormSchema = z.object({
-  question: z.string().min(1, "Question is required"),
-  answer: z.string().min(1, "Answer is required")
+  question: z.string(),
+  answer: z.string()
 });
 
 const productImageSchema = z.object({
@@ -106,7 +106,7 @@ const formSchema = z.object({
   volumes: z.array(z.string().min(1, "At least one volume is required")).min(1, "Select at least one option"),
   images: z.array(productImageSchema).min(1, "At least one image is required"),
   specifications: z.array(volumeFormSchema).min(1, "At least one volume is required"),
-  faqs: z.array(faqFormSchema).min(1, "At least one FAQ is required"),
+  faqs: z.array(faqFormSchema),
   relatedProducts: z.array(z.string()).optional(),
   purchasedTogether: z.array(z.string()).optional()
 });
@@ -191,7 +191,7 @@ export default function NewProductForm({
         "specifications",
         product.specifications.map((specification) => getSpecification(specification, volumeOptions))
       );
-      form.setValue("faqs", product.faqs);
+      form.setValue("faqs", product.faqs.length ? product.faqs : [{question: "", answer: ""}]);
       form.setValue("relatedProducts", product.relatedProducts.map(product => product.name));
       form.setValue("purchasedTogether", product.purchasedTogether.map(product => product.name));
     }

@@ -144,6 +144,7 @@ export async function POST(req: Request) {
     if (faqs && Array.isArray(faqs)) {
       for (const faq of faqs) {
         const { question, answer } = faq;
+        if (!question || !answer) continue;
 
         await client.query(
           `INSERT INTO products_faqs (product_id, question, answer)
