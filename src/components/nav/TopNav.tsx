@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
-import { TopNavLink, TopNavSocialLink } from "@/types/top-nav";
+import { navLinks, socialLinks } from "@/lib/constants";
 import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "./BreadCrumbs";
@@ -12,21 +12,9 @@ export default function TopNav() {
   const pathname = usePathname();
   const { breadcrumbs } = useBreadcrumbs();
 
-  if (pathname.includes("admin")) {
+  if (pathname.includes("admin") || pathname.includes("auth")) {
     return null;
   }
-
-  const navLinks: TopNavLink[] = [
-    { name: "About Us", href: "/" },
-    { name: "Products", href: "/products" },
-    { name: "News", href: "/news" },
-    { name: "Contact Us", href: "/contact" }
-  ];
-
-  const socialLinks: TopNavSocialLink[] = [
-    { path: "/images/top-nav/linkedin.svg", alt: "Linkedin Logo", size: 24, href: "/"},
-    { path: "/images/top-nav/shopping-bag.svg", alt: "Shopping Bag", size: 24, href: "/" }
-  ];
 
   function isActiveLink(link: string) {
     return pathname === link || pathname.startsWith(link + "/");
@@ -43,8 +31,8 @@ export default function TopNav() {
               height={47}
               width={72}
             />
-            <div className="flex flex-wrap justify-between items-center w-full space-y-2">
-              <ul className="flex gap-[32px] text-gray-900 leading-[24px] relative top-[2px] mr-[32px]">
+            <div className="flex flex-wrap justify-between items-center w-full gap-y-2">
+              <ul className="flex flex-wrap gap-[32px] text-gray-900 leading-[24px] relative top-[2px] mr-[32px]">
                 {navLinks.map((link, index) => (
                   <li key={index}>
                     <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 

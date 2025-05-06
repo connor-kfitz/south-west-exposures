@@ -2,6 +2,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
 import TopNav from "@/components/nav/TopNav";
 import "./globals.css";
+import Footer from "@/components/nav/Footer";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,6 +28,7 @@ export default function RootLayout({
         <BreadcrumbProvider>
           <TopNav/>
           {children}
+          <Footer/>
         </BreadcrumbProvider>
       </body>
     </html>
