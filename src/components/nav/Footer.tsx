@@ -38,6 +38,14 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            <Link href="/">
+              <Image
+                src="/images/footer/linkedin.svg"
+                alt="LinkedIn Logo"
+                width={24}
+                height={24}
+              />
+            </Link>
           </div>
         </div>
         <div className="flex items-center max-w-[556px] xl:max-w-[1160px] py-6 mx-auto">
