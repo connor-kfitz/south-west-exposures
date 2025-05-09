@@ -50,6 +50,7 @@ export type ProductPreview = {
 export type Filter = {
   id: string;
   name: string;
+  selected?: boolean;
 }
 
 export type ProductSpecification = {

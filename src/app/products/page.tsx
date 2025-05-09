@@ -1,25 +1,28 @@
-import { Product } from "@/types/admin-products";
-import type { Metadata } from 'next'
-import Link from "next/link";
+import ProductList from '@/components/products/list/ProductList';
+import type { Metadata } from 'next';
 
 export const revalidate = 0;
 
-// Todo: Add metadata
 export const metadata: Metadata = {
-  title: '...',
+  title: "Products",
   description: '...',
-}
+};
 
 export default async function ProductsPage() {
   try {
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`);
-    if (!response.ok) throw new Error(`Failed to fetch products, status: ${response.status}`);
-    const products = await response.json();
+    const [productsRes, filtersRes] = await Promise.all([
+      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`),
+      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/filters/all/get`)
+    ]);
 
-    return products.map((product: Product, index: number) => 
-      <Link key={index} className="block p-3 m-2 bg-gray-100" href={`/products/${product.id}`}>{product.name}</Link>
-    )
+    if (!productsRes.ok || !filtersRes.ok) {
+      throw new Error(`Failed to fetch data. Products status: ${productsRes.status}, Filters status: ${filtersRes.status}`);
+    }
 
+    const products = await productsRes.json();
+    const filters = await filtersRes.json();
+
+    return <ProductList products={products} filters={filters}/>;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
 
