@@ -5,6 +5,7 @@ import { Product } from "@/types/admin-products";
 import { Filter } from "@/types/product-list";
 import { useEffect, useState } from "react";
 import Filters from "./Filters";
+import FilterInfo from "./FilterInfo";
 
 interface ProductListProps {
   products: Product[];
@@ -25,7 +26,7 @@ export default function ProductList({products, filters}: ProductListProps) {
   const [filterState, setFilterState] = useState<Filter[]>(
     filters.map(group => ({
       ...group,
-      values: group.values.map(value => ({ ...value, selected: false }))
+      values: group.values.map(value => ({ ...value, selected: true }))
     }))
   );
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -37,6 +38,9 @@ export default function ProductList({products, filters}: ProductListProps) {
           <h1 className="text-[48px] text-gray-900 font-semibold leading-[52px] mb-8">Products</h1>
           <div className="flex gap-8">
             <Filters filters={filterState} setFilters={setFilterState}/>
+            <div className="grow">
+              <FilterInfo products={filteredProducts} filterState={filterState}/>
+            </div>
           </div>
         </div>
       </div>

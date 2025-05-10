@@ -6,6 +6,7 @@
 :root {
   --font-main: var(--font-jakarta);
   --shadow-nav: inset 0 -1px 0 0 #BCCCDC;
+  --shadow-dropdown: 0px 4px 6px 0px rgba(3, 7, 18, 0.05), 0px 10px 15px -3px rgba(3, 7, 18, 0.10);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(4.57, -0.27, 0.73);
@@ -38,6 +39,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --color-gray-50: #F9FAFB;
   --color-gray-100: #F3F4F6;
   --color-gray-200: #E5E7EB;
   --color-gray-300: #D1D5DB;
