@@ -36,6 +36,7 @@ export type Product = {
   customizationOptions: ProductAttribute[];
   usages: ProductAttribute[];
   volumes: ProductAttribute[];
+  createdAt: Date;
 }
 
 export type ProductPreview = {

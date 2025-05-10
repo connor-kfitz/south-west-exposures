@@ -11,6 +11,7 @@ export async function GET() {
         p.description,
         p.features,
         p.material,
+        p.date_created AS "createdAt",
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pco.customization_option_id,

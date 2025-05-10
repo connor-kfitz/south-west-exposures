@@ -13,6 +13,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
         p.description,
         p.features,
         p.material,
+        p.date_created AS "createdAt",
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pco.customization_option_id,

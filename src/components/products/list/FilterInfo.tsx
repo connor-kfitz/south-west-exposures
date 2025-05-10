@@ -11,16 +11,18 @@ import FormatIsotope from "@/lib/FormatIsotope";
 interface FilterInfoProps {
   products: Product[];
   filterState: Filter[];
+  sortOption: SortByOptions;
   setFilterState: React.Dispatch<React.SetStateAction<Filter[]>>;
+  setSortOption: React.Dispatch<React.SetStateAction<SortByOptions>>;
 }
 
-export default function FilterInfo({ products, filterState, setFilterState }: FilterInfoProps) {
+export default function FilterInfo({ products, filterState, sortOption, setFilterState, setSortOption }: FilterInfoProps) {
 
   return (
     <>
       <div className="flex justify-between items-center">
         <p className="text-[13px] text-gray-900 leading-[20px]">{products.length} products displayed</p>
-        <SortDropdown/>
+        <SortDropdown sortOption={sortOption} setSortOption={setSortOption}/>
       </div>
       <FilterBadges filterState={filterState} setFilterState={setFilterState}/>
     </>
@@ -71,7 +73,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
   }
 
   return (
-    <ul className="flex gap-4 flex-wrap mt-4 h-[32px]">
+    <ul className="flex gap-4 flex-wrap mt-4 min-h-[32px]">
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
@@ -100,12 +102,16 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
   )
 }
 
-function SortDropdown() {
-  const [sortOption, setSortOption] = useState<SortByOptions>("");
+interface SortDropdownProps {
+  sortOption: SortByOptions;
+  setSortOption: React.Dispatch<React.SetStateAction<SortByOptions>>;
+}
+
+function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
   const [open, setOpen] = useState(false);
 
   const sortByOptions = [
-    { value: "relevance", label: "Relevance" },
+    // { value: "relevance", label: "Relevance" },
     { value: "new", label: "New" },
     { value: "largest", label: "Largest first" },
     { value: "smallest", label: "Smallest first" }

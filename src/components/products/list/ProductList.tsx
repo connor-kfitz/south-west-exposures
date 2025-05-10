@@ -2,7 +2,7 @@
 
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { Product } from "@/types/admin-products";
-import { Filter } from "@/types/product-list";
+import { Filter, SortByOptions } from "@/types/product-list";
 import { useEffect, useState } from "react";
 import Filters from "./Filters";
 import FilterInfo from "./FilterInfo";
@@ -25,6 +25,7 @@ export default function ProductList({products, filters}: ProductListProps) {
   }, [setBreadcrumbs]);
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [sortOption, setSortOption] = useState<SortByOptions>("");
   const [filterState, setFilterState] = useState<Filter[]>(
     filters.map(group => ({
       ...group,
@@ -70,9 +71,41 @@ export default function ProductList({products, filters}: ProductListProps) {
       return typeof value === 'object' && value !== null && 'name' in value;
     }
 
-    const newFiltered = applyFiltersToProducts(products, filterState);    
-    setFilteredProducts(newFiltered);
-  },[filterState, products])
+    function sortProducts(products: Product[], option: SortByOptions) {
+      switch (option) {
+        case "largest":
+          return [...products].sort((a, b) => getMaxVolume(b) - getMaxVolume(a));
+        case "smallest":
+          return [...products].sort((a, b) => getMinVolume(a) - getMinVolume(b));
+        case "new":
+          return [...products].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        default:
+          return products;
+      }
+    }
+
+    function getMaxVolume(product: Product): number {
+      return Math.max(...product.volumes.map(v => parseVolume(v.name, "max")));
+    }
+
+    function getMinVolume(product: Product): number {
+      return Math.min(...product.volumes.map(v => parseVolume(v.name, "min")));
+    }
+
+    function parseVolume(volumeStr: string, mode: "min" | "max" = "min"): number {
+      if (!volumeStr) return 0;
+      if (volumeStr.includes("-")) {
+        const [min, max] = volumeStr.split("-").map(v => parseFloat(v));
+        return mode === "min" ? min : max;
+      }
+      return parseFloat(volumeStr);
+    }
+
+    const filteredProducts = applyFiltersToProducts(products, filterState);
+    const sortedProducts = sortProducts(filteredProducts, sortOption);
+    setFilteredProducts(sortedProducts);
+
+  }, [filterState, sortOption, products]);
 
 
   return (
@@ -86,7 +119,9 @@ export default function ProductList({products, filters}: ProductListProps) {
               <FilterInfo 
                 products={filteredProducts}
                 filterState={filterState}
-                setFilterState={setFilterState}  
+                sortOption={sortOption}
+                setFilterState={setFilterState}
+                setSortOption={setSortOption}
               />
               <Products products={filteredProducts}/>
             </div>
