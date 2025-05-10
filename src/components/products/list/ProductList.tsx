@@ -6,6 +6,7 @@ import { Filter } from "@/types/product-list";
 import { useEffect, useState } from "react";
 import Filters from "./Filters";
 import FilterInfo from "./FilterInfo";
+import Products from "./Products";
 
 interface ProductListProps {
   products: Product[];
@@ -49,6 +50,7 @@ export default function ProductList({products, filters}: ProductListProps) {
                 filterState={filterState}
                 setFilterState={setFilterState}  
               />
+              <Products products={filteredProducts}/>
             </div>
           </div>
         </div>

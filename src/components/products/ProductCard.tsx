@@ -32,7 +32,7 @@ export default function ProductCard({product, className}: ProductCardProps) {
         <h3 className="text-left font-semibold text-gray-900 leading-[24px]">{product.name}</h3>
         <ul className="text-gray-600 text-[13px]">
           <li>
-            <ul className="text-gray-600">
+            <ul className="flex flex-wrap text-gray-600">
               {product.shields.map((shield, index) => (
                 <li
                   key={index}
@@ -44,7 +44,7 @@ export default function ProductCard({product, className}: ProductCardProps) {
             </ul>
           </li>
           <li>
-            <ul className="text-gray-600">
+            <ul className="flex flex-wrap text-gray-600">
               {product.volumes.map((volume, index) => (
                 <li
                   key={index}
@@ -56,7 +56,7 @@ export default function ProductCard({product, className}: ProductCardProps) {
             </ul>
           </li>
           <li>
-            <ul className="text-gray-600">
+            <ul className="flex flex-wrap text-gray-600">
               {product.isotopes.map((isotope, index) => (
                 <li
                   key={index}
