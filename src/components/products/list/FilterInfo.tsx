@@ -138,7 +138,7 @@ function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="font-main w-[100px] bg-white rounded-[4px] text-gray-900 border-none p-0" style={{ boxShadow: 'var(--shadow-dropdown)' }} align="end">
-        <DropdownMenuRadioGroup value={sortOption} onValueChange={(value) => setSortOption(value as SortByOptions)}>
+        <DropdownMenuRadioGroup value={sortOption} onValueChange={(value) => setSortOption(value === sortOption ? "" : (value as SortByOptions))}>
           {sortByOptions.map((option, index) => (
             <DropdownMenuRadioItem key={index} value={option.value}
               className="cursor-pointer py-1 px-2 text-[13px] leading-[20px]"

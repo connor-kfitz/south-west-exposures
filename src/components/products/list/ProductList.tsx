@@ -62,7 +62,7 @@ export default function ProductList({products, filters}: ProductListProps) {
             );
           }
 
-          return selectedValues.includes(productValue);
+          return selectedValues.includes(productValue as string);
         });
       });
     }

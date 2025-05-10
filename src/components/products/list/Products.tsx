@@ -6,10 +6,17 @@ interface ProductsProps {
 }
 
 export default function Products({ products }: ProductsProps) {
+
+  if (products.length === 0) {
+    return (
+      <p className="text-gray-900 mt-[48px]">No Products Available</p>
+    )
+  }
+
   return (
-    <ul className="flex flex-wrap gap-x-4 gap-y-8 mt-[48px]">
+    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 mt-[48px]">
       {products.map((product, index) => (
-        <ProductCard product={product} className="basis-[calc(33%-0.5rem)]" key={index}/>
+        <ProductCard product={product} key={index} />
       ))}
     </ul>
   )
