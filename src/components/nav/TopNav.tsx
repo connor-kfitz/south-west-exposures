@@ -49,7 +49,7 @@ export default function TopNav() {
                 {socialLinks.map((link, index) => (
                   <li key={index}>
                     <Link className="block p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-                      href={link.href}
+                      href={link.href} target="_blank" rel="noopener noreferrer"
                     >
                       <Image 
                         src={link.path}

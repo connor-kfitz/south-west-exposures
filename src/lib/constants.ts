@@ -19,6 +19,6 @@ export const navLinks: TopNavLink[] = [
 ];
 
 export const socialLinks: TopNavSocialLink[] = [
-  { path: "/images/top-nav/linkedin.svg", alt: "Linkedin Logo", size: 24, href: "/" },
+  { path: "/images/top-nav/linkedin.svg", alt: "Linkedin Logo", size: 24, href: "https://www.linkedin.com/in/swexposures" },
   // { path: "/images/top-nav/shopping-bag.svg", alt: "Shopping Bag", size: 24, href: "/" }
 ];

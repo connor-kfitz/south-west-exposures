@@ -38,7 +38,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <Link href="/">
+            <Link href="https://www.linkedin.com/in/swexposures" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/images/footer/linkedin.svg"
                 alt="LinkedIn Logo"
