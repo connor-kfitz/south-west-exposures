@@ -11,7 +11,7 @@ export async function GET() {
       volumes: `SELECT volume_id AS id, name FROM volumes ORDER BY name`,
       accessories: `SELECT accessory_id AS id, name FROM accessories ORDER BY name`,
       shields: `SELECT shield_id AS id, name FROM shields ORDER BY name`,
-      usage: `SELECT usage_id AS id, name FROM usages ORDER BY name`,
+      usages: `SELECT usage_id AS id, name FROM usages ORDER BY name`,
     };
 
     const filterEntries = await Promise.all(

@@ -24,7 +24,7 @@ export default function ProductList({products, filters}: ProductListProps) {
     ])
   }, [setBreadcrumbs]);
 
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [filterState, setFilterState] = useState<Filter[]>(
     filters.map(group => ({
       ...group,
@@ -33,8 +33,46 @@ export default function ProductList({products, filters}: ProductListProps) {
   );
 
   useEffect(() => {
-    setFilteredProducts(prev => prev);
-  },[filterState])
+
+    function applyFiltersToProducts(products: Product[], filters: Filter[]) {
+      const activeFilters = filters.reduce<{[key: string]: string[]}>((acc, group) => {
+        const selectedValues = group.values
+          .filter(v => v.selected)
+          .map(v => v.name);
+
+        if (selectedValues.length > 0) {
+          acc[group.name] = selectedValues;
+        }
+
+        return acc;
+      }, {});
+
+      return products.filter(product => {
+        return Object.entries(activeFilters).every(([group, selectedValues]) => {
+          const productValue = product[group as keyof typeof product];
+
+          if (!productValue) return false;
+
+          if (Array.isArray(productValue)) {
+            return selectedValues.some(val =>
+              productValue.some(pv =>
+                hasNameField(pv) ? pv.name === val : pv === val
+              )
+            );
+          }
+
+          return selectedValues.includes(productValue);
+        });
+      });
+    }
+
+    function hasNameField(value: unknown): value is { name: string } {
+      return typeof value === 'object' && value !== null && 'name' in value;
+    }
+
+    const newFiltered = applyFiltersToProducts(products, filterState);    
+    setFilteredProducts(newFiltered);
+  },[filterState, products])
 
 
   return (

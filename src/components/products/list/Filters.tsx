@@ -1,6 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { capitalizeFirstLetter } from "@/lib/helpers";
+import { capitalizeFirstLetter, sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Filter } from "@/types/product-list";
+import { Filter as FilterValue } from "@/types/admin-products";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import FormatIsotope from "@/lib/FormatIsotope";
@@ -39,6 +40,8 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
     switch (header) {
       case "volumes":
         return "Volume (mL)";
+      case "usages":
+        return "Usage";
       default:
         return capitalizeFirstLetter(header);
     }
@@ -61,6 +64,17 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
         return group;
       });
     });
+  }
+
+  function getSortedFilterValues(filter: Filter): FilterValue[] {
+    switch (filter.name) {
+      case "isotopes":
+        return sortIsotopeValues(filter.values);
+      case "volumes":
+        return sortVolumeValues(filter.values);
+      default:
+        return [...filter.values].sort((a, b) => a.name.localeCompare(b.name));
+    }
   }
 
   return (
@@ -92,14 +106,15 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
         }}
         className="transition-all duration-300 ease-in-out overflow-hidden flex flex-col gap-2"
       >
-        {filter.values.map((value, index) => (
+        {getSortedFilterValues(filter).map((value, index) => (
           <li key={index} className="flex items-center gap-2">
-            <Checkbox id={value.name} checked={value.selected} onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)} />
-            <label
-              htmlFor={value.name}
-              className="text-gray-900 leading-[24px]"
-            >
-              {filter.name === "isotopes" ? <FormatIsotope isotope={value.name}/> : value.name}
+            <Checkbox
+              id={value.name}
+              checked={value.selected}
+              onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
+            />
+            <label htmlFor={value.name} className="text-gray-900 leading-[24px]">
+              {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
             </label>
           </li>
         ))}

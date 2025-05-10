@@ -70,9 +70,8 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
     });
   }
 
-
   return (
-    <ul className={`flex gap-4 flex-wrap ${getFilterCount(filterState) > 0 ? "mt-4" : "mt-0"}`}>
+    <ul className="flex gap-4 flex-wrap mt-4 h-[32px]">
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
