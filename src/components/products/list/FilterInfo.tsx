@@ -6,6 +6,7 @@ import { Product } from "@/types/admin-products";
 import { Filter, SortByOptions } from "@/types/product-list";
 import { useState } from "react";
 import Image from "next/image";
+import FormatIsotope from "@/lib/FormatIsotope";
 
 interface FilterInfoProps {
   products: Product[];
@@ -76,7 +77,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
         group.values.map((value, index) => (
           value.selected && (
             <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-gray-900 leading-[24px]">
-              <span>{value.name}</span>
+              <span>{group.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}</span>
               <button className="cursor-pointer" onClick={() => removeFilter(value.name)}>
                 <Image
                   src="/images/products/list/close.svg"

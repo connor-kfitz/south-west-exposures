@@ -23,7 +23,7 @@ export default function TopNav() {
   return (
     <nav className="w-full font-main">
       <div className="px-6" style={{ boxShadow: 'var(--shadow-nav)' }}>
-        <div className="flex items-center min-h-[88px] max-w-[556px] xl:max-w-[1160px] py-3 mx-auto">
+        <div className="flex items-center min-h-[88px] max-w-[1160px] py-3 mx-auto">
             <Image 
               src="/images/top-nav/swe-logo.png"
               alt="South West Exposures Logo"
@@ -65,7 +65,7 @@ export default function TopNav() {
           </div>
         </div>
         <div className="px-6">
-          <div className="max-w-[556px] xl:max-w-[1160px] mx-auto">
+          <div className="max-w-[1160px] mx-auto">
             <BreadCrumbs breadCrumbs={breadcrumbs} />
           </div>
       </div>

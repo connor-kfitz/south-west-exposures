@@ -3,6 +3,7 @@ import { capitalizeFirstLetter } from "@/lib/helpers";
 import { Filter } from "@/types/product-list";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import FormatIsotope from "@/lib/FormatIsotope";
 
 interface FiltersProps {
   filters: Filter[];
@@ -98,7 +99,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
               htmlFor={value.name}
               className="text-gray-900 leading-[24px]"
             >
-              {value.name}
+              {filter.name === "isotopes" ? <FormatIsotope isotope={value.name}/> : value.name}
             </label>
           </li>
         ))}
