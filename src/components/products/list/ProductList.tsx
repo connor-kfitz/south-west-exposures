@@ -23,13 +23,18 @@ export default function ProductList({products, filters}: ProductListProps) {
     ])
   }, [setBreadcrumbs]);
 
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [filterState, setFilterState] = useState<Filter[]>(
     filters.map(group => ({
       ...group,
-      values: group.values.map(value => ({ ...value, selected: true }))
+      values: group.values.map(value => ({ ...value, selected: false }))
     }))
   );
-  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  useEffect(() => {
+    setFilteredProducts(prev => prev);
+  },[filterState])
+
 
   return (
     <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
@@ -39,7 +44,11 @@ export default function ProductList({products, filters}: ProductListProps) {
           <div className="flex gap-8">
             <Filters filters={filterState} setFilters={setFilterState}/>
             <div className="grow">
-              <FilterInfo products={filteredProducts} filterState={filterState}/>
+              <FilterInfo 
+                products={filteredProducts}
+                filterState={filterState}
+                setFilterState={setFilterState}  
+              />
             </div>
           </div>
         </div>

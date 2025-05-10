@@ -11,12 +11,12 @@ interface FiltersProps {
 
 export default function Filters({filters, setFilters}: FiltersProps) {
   return (
-    <div className="grow max-w-[266px]">
+    <div className="grow min-w-[266px] max-w-[266px]">
       <h2 className="mb-4 text-[32px] text-blue-900 leading-[40px] font-semibold">Filter</h2>
       <ul className="flex flex-col gap-4">
         {filters.map((filter, index) => (
           <li key={index}>
-            <FilterBox filter={filter}/>
+            <FilterBox filter={filter} setFilters={setFilters}/>
             {index <= filters.length - 2 ? <div className="w-full h-[1px] bg-gray-100 mt-4"></div> : null}
           </li>
         ))}
@@ -27,9 +27,10 @@ export default function Filters({filters, setFilters}: FiltersProps) {
 
 interface FilterBoxProps {
   filter: Filter;
+  setFilters: React.Dispatch<React.SetStateAction<Filter[]>>;
 }
 
-function FilterBox({ filter }: FilterBoxProps) {
+function FilterBox({ filter, setFilters }: FilterBoxProps) {
   const [collapsed, setCollapsed] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
 
@@ -40,7 +41,26 @@ function FilterBox({ filter }: FilterBoxProps) {
       default:
         return capitalizeFirstLetter(header);
     }
-  } 
+  }
+
+  function updateFilter(checked: boolean, name: string) {
+    setFilters(prevFilters => {
+      return prevFilters.map(group => {
+        if (group.name === filter.name) {
+          return {
+            ...group,
+            values: group.values.map(value => {
+              if (value.name === name) {
+                return { ...value, selected: checked };
+              }
+              return value;
+            })
+          };
+        }
+        return group;
+      });
+    });
+  }
 
   return (
     <>
@@ -73,7 +93,7 @@ function FilterBox({ filter }: FilterBoxProps) {
       >
         {filter.values.map((value, index) => (
           <li key={index} className="flex items-center gap-2">
-            <Checkbox id={value.name} />
+            <Checkbox id={value.name} checked={value.selected} onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)} />
             <label
               htmlFor={value.name}
               className="text-gray-900 leading-[24px]"
