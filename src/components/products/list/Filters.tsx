@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { capitalizeFirstLetter, sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Filter } from "@/types/product-list";
 import { Filter as FilterValue } from "@/types/admin-products";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import FormatIsotope from "@/lib/FormatIsotope";
 
@@ -33,8 +33,25 @@ interface FilterBoxProps {
 }
 
 function FilterBox({ filter, setFilters }: FilterBoxProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState<"open" | "closed" | "opening" | "closing">("open");
   const contentRef = useRef<HTMLUListElement>(null);
+
+  function toggleCollapsed() {
+    if (collapsed === "open") {
+      setCollapsed("closing");
+    } else if (collapsed === "closed") {
+      setCollapsed("opening");
+    }
+  }
+
+  useEffect(() => {
+    if (collapsed === "closing") {setTimeout(() => {
+      setCollapsed("closed")
+    }, 300)}
+    if (collapsed === "opening") {setTimeout(() => {
+      setCollapsed("open")
+    }, 300)} 
+  },[collapsed])
 
   function getHeaderName(header: string): string {
     switch (header) {
@@ -79,21 +96,21 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
 
   return (
     <>
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between mb-2 items-center">
         <h3 className="text-gray-900 font-semibold leading-[24px]">
           {getHeaderName(filter.name)}
         </h3>
         <button
-          className="cursor-pointer"
-          onClick={() => setCollapsed(prev => !prev)}
+          className="cursor-pointer w-4 h-4 rounded-[2px] flex items-center justify-center focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+          onClick={() => toggleCollapsed()}
         >
           <Image
             src="/images/products/list/up-chevron.svg"
             alt="Up Chevron"
-            width={15}
+            width={16}
             height={8}
             style={{
-              transform: collapsed ? "rotate(180deg)" : "rotate(0deg)",
+              transform: (collapsed === "closed" || collapsed === "closing") ? "rotate(180deg)" : "rotate(0deg)",
               transition: "transform 0.3s ease"
             }}
           />
@@ -102,20 +119,22 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
       <ul
         ref={contentRef}
         style={{
-          height: collapsed ? 0 : `${contentRef?.current?.scrollHeight}px`
+          height: (collapsed === "closed" || collapsed === "closing") ? 0 : `${contentRef?.current?.scrollHeight}px`,
         }}
-        className="transition-all duration-300 ease-in-out overflow-hidden flex flex-col gap-2"
+        className={`transition-all duration-300 ease-in-out flex flex-col gap-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
       >
         {getSortedFilterValues(filter).map((value, index) => (
-          <li key={index} className="flex items-center gap-2">
-            <Checkbox
-              id={value.name}
-              checked={value.selected}
-              onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
-            />
-            <label htmlFor={value.name} className="text-gray-900 leading-[24px]">
-              {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
-            </label>
+          <li key={index} 
+            className="flex items-center gap-2 cursor-pointer"
+            >
+              <Checkbox
+                checked={value.selected}
+                onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
+                tabIndex={collapsed === "closed" || collapsed === "closing" ? -1 : 0}
+              />
+              <label className="text-gray-900 leading-[24px]">
+                {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
+              </label>
           </li>
         ))}
       </ul>

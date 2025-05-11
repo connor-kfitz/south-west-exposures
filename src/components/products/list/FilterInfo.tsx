@@ -77,9 +77,9 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
-            <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-gray-900 leading-[24px]">
+            <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-gray-900 leading-[24px] focus-within:ring-offset-2 focus-within:ring-offset-blue-600 focus-within:ring-2 focus-within:ring-white focus-within:outline-none">
               <span>{group.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}</span>
-              <button className="cursor-pointer" onClick={() => removeFilter(value.name)}>
+              <button className="cursor-pointer focus:outline-none focus:ring-0 focus:ring-offset-0" onClick={() => removeFilter(value.name)} >
                 <Image
                   src="/images/products/list/close.svg"
                   alt="Close"
@@ -93,7 +93,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
       )}
       {getFilterCount(filterState) > 0 ? 
         <li className="py-1 text-gray-900 leading-[24px]">
-          <button className="cursor-pointer underline underline-offset-3" onClick={clearAll}>
+          <button className="cursor-pointer underline underline-offset-3 rounded-[2px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={clearAll}>
             Clear all
           </button>
         </li> 
@@ -122,7 +122,7 @@ function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="text-[13px] p-0 text-gray-900 hover:bg-white hover:text-gray-900 h-[20px] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+          className="text-[13px] p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
         >
           {sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}
           <Image
