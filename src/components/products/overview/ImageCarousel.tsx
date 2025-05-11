@@ -51,42 +51,44 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
           />
         }
 
-        <div className="absolute bottom-[6vw] right-[6vw] sm:right-6 sm:bottom-6 flex justify-between items-center gap-4">
-          <button
-            className="
-             bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
-             hover:bg-gray-300 focus-visible:bg-gray-300 
-             focus-visible:ring-offset-2 
-             focus-visible:ring-offset-blue-600 focus-visible:ring-2 
-             focus-visible:ring-white focus-visible:outline-none
-            "
-            onClick={() => cycleImages(-1)}
-          >
-            <div className="w-[40%] h-[40%] relative">
-              <Image
-                src="/images/products/overview/left-chevron.svg"
-                alt="Left Arrow"
-                fill
-              />
-            </div>
-          </button>
-          <button
-            className="bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
-             hover:bg-gray-300 focus-visible:bg-gray-300 
-             focus-visible:ring-offset-2 
-             focus-visible:ring-offset-blue-600 focus-visible:ring-2 
-             focus-visible:ring-white focus-visible:outline-none"
-            onClick={() => cycleImages(1)}
-          >
-            <div className="w-[40%] h-[40%] relative">
-              <Image
-                src="/images/products/overview/right-chevron.svg"
-                alt="Right Arrow"
-                fill
-              />
-            </div>
-          </button>
-        </div>
+        {images.length > 1 ? 
+          <div className="absolute bottom-[6vw] right-[6vw] sm:right-6 sm:bottom-6 flex justify-between items-center gap-4">
+            <button
+              className="
+              bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
+              hover:bg-gray-300 focus-visible:bg-gray-300 
+              focus-visible:ring-offset-2 
+              focus-visible:ring-offset-blue-600 focus-visible:ring-2 
+              focus-visible:ring-white focus-visible:outline-none
+              "
+              onClick={() => cycleImages(-1)}
+            >
+              <div className="w-[40%] h-[40%] relative">
+                <Image
+                  src="/images/products/overview/left-chevron.svg"
+                  alt="Left Arrow"
+                  fill
+                />
+              </div>
+            </button>
+            <button
+              className="bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
+              hover:bg-gray-300 focus-visible:bg-gray-300 
+              focus-visible:ring-offset-2 
+              focus-visible:ring-offset-blue-600 focus-visible:ring-2 
+              focus-visible:ring-white focus-visible:outline-none"
+              onClick={() => cycleImages(1)}
+            >
+              <div className="w-[40%] h-[40%] relative">
+                <Image
+                  src="/images/products/overview/right-chevron.svg"
+                  alt="Right Arrow"
+                  fill
+                />
+              </div>
+            </button>
+          </div> : null
+        }
       </div>
     </section>
   )
