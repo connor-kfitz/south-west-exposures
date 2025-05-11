@@ -27,14 +27,14 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
   }, [product, setBreadcrumbs]);
 
   return (
-    <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
-      <div className="pt-6 flex justify-center xl:pt-[45px]">
-        <div className="max-w-[556px] w-full xl:max-w-[1160px]">
-          <div className="flex flex-col-reverse w-full mb-[64px] xl:flex-row xl:gap-8">
+    <main className="font-main bg-white pb-6 pt-6 px-6 sm:pb-[96px] md:pt-[45px] ">
+      <div className="flex justify-center">
+        <div className="w-full max-w-[1160px]">
+          <div className="flex flex-col-reverse w-full mb-[64px] md:flex-row md:gap-8">
           <div className="flex-1 flex-col">
-            <ImageCarousel images={product.images} className="w-full flex gap-4 flex-col sm:flex-row xl:gap-8"/>
+            <ImageCarousel images={product.images} className="w-full flex flex-col sm:flex-row gap-8"/>
           </div>
-          <div className="flex-1 xl:max-w-[465px]">
+          <div className="flex-1 max-w-[465px]">
             <Metadata product={product} className="w-full"/>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
           <Specifications specifications={product.specifications} material={product.material} className="mb-[64px]" />
           <Faqs faqs={product.faqs} className="mb-[96px]" />
         </div>
-        <RelatedProducts relatedProducts={product.relatedProducts}/>
+          <RelatedProducts relatedProducts={product.relatedProducts}/>
         </div>
       </div>
     </main>

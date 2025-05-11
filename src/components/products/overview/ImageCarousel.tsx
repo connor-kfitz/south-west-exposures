@@ -41,7 +41,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
         ))}
       </ul>
 
-      <div className="relative flex justify-center items-center bg-gray-100 rounded-[16px] aspect-[1/1] max-w-[564px] sm:grow">
+      <div className="relative flex justify-center items-center bg-gray-100 rounded-[16px] aspect-[1/1] max-w-[564px] sm:grow md:min-w-[316px]">
         {images[selectedImageIndex].src &&
           <Image
             src={images[selectedImageIndex].src}
