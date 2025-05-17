@@ -32,7 +32,7 @@ export default function TopNav() {
               width={72}
             />
             <div className="flex flex-wrap justify-between items-center w-full gap-y-2">
-              <ul className="flex flex-wrap gap-[32px] text-gray-900 leading-[24px] relative top-[2px] mr-[32px]">
+            <ul className="flex flex-wrap gap-[32px] text-gray-900 text-b6 leading-b6 relative top-[2px] mr-[32px]">
                 {navLinks.map((link, index) => (
                   <li key={index}>
                     <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 

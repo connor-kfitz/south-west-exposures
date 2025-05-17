@@ -29,8 +29,8 @@ export default function ProductCard({product, className}: ProductCardProps) {
         )}
       </div>
       <div className="p-0">
-        <h3 className="text-left font-semibold text-gray-900 leading-[24px]">{product.name}</h3>
-        <ul className="text-gray-600 text-[13px]">
+        <h3 className="text-left font-semibold text-gray-900 text-b6 leading-b6 ">{product.name}</h3>
+        <ul className="text-b7 leading-b7 text-gray-600">
           <li>
             <ul className="flex flex-wrap text-gray-600">
               {product.shields.map((shield, index) => (

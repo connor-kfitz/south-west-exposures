@@ -16,7 +16,7 @@ export default function BreadCrumbs({ breadCrumbs }: BreadCrumbsProps) {
           return (
             <div key={index} className="flex items-center">
               <BreadcrumbItem 
-                className="text-[13px] text-gray-600"
+                className="text-b7 leading-b7 text-gray-600"
               >
                 {isLast ? (
                   <span className="p-0.5">{crumb.name}</span>

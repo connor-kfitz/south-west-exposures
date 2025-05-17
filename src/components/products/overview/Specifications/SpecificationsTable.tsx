@@ -60,7 +60,7 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
             {tableData[0].map((cell, index) => (
               <TableHead
                 key={index}
-                className={`text-[16px] leading-[24px] text-black font-medium pt-[15px] pb-[17px] px-[24px] tableBpSm:min-w-[154px]
+                className={`text-[16px] text-b6 leading-b6 text-black font-medium pt-[15px] pb-[17px] px-[24px] tableBpSm:min-w-[154px]
                   ${index === 0 ? "rounded-tl-[8px] tableBpSm:min-w-[200px]" : ""}
                   ${index === tableData[0].length - 1 ? "rounded-tr-[8px]" : ""}
                   ${index === 2 ? "hidden tableBpSm:table-cell" : ""}
@@ -78,7 +78,7 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
               {row.map((cell, colIndex) => (
                 <TableCell
                   key={colIndex}
-                  className={`text-[16px] leading-[24px] text-black pt-[15px] pb-[17px] px-[24px]
+                  className={`text-[16px] text-b6 leading-b6 text-black pt-[15px] pb-[17px] px-[24px]
                     ${colIndex === 0 ? "font-medium" : ""}
                     ${colIndex > 0 ? "text-gray-600" : "text-black"}
                     ${colIndex === 2 ? "hidden tableBpSm:table-cell" : ""}

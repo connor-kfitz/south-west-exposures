@@ -21,7 +21,7 @@ export default function FilterInfo({ products, filterState, sortOption, setFilte
   return (
     <>
       <div className="flex justify-between items-center">
-        <p className="text-[13px] text-gray-900 leading-[20px]">{products.length} products displayed</p>
+        <p className="text-b7 leading-b7 text-gray-900">{products.length} products displayed</p>
         <SortDropdown sortOption={sortOption} setSortOption={setSortOption}/>
       </div>
       <FilterBadges filterState={filterState} setFilterState={setFilterState}/>
@@ -77,7 +77,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
-            <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-gray-900 leading-[24px] focus-within:ring-offset-2 focus-within:ring-offset-blue-600 focus-within:ring-2 focus-within:ring-white focus-within:outline-none">
+            <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-b6 leading-b6 text-gray-900 focus-within:ring-offset-2 focus-within:ring-offset-blue-600 focus-within:ring-2 focus-within:ring-white focus-within:outline-none">
               <span>{group.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}</span>
               <button className="cursor-pointer focus:outline-none focus:ring-0 focus:ring-offset-0" onClick={() => removeFilter(value.name)} >
                 <Image
@@ -92,7 +92,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
         ))
       )}
       {getFilterCount(filterState) > 0 ? 
-        <li className="py-1 text-gray-900 leading-[24px]">
+        <li className="text-b6 leading-b6 py-1 text-gray-900">
           <button className="cursor-pointer underline underline-offset-3 rounded-[2px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={clearAll}>
             Clear all
           </button>
@@ -122,7 +122,7 @@ function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="text-[13px] p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+          className="text-b7 leading-b7 p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
         >
           {sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}
           <Image
@@ -141,7 +141,7 @@ function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
         <DropdownMenuRadioGroup value={sortOption} onValueChange={(value) => setSortOption(value === sortOption ? "" : (value as SortByOptions))}>
           {sortByOptions.map((option, index) => (
             <DropdownMenuRadioItem key={index} value={option.value}
-              className="cursor-pointer py-1 px-2 text-[13px] leading-[20px]"
+              className="cursor-pointer py-1 px-2 text-b7 leading-b7"
             >
               <span className="ml-5">{option.label}</span>
             </DropdownMenuRadioItem>

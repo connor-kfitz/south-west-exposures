@@ -14,7 +14,7 @@ interface FiltersProps {
 export default function Filters({filters, setFilters}: FiltersProps) {
   return (
     <div className="grow min-w-[266px] max-w-[266px]">
-      <h2 className="mb-4 text-[32px] text-blue-900 leading-[40px] font-semibold">Filter</h2>
+      <h2 className="mb-4 text-h3 leading-h3 text-blue-900 font-semibold">Filter</h2>
       <ul className="flex flex-col gap-4">
         {filters.map((filter, index) => (
           <li key={index}>
@@ -97,7 +97,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
   return (
     <>
       <div className="flex justify-between mb-2 items-center">
-        <h3 className="text-gray-900 font-semibold leading-[24px]">
+        <h3 className="text-b6 leading-b6 text-gray-900 font-semibold">
           {getHeaderName(filter.name)}
         </h3>
         <button
@@ -132,7 +132,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
                 onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
                 tabIndex={collapsed === "closed" || collapsed === "closing" ? -1 : 0}
               />
-              <label className="text-gray-900 leading-[24px]">
+            <label className="text-b6 leading-b6 text-gray-900">
                 {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
               </label>
           </li>

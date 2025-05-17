@@ -12,9 +12,9 @@ export default function Metadata({ product, className }: MetadataProps) {
 
   return (
     <section className={className}>
-      <h1 className="text-gray-900 font-semibold leading-[44px] mb-4 text-[36px] sm:text-[40px]">{product.name}</h1>
-      <p className="text-gray-600 leading-[24px] mb-4">{product.description}</p>
-      <h3 className="font-semibold leading-[24px] mb-1">Usage</h3>
+      <h1 className="text-gray-900 font-semibold mb-4 text-h2 leading-h2">{product.name}</h1>
+      <p className="text-gray-600 text-b6 leading-b6 mb-4">{product.description}</p>
+      <h3 className="font-semibold text-b6 leading-b6 mb-1">Usage</h3>
       <ul className="mb-4 flex flex-col gap-3 text-gray-600"> 
         {product.usages.map((usage, index) => (
           <li className="flex items-center" key={index}>
@@ -30,7 +30,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           </li>
         ))}
       </ul>
-      <h3 className="font-semibold leading-[24px]">Isotopes</h3>
+      <h3 className="font-semibold text-b6 leading-b6">Isotopes</h3>
       <ul className="mb-4 flex gap-4">
         {product.isotopes.map((isotope, index) => (
           <li key={index}>
@@ -44,7 +44,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           </li>
         ))}
       </ul>
-      <h3 className="font-semibold leading-[24px] mb-1">Volume (mL)</h3>
+      <h3 className="font-semibold text-b6 leading-b6 mb-1">Volume (mL)</h3>
       <ul className="mb-4 text-gray-600">
         {product.volumes.map((volume, index) => (
           <li
@@ -55,7 +55,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           </li>
         ))}
       </ul>
-      <h3 className="font-semibold leading-[24px] mb-1">Customization options</h3>
+      <h3 className="font-semibold text-b6 leading-b6 mb-1">Customization options</h3>
       <ul className="flex flex-wrap text-gray-600 mb-6">
         {product.customizationOptions.map((volume, index) => {
           const name = index === 0

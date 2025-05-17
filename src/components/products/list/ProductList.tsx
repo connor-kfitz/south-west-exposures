@@ -112,7 +112,7 @@ export default function ProductList({products, filters}: ProductListProps) {
     <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
       <div className="pt-6 flex justify-center xl:pt-[48px]">
         <div className="w-full max-w-[1160px]">
-          <h1 className="text-[48px] text-gray-900 font-semibold leading-[52px] mb-8">Products</h1>
+          <h1 className="text-h1 leading-h1 text-gray-900 font-semibold mb-8">Products</h1>
           <div className="flex gap-8">
             <Filters filters={filterState} setFilters={setFilterState}/>
             <div className="grow">

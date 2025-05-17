@@ -50,6 +50,70 @@
   --color-blue-800: #1E40AF;
 }
 
+@layer base {
+  :root {
+    --font-size-h1: 48px;
+    --line-height-h1: 52px;
+    --font-size-h2: 40px;
+    --line-height-h2: 44px;
+    --font-size-h3: 32px;
+    --line-height-h3: 40px;
+    --font-size-b6: 16px;
+    --line-height-b6: 24px;
+    --font-size-b7: 13px;
+    --line-height-b7: 20px;
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --font-size-h1: 40px;
+      --line-height-h1: 44px ;
+      --font-size-h2: 33px; 
+      --line-height-h2: 40px;
+      --font-size-h3: 28px;
+      --line-height-h3: 36px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --font-size-h1: 29px;
+      --line-height-h1: 36px;
+      --font-size-h2: 26px;
+      --line-height-h2: 32px;
+      --font-size-h3: 23px;
+      --line-height-h3: 32px;
+    }
+  }
+}
+
+@layer utilities {
+  .text-h1 {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+  }
+
+  .text-h2 {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+
+  .text-h3 {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+  }
+
+  .text-b6 {
+    font-size: var(--font-size-b6);
+    line-height: var(--line-height-b6);
+  }
+
+  .text-b7 {
+    font-size: var(--font-size-b7);
+    line-height: var(--line-height-b7);
+  }
+}
+
 @theme {
   --breakpoint-tableBpSm: 34.875rem;
   --breakpoint-tableBpMd: 44.5rem;

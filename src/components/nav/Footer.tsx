@@ -25,7 +25,7 @@ export default function Footer() {
             width={68}
           />
           <div className="flex flex-wrap justify-between items-center w-full space-y-2">
-            <ul className="flex flex-wrap gap-[32px] gap-y-2 leading-[24px] relative top-[2px] mr-[32px]">
+            <ul className="flex flex-wrap gap-[32px] gap-y-2 text-b6 leading-b6 relative top-[2px] mr-[32px]">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link className="whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 
@@ -51,7 +51,7 @@ export default function Footer() {
         <div className="flex items-center max-w-[556px] xl:max-w-[1160px] py-6 mx-auto">
           <div className="flex flex-wrap justify-between items-center w-full gap-y-6">
             <div className="flex gap-5 justify-start items-center">
-              <p className="text-[13px] leading-[20px]">SWE is registered with</p>
+              <p className="text-b7 leading-b7">SWE is registered with</p>
               <Image 
                 src="/images/footer/canadian-flag.png"
                 alt="Canadian Flag"

@@ -14,7 +14,7 @@ export default function RelatedProducts({relatedProducts, className}: RelatedPro
 
   return (
     <section className={className}>
-      <h2 className="text-[32px] text-gray-900 font-semibold leading-[40px] mb-4">Related Products</h2>
+      <h2 className="text-h3 leading-h3 text-gray-900 font-semibold mb-4">Related Products</h2>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {expanded.map((product, index) => (
           <ProductCard product={product} key={index}/>

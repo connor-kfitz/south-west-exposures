@@ -11,9 +11,9 @@ export default function Specifications({ specifications, material, className }: 
 
   return (
     <section className={className}>
-      <h2 className="text-gray-900 text-[32px] font-semibold leading-[40px] mb-4">Specifications</h2>
-      <h3 className="text-gray-900 font-semibold leading-[24px]">Material</h3>
-      <p className="text-gray-600 leading-[24px] mb-6">{material}</p>
+      <h2 className="text-h3 leading-h3 text-gray-900 font-semibold mb-4">Specifications</h2>
+      <h3 className="text-gray-900 font-semibold text-b6 leading-b6">Material</h3>
+      <p className="text-gray-600 text-b6 leading-b6 mb-6">{material}</p>
       <SpecificationsTable specifications={specifications}/>
     </section>
   )
