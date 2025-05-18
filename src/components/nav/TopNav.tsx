@@ -22,7 +22,7 @@ export default function TopNav() {
 
   return (
     <nav className="w-full font-main">
-      <div className="px-6" style={{ boxShadow: 'var(--shadow-nav)' }}>
+      <div className="padding-content" style={{ boxShadow: 'var(--shadow-nav)' }}>
         <div className="flex items-center min-h-[88px] max-w-[1160px] py-3 mx-auto">
             <Image 
               src="/images/top-nav/swe-logo.png"
@@ -64,7 +64,7 @@ export default function TopNav() {
             </div>
           </div>
         </div>
-        <div className="px-6">
+        <div className="padding-content">
           <div className="max-w-[1160px] mx-auto">
             <BreadCrumbs breadCrumbs={breadcrumbs} />
           </div>

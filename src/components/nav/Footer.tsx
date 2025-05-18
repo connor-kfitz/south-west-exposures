@@ -15,7 +15,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full font-main text-white bg-gray-900 min-h-[241px]">
-      <div className="px-6">
+      <div className="padding-content">
         <div className="flex items-center max-w-[556px] xl:max-w-[1160px] pb-5 pt-6 mx-auto border-b border-[#BFDBFE]">
           <Image
             src="/images/footer/swe-logo.png"

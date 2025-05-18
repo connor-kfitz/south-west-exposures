@@ -27,7 +27,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
   }, [product, setBreadcrumbs]);
 
   return (
-    <main className="font-main bg-white pb-6 pt-6 px-6 sm:pb-[96px] md:pt-[45px] ">
+    <main className="font-main bg-white pb-6 pt-6 padding-content sm:pb-[96px] md:pt-[45px] ">
       <div className="flex justify-center">
         <div className="w-full max-w-[1160px]">
           <div className="flex flex-col-reverse w-full mb-[64px] md:flex-row md:gap-8">

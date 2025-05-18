@@ -109,7 +109,7 @@ export default function ProductList({products, filters}: ProductListProps) {
 
 
   return (
-    <main className="font-main bg-white pb-6 xl:pb-[96px] px-6">
+    <main className="font-main bg-white pb-6 xl:pb-[96px] padding-content">
       <div className="pt-6 flex justify-center xl:pt-[48px]">
         <div className="w-full max-w-[1160px]">
           <h1 className="text-h1 leading-h1 text-gray-900 font-semibold mb-8">Products</h1>
