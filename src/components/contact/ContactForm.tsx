@@ -61,7 +61,7 @@ export default function ContactForm({ className }: ContactFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={`px-[64px] bg-white rounded-[24px] ${className}`}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
           You can email us directly at&nbsp;
@@ -77,8 +77,8 @@ export default function ContactForm({ className }: ContactFormProps) {
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
+              <FormItem className="gap-1">
+                <FormLabel className="text-b7 leading-b7">First Name</FormLabel>
                 <FormControl>
                   <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
                 </FormControl>
@@ -91,8 +91,8 @@ export default function ContactForm({ className }: ContactFormProps) {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
+              <FormItem className="gap-1">
+                <FormLabel className="text-b7 leading-b7">Last Name</FormLabel>
                 <FormControl>
                   <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
                 </FormControl>
@@ -105,8 +105,8 @@ export default function ContactForm({ className }: ContactFormProps) {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email Address</FormLabel>
+              <FormItem className="gap-1">
+                <FormLabel className="text-b7 leading-b7">Email Address</FormLabel>
                 <FormControl>
                   <Input type="email" {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
                 </FormControl>
@@ -119,8 +119,8 @@ export default function ContactForm({ className }: ContactFormProps) {
             control={form.control}
             name="website"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website (optional)</FormLabel>
+              <FormItem className="gap-1">
+                <FormLabel className="text-b7 leading-b7">Website (optional)</FormLabel>
                 <FormControl>
                   <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
                 </FormControl>
@@ -133,8 +133,8 @@ export default function ContactForm({ className }: ContactFormProps) {
             control={form.control}
             name="phone"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+              <FormItem className="gap-1">
+                <FormLabel className="text-b7 leading-b7">Phone Number</FormLabel>
                 <FormControl>
                   <Input
                     ref={inputRef}
@@ -191,15 +191,23 @@ export default function ContactForm({ className }: ContactFormProps) {
           <FormField
             control={form.control}
             name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Message</FormLabel>
-                <FormControl>
-                  <Textarea {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const charsLeft = 1000 - (field.value?.length || 0)
+
+              return (
+                <FormItem className="gap-1">
+                  <FormLabel className="text-b7 leading-b7">Message</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+                    />
+                  </FormControl>
+                  <div className="text-b7 leading-b7 text-gray-900">{charsLeft} characters left</div>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
           />
         </div>
 
