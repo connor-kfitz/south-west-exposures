@@ -77,7 +77,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
-            <li key={index} className="flex items-center gap-1 bg-gray-50 rounded-[99px] px-3 py-1 text-b6 leading-b6 text-gray-900 focus-within:ring-offset-2 focus-within:ring-offset-blue-600 focus-within:ring-2 focus-within:ring-white focus-within:outline-none">
+            <li key={index} className="flex items-center gap-1 bg-gray-100 rounded-[99px] px-3 py-1 text-b6 leading-b6 text-gray-900 focus-within:ring-offset-2 focus-within:ring-offset-blue-600 focus-within:ring-2 focus-within:ring-white focus-within:outline-none">
               <span>{group.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}</span>
               <button className="cursor-pointer focus:outline-none focus:ring-0 focus:ring-offset-0" onClick={() => removeFilter(value.name)} >
                 <Image
