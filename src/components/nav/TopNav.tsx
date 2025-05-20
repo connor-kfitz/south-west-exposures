@@ -20,6 +20,11 @@ export default function TopNav() {
     return pathname === link || pathname.startsWith(link + "/");
   }
 
+  function getBreadcrumbBackgroundColor() {
+    if (pathname.includes("/contact")) return "bg-gray-100";
+    return "bg-white";
+  }
+
   return (
     <nav className="w-full font-main">
       <div className="padding-content" style={{ boxShadow: 'var(--shadow-nav)' }}>
@@ -64,9 +69,9 @@ export default function TopNav() {
             </div>
           </div>
         </div>
-        <div className="padding-content">
+        <div className={`hidden padding-content rounded sm:block ${getBreadcrumbBackgroundColor()}`}>
           <div className="max-w-[1160px] mx-auto">
-            <BreadCrumbs breadCrumbs={breadcrumbs} />
+            <BreadCrumbs breadCrumbs={breadcrumbs}/>
           </div>
       </div>
     </nav>

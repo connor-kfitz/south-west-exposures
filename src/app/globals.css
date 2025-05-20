@@ -43,11 +43,13 @@
   --color-gray-100: #F3F4F6;
   --color-gray-200: #E5E7EB;
   --color-gray-300: #D1D5DB;
+  --color-gray-500: #6b7280;
   --color-gray-600: #4B5563;
   --color-gray-900: #111827;
   --color-blue-500: #3B82F6;
   --color-blue-600: #2563EB;
   --color-blue-800: #1E40AF;
+  --color-violet-900: #4C1D95;
 }
 
 @layer base {
@@ -58,6 +60,8 @@
     --line-height-h2: 44px;
     --font-size-h3: 32px;
     --line-height-h3: 40px;
+    --font-size-h4: 25px;
+    --line-height-h4: 32px;
     --font-size-b6: 16px;
     --line-height-b6: 24px;
     --font-size-b7: 13px;
@@ -96,6 +100,8 @@
       --line-height-h2: 32px;
       --font-size-h3: 23px;
       --line-height-h3: 32px;
+      --font-size-h4: 20px;
+      --line-height-h4: 28px;
       --padding-content: 16px;
     }
   }
@@ -115,6 +121,11 @@
   .text-h3 {
     font-size: var(--font-size-h3);
     line-height: var(--line-height-h3);
+  }
+
+  .text-h4 {
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
   }
 
   .text-b6 {
