@@ -51,7 +51,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
     if (collapsed === "opening") {setTimeout(() => {
       setCollapsed("open")
     }, 300)} 
-  },[collapsed])
+  }, [collapsed])
 
   function getHeaderName(header: string): string {
     switch (header) {
