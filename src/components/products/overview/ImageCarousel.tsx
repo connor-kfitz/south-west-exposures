@@ -58,8 +58,8 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
               bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
               hover:bg-gray-300 focus-visible:bg-gray-300 
               focus-visible:ring-offset-2 
-              focus-visible:ring-offset-blue-600 focus-visible:ring-2 
-              focus-visible:ring-white focus-visible:outline-none
+              focus-visible:ring-offset-white focus-visible:ring-2 
+              focus-visible:ring-blue-600 focus-visible:outline-none
               "
               onClick={() => cycleImages(-1)}
             >
@@ -75,8 +75,8 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
               className="bg-white w-[6.38vw] h-[6.38vw] max-w-[36px] max-h-[36px] rounded-full flex justify-center items-center cursor-pointer 
               hover:bg-gray-300 focus-visible:bg-gray-300 
               focus-visible:ring-offset-2 
-              focus-visible:ring-offset-blue-600 focus-visible:ring-2 
-              focus-visible:ring-white focus-visible:outline-none"
+              focus-visible:ring-offset-white focus-visible:ring-2 
+              focus-visible:ring-blue-600 focus-visible:outline-none"
               onClick={() => cycleImages(1)}
             >
               <div className="w-[40%] h-[40%] relative">
