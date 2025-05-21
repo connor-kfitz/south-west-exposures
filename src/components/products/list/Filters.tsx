@@ -14,7 +14,7 @@ interface FiltersProps {
 export default function Filters({filters, setFilters}: FiltersProps) {
   return (
     <div className="grow min-w-[266px] max-w-[266px]">
-      <h2 className="mb-4 text-h3 leading-h3 text-blue-900 font-semibold">Filter</h2>
+      <h2 className="mb-4 text-h3 leading-h3 text-gray -900 font-semibold">Filter</h2>
       <ul className="flex flex-col gap-4">
         {filters.map((filter, index) => (
           <li key={index}>
@@ -96,13 +96,12 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
 
   return (
     <>
-      <div className="flex justify-between mb-2 items-center">
+      <button className="w-full flex justify-between mb-2 items-center rounded-[2px] cursor-pointer focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={() => toggleCollapsed()}>
         <h3 className="text-b6 leading-b6 text-gray-900 font-semibold">
           {getHeaderName(filter.name)}
         </h3>
-        <button
-          className="cursor-pointer w-4 h-4 rounded-[2px] flex items-center justify-center focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
-          onClick={() => toggleCollapsed()}
+        <div
+          className="w-4 h-4 flex items-center justify-center"
         >
           <Image
             src="/images/products/list/up-chevron.svg"
@@ -114,27 +113,31 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
               transition: "transform 0.3s ease"
             }}
           />
-        </button>
-      </div>
+        </div>
+      </button>
       <ul
         ref={contentRef}
         style={{
           height: (collapsed === "closed" || collapsed === "closing") ? 0 : `${contentRef?.current?.scrollHeight}px`,
         }}
-        className={`transition-all duration-300 ease-in-out flex flex-col gap-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
+        className={`items-start transition-all duration-300 ease-in-out flex flex-col gap-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
       >
         {getSortedFilterValues(filter).map((value, index) => (
-          <li key={index} 
+          <li
+            key={index}
             className="flex items-center gap-2 cursor-pointer"
-            >
-              <Checkbox
-                checked={value.selected}
-                onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
-                tabIndex={collapsed === "closed" || collapsed === "closing" ? -1 : 0}
-              />
-            <label className="text-b6 leading-b6 text-gray-900">
-                {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
-              </label>
+            onClick={() => updateFilter(!value.selected, value.name)}
+          >
+            <Checkbox
+              checked={value.selected}
+              onCheckedChange={(checked) => updateFilter(Boolean(checked), value.name)}
+              onClick={(e) => e.stopPropagation()}
+              tabIndex={collapsed === "closed" || collapsed === "closing" ? -1 : 0}
+              className="cursor-pointer"
+            />
+            <label className="text-b6 leading-b6 text-gray-900 cursor-pointer">
+              {filter.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}
+            </label>
           </li>
         ))}
       </ul>

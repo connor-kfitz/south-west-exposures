@@ -65,7 +65,7 @@ export default function Footer() {
                 height={24}
               />
             </div>
-            <p className="font-[Inter] text-xs leading-[16px]">2025 South West Exposures. All rights reserved</p>
+            <p className="text-xs leading-[16px]">2025 South West Exposures. All rights reserved</p>
           </div>
         </div>
       </div>
