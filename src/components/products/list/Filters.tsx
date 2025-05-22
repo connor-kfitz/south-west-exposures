@@ -101,7 +101,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
           {getHeaderName(filter.name)}
         </h3>
         <div
-          className="w-4 h-4 flex items-center justify-center"
+          className="w-4 h-4 flex items-center justify-center mr-1"
         >
           <Image
             src="/images/products/list/up-chevron.svg"
