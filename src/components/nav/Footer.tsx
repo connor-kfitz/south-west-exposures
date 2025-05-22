@@ -16,16 +16,16 @@ export default function Footer() {
   return (
     <footer className="w-full font-main text-white bg-gray-900 min-h-[241px]">
       <div className="padding-content">
-        <div className="flex items-center max-w-[556px] xl:max-w-[1160px] pb-5 pt-6 mx-auto border-b border-[#BFDBFE]">
+        <div className="flex-col flex max-w-[1160px] pb-5 pt-[32px] mx-auto border-b border-[#BFDBFE] sm:flex-row sm:items-center sm:pt-6">
           <Image
             src="/images/footer/swe-logo.png"
             alt="South West Exposures Logo"
-            className="mr-[37px] relative bottom-[6px]"
+            className="mr-[37px] mb-[7px] relative bottom-[6px] sm:mb-0"
             height={66}
             width={68}
           />
-          <div className="flex flex-wrap justify-between items-center w-full space-y-2">
-            <ul className="flex flex-wrap gap-[32px] gap-y-2 text-b6 leading-b6 relative top-[2px] mr-[32px]">
+          <div className="flex-col flex flex-wrap justify-between w-full space-y-2 sm:flex-row sm:items-center">
+            <ul className="flex-col flex flex-wrap gap-[32px] gap-y-4 pb-6 mb-6 border-b border-[#BFDBFE] text-b6 leading-b6 relative top-[2px] pr-[32px] sm:flex-row sm:pb-0 sm:mb-0 sm:border-b-0 sm:gap-y-2">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link className="whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 
@@ -38,7 +38,8 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <Link href="https://www.linkedin.com/in/swexposures" target="_blank" rel="noopener noreferrer">
+            <Link href="https://www.linkedin.com/in/swexposures" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <span className="mr-4 sm:hidden">LinkedIn</span>
               <Image
                 src="/images/footer/linkedin.svg"
                 alt="LinkedIn Logo"
@@ -48,10 +49,10 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <div className="flex items-center max-w-[556px] xl:max-w-[1160px] py-6 mx-auto">
-          <div className="flex flex-wrap justify-between items-center w-full gap-y-6">
-            <div className="flex gap-5 justify-start items-center">
-              <p className="text-b7 leading-b7">SWE is registered with</p>
+        <div className="flex items-center max-w-[1160px] pt-6 pb-[32px] mx-auto sm:pb-6">
+          <div className="flex flex-wrap justify-between items-center w-full gap-6 gap-y-6">
+            <div className="w-full flex flex-wrap gap-3 sm:gap-5 justify-start items-center">
+              <p className="basis-full sm:basis-auto text-b7 leading-b7">SWE is registered with</p>
               <Image 
                 src="/images/footer/canadian-flag.png"
                 alt="Canadian Flag"
