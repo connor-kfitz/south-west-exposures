@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "@radix-ui/themes/styles.css";
+@import 'swiper/css';
+@import 'swiper/css/pagination';
 
 @plugin "tailwindcss-animate";
 
@@ -102,7 +104,7 @@
       --line-height-h3: 32px;
       --font-size-h4: 20px;
       --line-height-h4: 28px;
-      --padding-content: 16px;
+      --padding-content: 24px;
     }
   }
 }
@@ -201,4 +203,17 @@
 
 .animate-spin-slow {
   animation: spin-slow 1s linear infinite;
+}
+
+.custom-swiper-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #E5E7EB;
+  border-radius: 9999px;
+  opacity: 1;
+  transition: background-color 0.3s;
+}
+
+.custom-swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #4B5563;
 }

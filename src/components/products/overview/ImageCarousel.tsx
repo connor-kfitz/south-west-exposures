@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { ProductImage } from "@/types/admin-products";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import Image from "next/image";
 
 interface ImageCarouselProps {
@@ -19,7 +21,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
 
   return (
     <section className={className}>
-      <ul className="flex flex-wrap gap-4 sm:flex-col">
+      <ul className="hidden flex-wrap gap-4 sm:flex-col sm:flex">
         {images.map((image, index) => (
           image.src &&
           <li key={index}>
@@ -41,7 +43,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
         ))}
       </ul>
 
-      <div className="relative flex justify-center items-center bg-gray-100 rounded-[16px] aspect-[1/1] max-w-[564px] sm:grow md:min-w-[316px]">
+      <div className="hidden relative justify-center items-center bg-gray-100 rounded-[16px] aspect-[1/1] max-w-[564px] sm:grow md:min-w-[316px] sm:flex">
         {images[selectedImageIndex].src &&
           <Image
             src={images[selectedImageIndex].src}
@@ -89,6 +91,32 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
             </button>
           </div> : null
         }
+      </div>
+      <div className="w-screen flex flex-col items-center ml-[-24px] mt-6 sm:hidden">
+        <Swiper
+          modules={[Pagination]}
+          pagination={{ clickable: false, el: '.custom-swiper-pagination' }}
+          className="w-full aspect-[1/1] rounded-xl bg-gray-100"
+        >
+          {images.map((image, index) => (
+            <SwiperSlide
+              key={index}
+              className="flex justify-center items-center rounded-xl relative"
+            >
+              {image.src ? (
+                <Image
+                  src={image.src}
+                  alt={`Image ${index + 1}`}
+                  fill
+                  className="object-contain rounded-xl"
+                />
+              ) : (
+                <div className="text-gray-400">No image</div>
+              )}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="custom-swiper-pagination mt-6 flex justify-center gap-4"/>
       </div>
     </section>
   )

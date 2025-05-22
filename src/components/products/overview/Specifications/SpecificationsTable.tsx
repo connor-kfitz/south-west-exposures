@@ -53,55 +53,54 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
   if (!tableData.length) return null;
 
   return (
-    <div className="inline-block w-full tableBpSm:w-auto rounded-[8px] border border-gray-300">
-      <Table className="w-full tableBpSm:w-auto">
-        <TableHeader>
-          <TableRow className="bg-gray-100">
-            {tableData[0].map((cell, index) => (
-              <TableHead
-                key={index}
-                className={`text-[16px] text-b6 leading-b6 text-black font-medium pt-[15px] pb-[17px] px-[24px] tableBpSm:min-w-[154px]
-                  ${index === 0 ? "rounded-tl-[8px] tableBpSm:min-w-[200px]" : ""}
-                  ${index === tableData[0].length - 1 ? "rounded-tr-[8px]" : ""}
-                  ${index === 2 ? "hidden tableBpSm:table-cell" : ""}
-                  ${index === 3 ? "hidden tableBpMd:table-cell" : ""}
-                `}
-              >
-                {Array.isArray(cell) ? cell.map((line, i) => <div key={i}>{line}</div>) : cell}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tableData.slice(1).map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                <TableCell
-                  key={colIndex}
-                  className={`text-[16px] text-b6 leading-b6 text-black pt-[15px] pb-[17px] px-[24px]
-                    ${colIndex === 0 ? "font-medium" : ""}
-                    ${colIndex > 0 ? "text-gray-600" : "text-black"}
-                    ${colIndex === 2 ? "hidden tableBpSm:table-cell" : ""}
-                    ${colIndex === 3 ? "hidden tableBpMd:table-cell" : ""}
-                    ${rowIndex === tableData.length - 2 && colIndex === 0
-                      ? "rounded-bl-[8px]"
-                      : ""
-                    }
-                    ${rowIndex === tableData.length - 2 && colIndex === row.length - 1
-                      ? "rounded-br-[8px]"
-                      : ""
-                    }
+    <div className="w-[calc(100vw-24px)] overflow-x-scroll">
+      <div className="inline-block rounded-[8px] border border-gray-300">
+        <Table className="">
+          <TableHeader>
+            <TableRow className="bg-gray-100">
+              {tableData[0].map((cell, index) => (
+                <TableHead
+                  key={index}
+                  className={`text-[16px] text-b6 leading-b6 text-black font-medium pt-[15px] pb-[17px] px-[24px] tableBpSm:min-w-[154px]
+                    ${index === 0 ? "rounded-tl-[8px] min-w-[176px] tableBpSm:min-w-[200px]" : ""}
+                    ${index !== 0 ? "min-w-[100px]" : ""}
+                    ${index === tableData[0].length - 1 ? "rounded-tr-[8px] " : ""}
                   `}
                 >
-                  {Array.isArray(cell)
-                    ? cell.map((value, i) => <div key={i}>{value}</div>)
-                    : cell}
-                </TableCell>
+                  {Array.isArray(cell) ? cell.map((line, i) => <div key={i}>{line}</div>) : cell}
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {tableData.slice(1).map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {row.map((cell, colIndex) => (
+                  <TableCell
+                    key={colIndex}
+                    className={`text-[16px] text-b6 leading-b6 text-black pt-[15px] pb-[17px] px-[24px]
+                      ${colIndex === 0 ? "font-medium" : ""}
+                      ${colIndex > 0 ? "text-gray-600" : "text-black"}
+                      ${rowIndex === tableData.length - 2 && colIndex === 0
+                        ? "rounded-bl-[8px]"
+                        : ""
+                      }
+                      ${rowIndex === tableData.length - 2 && colIndex === row.length - 1
+                        ? "rounded-br-[8px]"
+                        : ""
+                      }
+                    `}
+                  >
+                    {Array.isArray(cell)
+                      ? cell.map((value, i) => <div key={i}>{value}</div>)
+                      : cell}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
