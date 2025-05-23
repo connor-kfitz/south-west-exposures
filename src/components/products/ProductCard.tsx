@@ -2,6 +2,7 @@ import { ProductPreview } from "@/types/admin-products";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 
 interface ProductCardProps {
   product: ProductPreview;
@@ -45,7 +46,7 @@ export default function ProductCard({product, className}: ProductCardProps) {
           </li>
           <li>
             <ul className="flex flex-wrap text-gray-600">
-              {product.volumes.map((volume, index) => (
+              {sortVolumeValues(product.volumes).map((volume, index) => (
                 <li
                   key={index}
                   className="text-left after:content-[',\00a0'] last:after:content-[''] leading-[20px]"
@@ -57,7 +58,7 @@ export default function ProductCard({product, className}: ProductCardProps) {
           </li>
           <li>
             <ul className="flex flex-wrap text-gray-600">
-              {product.isotopes.map((isotope, index) => (
+              {sortIsotopeValues(product.isotopes).map((isotope, index) => (
                 <li
                   key={index}
                   className="text-left after:content-[',\00a0'] last:after:content-[''] leading-[20px]"

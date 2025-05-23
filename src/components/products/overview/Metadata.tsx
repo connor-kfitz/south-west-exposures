@@ -1,4 +1,5 @@
 // import { Button } from "@/components/ui/button";
+import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Product } from "@/types/admin-products";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,7 +33,7 @@ export default function Metadata({ product, className }: MetadataProps) {
       </ul>
       <h3 className="font-semibold text-b6 leading-b6">Isotopes</h3>
       <ul className="mb-4 flex gap-4">
-        {product.isotopes.map((isotope, index) => (
+        {sortIsotopeValues(product.isotopes).map((isotope, index) => (
           <li key={index}>
             {/* Todo: Update href to product page with appropriate filter */}
             <Link
@@ -46,7 +47,7 @@ export default function Metadata({ product, className }: MetadataProps) {
       </ul>
       <h3 className="font-semibold text-b6 leading-b6 mb-1">Volume (mL)</h3>
       <ul className="mb-4 text-gray-600">
-        {product.volumes.map((volume, index) => (
+        {sortVolumeValues(product.volumes).map((volume, index) => (
           <li
             key={index}
             className="inline after:content-[',\00a0'] last:after:content-['']"
