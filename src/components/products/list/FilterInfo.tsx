@@ -77,22 +77,28 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
-            <li 
-              key={index}
-              className="flex items-center gap-1 bg-gray-100 rounded-[99px] px-3 py-1 text-b6 leading-b6 text-gray-900 
-              focus-within:ring-offset-2 focus-within:ring-blue-600 focus-within:ring-2 focus-within:ring-offset-white 
-              focus-within:outline-none focus-within:bg-gray-300 hover:bg-gray-300"
-            >
-              <span>{group.name === "isotopes" ? <FormatIsotope isotope={value.name} /> : value.name}</span>
-              <button className="cursor-pointer focus:outline-none focus:ring-0 focus:ring-offset-0" onClick={() => removeFilter(value.name)} >
+            <li key={index}>
+              <button
+                type="button"
+                onClick={() => removeFilter(value.name)}
+                className="flex items-center gap-1 bg-gray-100 rounded-[99px] px-3 py-1 text-b6 leading-b6 text-gray-900
+                         hover:bg-gray-300 active:bg-gray-300 transition
+                         focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white
+                         focus:outline-none focus:bg-gray-300 cursor-pointer"
+              >
+                <span>
+                  {group.name === "isotopes"
+                    ? <FormatIsotope isotope={value.name} />
+                    : value.name}
+                </span>
                 <Image
                   src="/images/products/list/close.svg"
-                  alt="Close"
+                  alt="Remove"
                   width={10}
                   height={10}
                 />
               </button>
-            </li>
+          </li>
           )
         ))
       )}
