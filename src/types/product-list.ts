@@ -6,3 +6,8 @@ export type Filter = {
 }
 
 export type SortByOptions = "relevance" | "new" | "largest" | "smallest" | "";
+
+export type DropdownOption ={
+  value: string;
+  label: string;
+}

@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Product } from "@/types/admin-products";
-import { Filter, SortByOptions } from "@/types/product-list";
+import { DropdownOption, Filter, SortByOptions } from "@/types/product-list";
 import { useState } from "react";
 import Image from "next/image";
 import FormatIsotope from "@/lib/FormatIsotope";
+import FilterAndSortSheet from "./mobile-filters/FilterAndSortSheet";
 
 interface FilterInfoProps {
   products: Product[];
@@ -17,12 +18,32 @@ interface FilterInfoProps {
 }
 
 export default function FilterInfo({ products, filterState, sortOption, setFilterState, setSortOption }: FilterInfoProps) {
+  const sortByOptions: DropdownOption[] = [
+    // { value: "relevance", label: "Relevance" },
+    { value: "new", label: "New" },
+    { value: "largest", label: "Largest first" },
+    { value: "smallest", label: "Smallest first" }
+  ]
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <p className="text-b7 leading-b7 text-gray-900">{products.length} products displayed</p>
-        <SortDropdown sortOption={sortOption} setSortOption={setSortOption}/>
+        <p className="hidden text-b7 leading-b7 text-gray-900 lg:block">{products.length} products <span>displayed</span></p>
+        <p className="text-md leading-[24px] text-gray-900 lg:hidden">{products.length} products</p>
+        <SortDropdown
+          className="hidden lg:flex"
+          sortByOptions={sortByOptions}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
+        <FilterAndSortSheet 
+          filterState={filterState}
+          sortOption={sortOption}
+          sortByOptions={sortByOptions}
+          setFilterState={setFilterState}
+          setSortOption={setSortOption}
+          className="lg:hidden"
+        />
       </div>
       <FilterBadges filterState={filterState} setFilterState={setFilterState}/>
     </>
@@ -73,7 +94,7 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
   }
 
   return (
-    <ul className="flex gap-4 flex-wrap mt-4 min-h-[32px]">
+    <ul className="hidden lg:flex gap-4 flex-wrap mt-4 min-h-[32px]">
       {filterState.map((group) => 
         group.values.map((value, index) => (
           value.selected && (
@@ -114,26 +135,23 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
 }
 
 interface SortDropdownProps {
+  sortByOptions: DropdownOption[];
   sortOption: SortByOptions;
   setSortOption: React.Dispatch<React.SetStateAction<SortByOptions>>;
+  className?: string;
 }
 
-function SortDropdown({ sortOption, setSortOption }: SortDropdownProps) {
+function SortDropdown({ sortByOptions, sortOption, setSortOption, className }: SortDropdownProps) {
   const [open, setOpen] = useState(false);
-
-  const sortByOptions = [
-    // { value: "relevance", label: "Relevance" },
-    { value: "new", label: "New" },
-    { value: "largest", label: "Largest first" },
-    { value: "smallest", label: "Smallest first" }
-  ]
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className={className}>
         <Button
           variant="ghost"
-          className="text-b7 leading-b7 p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+          className="text-b7 leading-b7 p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] 
+            focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 
+            focus-visible:outline-none"
         >
           {sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}
           <Image

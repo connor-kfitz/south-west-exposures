@@ -1,3 +1,5 @@
+"use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { capitalizeFirstLetter, sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Filter } from "@/types/product-list";
@@ -12,14 +14,14 @@ interface FiltersProps {
   className?: string;
 }
 
-export default function Filters({filters, setFilters, className}: FiltersProps) {
+export default function Filters({ filters, setFilters, className }: FiltersProps) {
   return (
     <div className={`${className}`}>
       <h2 className="mb-4 text-h3 leading-h3 text-gray-900 font-semibold">Filter</h2>
       <ul className="flex flex-col gap-4">
         {filters.map((filter, index) => (
           <li key={index}>
-            <FilterBox filter={filter} setFilters={setFilters}/>
+            <FilterBox filter={filter} setFilters={setFilters} />
             {index <= filters.length - 2 ? <div className="w-full h-[1px] bg-gray-100 mt-4"></div> : null}
           </li>
         ))}
@@ -34,7 +36,7 @@ interface FilterBoxProps {
 }
 
 function FilterBox({ filter, setFilters }: FilterBoxProps) {
-  const [collapsed, setCollapsed] = useState<"open" | "closed" | "opening" | "closing">("open");
+  const [collapsed, setCollapsed] = useState<"open" | "closed" | "opening" | "closing">("closed");
   const contentRef = useRef<HTMLUListElement>(null);
 
   function toggleCollapsed() {
@@ -44,14 +46,18 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
       setCollapsed("opening");
     }
   }
-  
+
   useEffect(() => {
-    if (collapsed === "closing") {setTimeout(() => {
-      setCollapsed("closed")
-    }, 300)}
-    if (collapsed === "opening") {setTimeout(() => {
-      setCollapsed("open")
-    }, 300)} 
+    if (collapsed === "closing") {
+      setTimeout(() => {
+        setCollapsed("closed")
+      }, 300)
+    }
+    if (collapsed === "opening") {
+      setTimeout(() => {
+        setCollapsed("open")
+      }, 300)
+    }
   }, [collapsed])
 
   function getHeaderName(header: string): string {
@@ -95,11 +101,23 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
     }
   }
 
+  function getAppliedFilterCount(): string {
+    console.log(filter);
+    let count = 0;
+    filter.values.forEach((value) => {
+      if (value.selected) {
+        count++;
+      }
+    })
+    if (count > 0) return  `(${String(count)})`;
+    return "";
+  }
+
   return (
     <>
-      <button className="w-full flex justify-between mb-2 items-center rounded-[2px] cursor-pointer focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={() => toggleCollapsed()}>
+      <button className="w-full flex justify-between items-center rounded-[2px] cursor-pointer focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={() => toggleCollapsed()}>
         <h3 className="text-b6 leading-b6 text-gray-900 font-semibold">
-          {getHeaderName(filter.name)}
+          {getHeaderName(filter.name)} {getAppliedFilterCount()}
         </h3>
         <div
           className="w-4 h-4 flex items-center justify-center mr-1"
@@ -121,7 +139,7 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
         style={{
           height: (collapsed === "closed" || collapsed === "closing") ? 0 : `${contentRef?.current?.scrollHeight}px`,
         }}
-        className={`items-start transition-all duration-300 ease-in-out flex flex-col gap-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
+        className={`items-start transition-all duration-300 ease-in-out flex flex-col gap-2 mt-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
       >
         {getSortedFilterValues(filter).map((value, index) => (
           <li
