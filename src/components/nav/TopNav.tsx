@@ -6,6 +6,7 @@ import { navLinks, socialLinks } from "@/lib/constants";
 import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "./BreadCrumbs";
+import MobileNav from "./MobileNav";
 
 export default function TopNav() {
 
@@ -36,20 +37,14 @@ export default function TopNav() {
             height={47}
             width={72}
           />
-          <Image
-            src="/images/top-nav/burger-menu.svg"
-            alt="Burder Menu"
-            height={28}
-            width={28}
-            className="ml-auto block sm:hidden"
-          />
-          <div className="hidden sm:flex flex-wrap justify-between items-center w-full gap-y-2">
+          <MobileNav navLinks={navLinks} isActiveLink={isActiveLink}/>
+          <div className="hidden md:flex flex-wrap justify-between items-center w-full gap-y-2">
             <ul className="flex flex-wrap gap-[32px] text-gray-900 text-b6 leading-b6 relative top-[2px] mr-[32px]">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 
                     focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white 
-                    focus-visible:outline-none ${isActiveLink(link.href) ? ' underline underline-offset-3' : ''}`}
+                    focus-visible:outline-none ${isActiveLink(link.href) ? " underline underline-offset-3" : ""}`}
                     href={link.href}
                   >
                     {link.name}
@@ -76,7 +71,7 @@ export default function TopNav() {
           </div>
         </div>
       </div>
-      <div className={`hidden padding-content rounded sm:block ${getBreadcrumbBackgroundColor()}`}>
+      <div className={`hidden padding-content rounded md:block ${getBreadcrumbBackgroundColor()}`}>
         <div className="max-w-[1160px] mx-auto">
           <BreadCrumbs breadCrumbs={breadcrumbs}/>
         </div>

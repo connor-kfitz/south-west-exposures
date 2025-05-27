@@ -12,8 +12,8 @@ export const specificationTableBase = [
 ];
 
 export const navLinks: TopNavLink[] = [
-  { name: "About Us", href: "/" },
   { name: "Products", href: "/products" },
+  { name: "About Us", href: "/" },
   // { name: "News", href: "/news" },
   { name: "Contact Us", href: "/contact" }
 ];
