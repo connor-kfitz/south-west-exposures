@@ -39,7 +39,7 @@ export default function Footer() {
               ))}
             </ul>
             <Link href="https://www.linkedin.com/in/swexposures" target="_blank" rel="noopener noreferrer" className="flex items-center">
-              <span className="mr-4 sm:hidden">LinkedIn</span>
+              <span className="mr-2 sm:hidden">LinkedIn</span>
               <Image
                 src="/images/footer/linkedin.svg"
                 alt="LinkedIn Logo"
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center max-w-[1160px] pt-6 pb-[32px] mx-auto sm:pb-6">
           <div className="flex flex-wrap justify-between items-center w-full gap-6 gap-y-6">
-            <div className="w-full flex flex-wrap gap-3 sm:gap-5 justify-start items-center">
+            <div className="w-auto sm:w-full flex flex-wrap gap-3 sm:gap-5 justify-start items-center">
               <p className="basis-full sm:basis-auto text-b7 leading-b7">SWE is registered with</p>
               <Image 
                 src="/images/footer/canadian-flag.png"
@@ -66,7 +66,7 @@ export default function Footer() {
                 height={24}
               />
             </div>
-            <p className="text-xs leading-[16px]">2025 South West Exposures. All rights reserved</p>
+            <p className="text-b7 leading-b7">2025 South West Exposures. All rights reserved</p>
           </div>
         </div>
       </div>
