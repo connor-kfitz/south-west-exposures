@@ -123,19 +123,19 @@ export async function POST(req: Request) {
         const {
           volume, weight, height, innerDiameter, outerDiameter,
           shieldingSide, shieldingSidePbEquiv, topShield,
-          topShieldPbEquiv, bottom, bottomPbEquiv
+          topShieldPbEquiv, bottom, bottomPbEquiv, partNumber
         } = spec;
 
         await client.query(
           `INSERT INTO products_volume_metrics (
              product_id, volume_id, weight, height, inner_diameter, outer_diameter,
              shielding_side, shielding_side_pb_equiv, top_shield, top_shield_pb_equiv,
-             bottom, bottom_pb_equiv
-           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`,
+             bottom, bottom_pb_equiv, part_number
+           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);`,
           [
             productId, volume, weight, height, innerDiameter, outerDiameter,
             shieldingSide, shieldingSidePbEquiv, topShield, topShieldPbEquiv,
-            bottom, bottomPbEquiv
+            bottom, bottomPbEquiv, partNumber?.trim() ? partNumber : null
           ]
         );
       }

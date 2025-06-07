@@ -76,7 +76,9 @@ export const volumeFormSchema = z.object({
     .refine(val => /^(-?\d*\.?\d+)$/.test(val), {
       message: "Bottom Pb equivalent must be a valid number"
     })
-    .transform(val => val.trim())
+    .transform(val => val.trim()),
+
+  partNumber: z.string().transform(val => val.trim())
 });
 
 export const faqFormSchema = z.object({
@@ -212,11 +214,12 @@ export default function NewProductForm({
         topShield: String(specification.topShield),
         topShieldPbEquiv: String(specification.topShieldPbEquiv),
         bottom: String(specification.bottom),
-        bottomPbEquiv: String(specification.bottomPbEquiv)
+        bottomPbEquiv: String(specification.bottomPbEquiv),
+        partNumber: String(specification.partNumber || "")
       }
       return modifiedSpecification
     }
-
+    
     setFormValues(editProduct);
 
   }, [editProduct, form, volumeOptions, productOptions]);
@@ -267,7 +270,8 @@ export default function NewProductForm({
       topShield: "",
       topShieldPbEquiv: "",
       bottom: "",
-      bottomPbEquiv: ""
+      bottomPbEquiv: "",
+      partNumber: ""
      }
     form.setValue("specifications", [...specifications, newSpecifications]);
   }

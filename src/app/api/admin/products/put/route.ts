@@ -203,12 +203,12 @@ async function updateSpecifications(client: PoolClient, formData: ProductFormDat
              SET weight = $3, height = $4, inner_diameter = $5, outer_diameter = $6,
                  shielding_side = $7, shielding_side_pb_equiv = $8, 
                  top_shield = $9, top_shield_pb_equiv = $10, 
-                 bottom = $11, bottom_pb_equiv = $12
+                 bottom = $11, bottom_pb_equiv = $12, part_number = $13
              WHERE product_id = $1 AND volume_id = $2;`,
           [
             formData.productId, spec.volume, spec.weight, spec.height, spec.innerDiameter, spec.outerDiameter,
             spec.shieldingSide, spec.shieldingSidePbEquiv, spec.topShield, spec.topShieldPbEquiv,
-            spec.bottom, spec.bottomPbEquiv
+            spec.bottom, spec.bottomPbEquiv, spec.partNumber?.trim() ? spec.partNumber : null
           ]
         );
       } else {
@@ -216,12 +216,12 @@ async function updateSpecifications(client: PoolClient, formData: ProductFormDat
           `INSERT INTO products_volume_metrics (
                product_id, volume_id, weight, height, inner_diameter, outer_diameter,
                shielding_side, shielding_side_pb_equiv, top_shield, top_shield_pb_equiv,
-               bottom, bottom_pb_equiv
-             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`,
+               bottom, bottom_pb_equiv, part_number
+             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);`,
           [
             formData.productId, spec.volume, spec.weight, spec.height, spec.innerDiameter, spec.outerDiameter,
             spec.shieldingSide, spec.shieldingSidePbEquiv, spec.topShield, spec.topShieldPbEquiv,
-            spec.bottom, spec.bottomPbEquiv
+            spec.bottom, spec.bottomPbEquiv, spec.partNumber?.trim() ? spec.partNumber : null
           ]
         );
       }
@@ -362,6 +362,7 @@ type ProductSpecification = {
   topShield: number;
   topShieldPbEquiv: number;
   weight: number;
+  partNumber?: string;
 }
 
 type ProductFaq = {

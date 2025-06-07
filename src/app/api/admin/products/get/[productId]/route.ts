@@ -58,7 +58,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
           'topShield', pvm.top_shield,
           'topShieldPbEquiv', pvm.top_shield_pb_equiv,
           'bottom', pvm.bottom,
-          'bottomPbEquiv', pvm.bottom_pb_equiv
+          'bottomPbEquiv', pvm.bottom_pb_equiv,
+          'partNumber', pvm.part_number
         )) FILTER (WHERE pvm.volume_id IS NOT NULL), '[]') AS specifications,
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(

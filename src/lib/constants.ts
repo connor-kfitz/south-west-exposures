@@ -8,7 +8,7 @@ export const specificationTableBase = [
   ["OD (in)"],
   ["Shielding side (in)", "Pb equiv (in)"],
   ["Top shield (in)", "Pb equiv (in)"],
-  ["Bottom (in)", "Pb equiv (in)"],
+  ["Bottom (in)", "Pb equiv (in)"]
 ];
 
 export const navLinks: TopNavLink[] = [

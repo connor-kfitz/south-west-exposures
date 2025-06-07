@@ -24,6 +24,7 @@ export function VolumeForm({ mainForm, index, formSpacing, className }: VolumeFo
     { name: "topShieldPbEquiv", label: "Top Shield Pb Equiv" },
     { name: "bottom", label: "Bottom" },
     { name: "bottomPbEquiv", label: "Bottom Pb Equiv" },
+    { name: "partNumber", label: "Part Number" }
   ];
 
   return (

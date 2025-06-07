@@ -102,7 +102,6 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
   }
 
   function getAppliedFilterCount(): string {
-    console.log(filter);
     let count = 0;
     filter.values.forEach((value) => {
       if (value.selected) {

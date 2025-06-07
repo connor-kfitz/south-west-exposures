@@ -15,10 +15,17 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
   useEffect(() => {
     if (!specifications.length) return;
 
+    const hasPartNumber = specifications.some(
+      (spec) => spec.partNumber?.trim()
+    );
+
     const tableArray: (string[])[][] = [];
     const sortedSpecifications = sortSpecifications(specifications);
 
-    tableArray.push(specificationTableBase);
+    const baseHeader = [...specificationTableBase];
+    if (hasPartNumber) baseHeader.push(["Part Number"]);
+    tableArray.push(baseHeader);
+
     formatSpecifications(sortedSpecifications);
     setTableData(transpose(tableArray));
 
@@ -45,6 +52,7 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
           [String(spec.topShield), String(spec.topShieldPbEquiv)],
           [String(spec.bottom), String(spec.bottomPbEquiv)],
         ];
+        newData.push([spec.partNumber || "-"]);
         tableArray.push(newData);
       });
     }

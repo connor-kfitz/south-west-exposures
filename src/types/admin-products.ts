@@ -67,4 +67,5 @@ export type ProductSpecification = {
   topShieldPbEquiv: number;
   weight: number;
   volume?: string;
+  partNumber?: string;
 }
