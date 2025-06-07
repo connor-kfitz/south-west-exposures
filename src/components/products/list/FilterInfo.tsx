@@ -28,7 +28,7 @@ export default function FilterInfo({ products, filterState, sortOption, setFilte
   return (
     <>
       <div className="flex justify-between items-center">
-        <p className="hidden text-b7 leading-b7 text-gray-900 lg:block">{products.length} products <span>displayed</span></p>
+        <p className="hidden text-b6 leading-b6 text-gray-900 lg:block">{products.length} products <span>displayed</span></p>
         <p className="text-md leading-[24px] text-gray-900 lg:hidden">{products.length} products</p>
         <SortDropdown
           className="hidden lg:flex"
@@ -149,11 +149,11 @@ function SortDropdown({ sortByOptions, sortOption, setSortOption, className }: S
       <DropdownMenuTrigger asChild className={className}>
         <Button
           variant="ghost"
-          className="text-b7 leading-b7 p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] 
+          className="p-0 text-gray-900 rounded-[2px] hover:bg-white hover:text-gray-900 h-[20px] 
             focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 
             focus-visible:outline-none"
         >
-          {sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}
+          <span className="text-b6 leading-b6">{sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}</span>
           <Image
             src="/images/products/list/down-chevron.svg"
             alt="Down Chevron"

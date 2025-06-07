@@ -80,7 +80,7 @@ export default function FilterAndSortSheet({ filterState, sortOption, sortByOpti
       </SheetTrigger>
       <SheetContent side="right" className="block font-main w-full p-6 pt-[74px] bg-white sm:max-w-auto border-none [&>button[data-close]]:hidden">
         <SheetHeader className="p-0 w-0 h-0">
-          <SheetTitle>Filters</SheetTitle>
+          <SheetTitle></SheetTitle>
         </SheetHeader>
         <Sort sortOption={localSortOption} sortByOptions={sortByOptions} setSortOption={setLocalSortOption}/>
         <Filters filters={localFilters} setFilters={setLocalFilters} />

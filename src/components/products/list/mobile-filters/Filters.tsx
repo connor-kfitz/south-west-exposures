@@ -22,7 +22,7 @@ export default function Filters({ filters, setFilters, className }: FiltersProps
         {filters.map((filter, index) => (
           <li key={index}>
             <FilterBox filter={filter} setFilters={setFilters} />
-            {index <= filters.length - 2 ? <div className="w-full h-[1px] bg-gray-100 mt-4"></div> : null}
+            {index <= filters.length - 2 ? <div className="w-full h-[1px] bg-gray-300 mt-4"></div> : null}
           </li>
         ))}
       </ul>

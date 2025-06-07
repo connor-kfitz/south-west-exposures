@@ -87,7 +87,7 @@ export default function Sort({ sortOption, sortByOptions, setSortOption }: SortP
           ))}
         </RadioGroup>
       </div>
-      <div className="w-full h-[1px] bg-gray-100 mb-[32px]"></div>
+      <div className="w-full h-[1px] bg-gray-300 mb-[32px]"></div>
     </>
   )
 }

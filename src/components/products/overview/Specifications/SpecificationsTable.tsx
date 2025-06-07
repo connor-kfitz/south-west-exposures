@@ -53,7 +53,7 @@ export function SpecificationsTable({ specifications }: SpecificationsTableProps
   if (!tableData.length) return null;
 
   return (
-    <div className="w-[calc(100vw-24px)] overflow-x-scroll">
+    <div className="w-[calc(100vw-24px)] md:w-[664px] overflow-x-scroll sm:overflow-x-auto">
       <div className="inline-block rounded-[8px] border border-gray-300">
         <Table className="">
           <TableHeader>

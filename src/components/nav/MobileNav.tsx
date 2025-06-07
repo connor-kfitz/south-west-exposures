@@ -28,7 +28,7 @@ export default function MobileNav({navLinks, isActiveLink}: MobileNavProps) {
         overlayClassName="bg-black/60"
       >
         <SheetHeader className="p-0 w-0 h-0">
-          <SheetTitle>Side Navigation</SheetTitle>
+          <SheetTitle></SheetTitle>
         </SheetHeader>
         <ul className="flex flex-col items-stretch gap-[14px] text-gray-900 text-[18px] leading-[24px]">
           {navLinks.map((link, index) => (
