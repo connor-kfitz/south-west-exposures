@@ -149,6 +149,8 @@
 @theme {
   --breakpoint-tableBpSm: 34.875rem;
   --breakpoint-tableBpMd: 44.5rem;
+
+  --breakpoint-productListXs: 25rem;
 }
 
 @theme inline {

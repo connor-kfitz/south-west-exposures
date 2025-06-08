@@ -155,12 +155,12 @@ function SortDropdown({ sortByOptions, sortOption, setSortOption, className }: S
         >
           <span className="text-b6 leading-b6">{sortOption ? `Sort by: ${sortByOptions.find(option => option.value === sortOption)?.label}` : "Sort by"}</span>
           <Image
-            src="/images/products/list/down-chevron.svg"
+            src="/images/products/list/up-chevron.svg"
             alt="Down Chevron"
-            width={15}
-            height={8}
+            width={12}
+            height={6}
             style={{
-              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              transform: open ? "rotate(0deg)" : "rotate(180deg)",
               transition: "transform 0.3s ease"
             }}
           />  
