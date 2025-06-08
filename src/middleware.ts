@@ -3,6 +3,10 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  
+  if (url.pathname === "/") {
+    return NextResponse.redirect(new URL("/products", req.url));
+  }
 
   if (url.pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -16,5 +20,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: "/admin/:path*"
-};
+  matcher: ["/", "/admin/:path*"]
+}
