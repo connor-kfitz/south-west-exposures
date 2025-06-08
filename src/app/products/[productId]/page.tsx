@@ -1,10 +1,9 @@
 import ProductOverview from "@/components/products/overview/ProductOverview";
 import { Product } from "@/types/admin-products";
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
 
 export const revalidate = 0;
 
-// Todo: Add metadata
 export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
   const { productId } = await params
 
@@ -12,7 +11,7 @@ export async function generateMetadata({ params }: {params: Promise<{ productId:
 
   return {
     title: product.name,
-    description: ""
+    description: product.description || "",
   }
 }
 

@@ -32,12 +32,11 @@ export default function Metadata({ product, className }: MetadataProps) {
         ))}
       </ul>
       <h3 className="font-semibold text-b6 leading-b6">Isotopes</h3>
-      <ul className="mb-4 flex gap-4">
+      <ul className="mb-4 flex gap-4 flex-wrap">
         {sortIsotopeValues(product.isotopes).map((isotope, index) => (
           <li key={index}>
-            {/* Todo: Update href to product page with appropriate filter */}
             <Link
-              href=""
+              href={`/products?isotopes=${isotope.name.toLowerCase()}`}
               className="inline-block text-blue-600 underline underline-offset-3 p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
             >
               {isotope.name}
@@ -46,7 +45,7 @@ export default function Metadata({ product, className }: MetadataProps) {
         ))}
       </ul>
       <h3 className="font-semibold text-b6 leading-b6 mb-1">Volume (mL)</h3>
-      <ul className="mb-4 text-gray-600">
+      <ul className="mb-4 text-gray-600 flex-wrap">
         {sortVolumeValues(product.volumes).map((volume, index) => (
           <li
             key={index}

@@ -4,6 +4,7 @@ import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { Product } from "@/types/admin-products";
 import { Filter, SortByOptions } from "@/types/product-list";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Filters from "./Filters";
 import FilterInfo from "./FilterInfo";
 import Products from "./Products";
@@ -34,6 +35,37 @@ export default function ProductList({products, filters}: ProductListProps) {
       values: group.values.map(value => ({ ...value, selected: false }))
     }))
   );
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const firstEntry = searchParams.entries().next();
+    if (firstEntry.done) return;
+    const [filterName, filterValue] = firstEntry.value;
+    if (!filterName || !filterValue) return;
+    
+    setFilterState((prevFilters) =>
+      prevFilters.map((group) => {
+        if (group.name.toLowerCase() === filterName) {
+          return {
+            ...group,
+            values: group.values.map((v) => ({
+              ...v,
+              selected: v.name.toLowerCase() === filterValue.toLowerCase()
+            }))
+          }
+        } else {
+          return {
+            ...group,
+            values: group.values.map((v) => ({
+              ...v,
+              selected: false
+            }))
+          }
+        }
+      })
+    );
+  }, [searchParams, setFilterState]);
 
   useEffect(() => {
 
