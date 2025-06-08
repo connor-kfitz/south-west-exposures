@@ -95,6 +95,12 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
     }
   }
 
+  useEffect(() => {
+    if (contentRef.current && collapsed === "open") {
+      contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+    }
+  }, [collapsed]);
+
   return (
     <>
       <button className="w-full flex justify-between mb-2 items-center rounded-[2px] cursor-pointer focus-visible:ring-offset-3 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" onClick={() => toggleCollapsed()}>
