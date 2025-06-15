@@ -22,7 +22,8 @@ const buttonVariants = cva(
         primary:
           "bg-blue-600 text-white rounded-[999px] font-semibold hover:bg-blue-800 focus:bg-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
         primaryGhost:
-          "bg-white border-[2px] border-blue-600 rounded-[999px] font-semibold hover:border-blue-800 hover:text-blue-800 focus:border-blue-800 focus:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+          "bg-white border-[2px] border-blue-600 rounded-[999px] font-semibold hover:border-blue-800 hover:text-blue-800 focus:border-blue-800 focus:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
+        hero: "text-violet-800 bg-yellow-300 rounded-full"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -30,7 +31,8 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         primaryDefault: "px-6 pt-[9px] pb-[11px] text-b6 leading-b6 text-white",
-        primaryGhostDefault: "px-6 pt-[7px] pb-[9px] text-b6 leading-b6 text-blue-600"
+        primaryGhostDefault: "px-6 pt-[7px] pb-[9px] text-b6 leading-b6 text-blue-600",
+        hero: "px-[48px] pt-[9px] pb-[11px] text-md leading-[24px]"
       },
     },
     defaultVariants: {

@@ -1,6 +1,10 @@
-export default function ContactPage() {
+import About from "@/components/about/About";
+
+export default function AboutPage() {
   
   return (
-    <div></div>
+    <main className="font-main">
+      <About/>
+    </main>
   )
 }

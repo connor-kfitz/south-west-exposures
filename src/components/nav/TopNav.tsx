@@ -71,11 +71,11 @@ export default function TopNav() {
           </div>
         </div>
       </div>
-      <div className={`hidden padding-content rounded md:block ${getBreadcrumbBackgroundColor()}`}>
+      {breadcrumbs.length ? <div className={`hidden padding-content rounded md:block ${getBreadcrumbBackgroundColor()}`}>
         <div className="max-w-[1160px] mx-auto">
           <BreadCrumbs breadCrumbs={breadcrumbs}/>
         </div>
-      </div>
+      </div> : null}
     </nav>
   )
 }
