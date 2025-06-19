@@ -2,10 +2,17 @@
 
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { useEffect } from "react";
+import { Product } from "@/types/admin-products";
 import HeroHeader from "./HeroHeader";
 import ProductRange from "./ProductRange";
+import CustomSolutions from "./CustomSolutions";
+import PopularProducts from "./PopularProducts";
 
-export default function About() {
+interface AboutProps {
+  popularProducts: Product[];
+}
+
+export default function About({ popularProducts }: AboutProps) {
 
   const { setBreadcrumbs } = useBreadcrumbs();
 
@@ -15,10 +22,12 @@ export default function About() {
 
   return (
     <>
-      <HeroHeader />
+      <HeroHeader/>
       <div className="max-w-[1160px] mx-auto">
         <ProductRange/>
       </div>
+      <CustomSolutions/>
+      <PopularProducts popularProducts={popularProducts}/>
     </>
   )
 }

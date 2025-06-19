@@ -27,8 +27,8 @@ export default function ProductRange() {
   ]
 
   return (
-    <section>
-      <h2 className="text-d3 font-semibold text-gray-900 mb-[64px]">Our product range</h2>
+    <section className="mb-[64px]">
+      <h2 className="text-d3 font-semibold text-gray-900 mb-[24px]">Our product range</h2>
       <ul className="flex justify-center gap-[32px]">
         {productTypes.map((product, index) => (
           <li key={index} className="flex items-center mb-4 group">

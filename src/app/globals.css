@@ -60,6 +60,8 @@
   :root {
     --font-size-d1: 90px;
     --line-height-d1: 92px;
+    --font-size-d2: 75px;
+    --line-height-d2: 80px;
     --font-size-d3: 60px;
     --line-height-d3: 68px;
     --font-size-h1: 48px;
@@ -95,6 +97,8 @@
     :root {
       --font-size-d1: 68px;
       --line-height-d1: 72px;
+      --font-size-d2: 56px;
+      --line-height-d2: 60px;
       --font-size-d3: 48px;
       --line-height-d3: 52px;
       --font-size-h1: 40px;
@@ -108,8 +112,10 @@
 
   @media (max-width: 640px) {
     :root {
-      --font-size-d1: 41px;
+      --font-size-d1: 41px; 
       --line-height-d1: 44px;
+      --font-size-d2: 37px;
+       --line-height-d2: 44px;
       --font-size-d3: 33px;
       --line-height-d3: 40px;
       --font-size-h1: 29px;
@@ -131,6 +137,11 @@
   .text-d1 {
       font-size: var(--font-size-d1);
       line-height: var(--line-height-d1);
+  }
+
+  .text-d2 {
+    font-size: var(--font-size-d2);
+    line-height: var(--line-height-d2);
   }
 
   .text-d3 {
@@ -184,6 +195,10 @@
       #4338CA 68.79%,
       #2E1065 100%
     );
+  }
+
+  .bg-custom-solutions {
+    background: linear-gradient(309deg, #5EEAD4 -81.73%, #FEF9C3 78.12%); 
   }
 }
 
