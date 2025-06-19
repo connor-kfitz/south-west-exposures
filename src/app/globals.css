@@ -198,7 +198,11 @@
   }
 
   .bg-custom-solutions {
-    background: linear-gradient(309deg, #5EEAD4 -81.73%, #FEF9C3 78.12%); 
+    background:
+      url('/images/about/custom-solutions.png'),
+      linear-gradient(309deg, #5EEAD4 -81.73%, #FEF9C3 78.12%);
+    background-size: cover;
+    background-position: center;
   }
 }
 

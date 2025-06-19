@@ -12,7 +12,7 @@ export default function PopularProducts({ popularProducts }: PopularProductsProp
 
   return (
     <section className="max-w-[1157px] mx-auto">
-      <h2 className="text-33 leading-d3 text-gray-900 font-semibold mb-4">
+      <h2 className="text-h1 text-gray-900 font-semibold mb-4">
         Popular Products
       </h2>
 

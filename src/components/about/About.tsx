@@ -7,6 +7,7 @@ import HeroHeader from "./HeroHeader";
 import ProductRange from "./ProductRange";
 import CustomSolutions from "./CustomSolutions";
 import PopularProducts from "./PopularProducts";
+import HealthPhysics from "./HealthPhysics";
 
 interface AboutProps {
   popularProducts: Product[];
@@ -27,6 +28,7 @@ export default function About({ popularProducts }: AboutProps) {
         <ProductRange/>
       </div>
       <CustomSolutions/>
+      <HealthPhysics/>
       <PopularProducts popularProducts={popularProducts}/>
     </>
   )
