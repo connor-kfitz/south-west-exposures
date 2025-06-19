@@ -3,6 +3,7 @@
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { useEffect } from "react";
 import HeroHeader from "./HeroHeader";
+import ProductRange from "./ProductRange";
 
 export default function About() {
 
@@ -15,8 +16,8 @@ export default function About() {
   return (
     <>
       <HeroHeader />
-      <div className="max-w-[1160px] padding-content mx-auto">
-
+      <div className="max-w-[1160px] mx-auto">
+        <ProductRange/>
       </div>
     </>
   )

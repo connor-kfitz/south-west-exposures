@@ -60,6 +60,8 @@
   :root {
     --font-size-d1: 90px;
     --line-height-d1: 92px;
+    --font-size-d3: 60px;
+    --line-height-d3: 68px;
     --font-size-h1: 48px;
     --line-height-h1: 52px;
     --font-size-h2: 40px;
@@ -93,6 +95,8 @@
     :root {
       --font-size-d1: 68px;
       --line-height-d1: 72px;
+      --font-size-d3: 48px;
+      --line-height-d3: 52px;
       --font-size-h1: 40px;
       --line-height-h1: 44px ;
       --font-size-h2: 33px; 
@@ -106,6 +110,8 @@
     :root {
       --font-size-d1: 41px;
       --line-height-d1: 44px;
+      --font-size-d3: 33px;
+      --line-height-d3: 40px;
       --font-size-h1: 29px;
       --line-height-h1: 36px;
       --font-size-h2: 26px;
@@ -125,7 +131,12 @@
   .text-d1 {
       font-size: var(--font-size-d1);
       line-height: var(--line-height-d1);
-    }
+  }
+
+  .text-d3 {
+    font-size: var(--font-size-d3);
+    line-height: var(--line-height-d3);
+  }
 
   .text-h1 {
     font-size: var(--font-size-h1);

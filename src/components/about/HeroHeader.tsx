@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 
 export default function HeroHeader() {
   return (
-    <header className="flex justify-center">
+    <header className="flex justify-center mb-[135px]">
       <div className="w-full max-w-[1440px]">
         <div className="bg-hero-radial w-full max-w-[1060px] pt-[48px] pl-[144px] pb-[72px]">
           <h1 className="text-d1 font-bold text-white mb-6">
