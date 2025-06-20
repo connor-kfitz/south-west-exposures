@@ -1,5 +1,6 @@
-import { Button } from "../ui/button";
+import Link from "next/link";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 export default function HeroHeader() {
   return (
@@ -15,7 +16,7 @@ export default function HeroHeader() {
               drug therapies
             </h1>
             <p className="text-b5 text-white max-w-[564px] mb-6">South West Exposures is a firm specializing in the design and fabrication of disruptive shielding technology.</p>
-            <Button variant="hero" size="hero" className="">Shop now</Button>
+            <Link href="/products"><Button variant="hero" size="hero" className="">Shop now</Button></Link>
           </div>
         </div>
         <Image

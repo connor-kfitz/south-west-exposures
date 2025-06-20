@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 
 export default function CustomSolutions() {
@@ -7,7 +8,7 @@ export default function CustomSolutions() {
         <div className="xl:ml-auto max-w-[465px] px-[48px] xl:px-0">
           <h2 className="text-d2 text-gray-900 font-bold mb-4">Custom solutions for your drug therapies</h2>
           <p className="text-b6 text-gray-600 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-          <Button variant="primary" size="primaryDefault" className="text-md font-medium">Custome your solution</Button>
+          <Link href="mailto:robert.kamen@swexposures.com"><Button variant="primary" size="primaryDefault" className="text-md font-medium">Custome your solution</Button></Link>
         </div>
       </div>
     </section>
