@@ -27,24 +27,26 @@ export default function ProductRange() {
   ]
 
   return (
-    <section className="mb-[64px]">
-      <h2 className="text-d3 font-semibold text-gray-900 mb-[24px]">Our product range</h2>
-      <ul className="flex justify-center gap-[32px]">
-        {productTypes.map((product, index) => (
-          <li key={index} className="flex items-center mb-4 group">
-            <Link href={product.path} className="block">
-              <Image 
-                src={product.imageSrc}
-                alt={product.name}
-                className="w-[266px] transition-transform duration-500 ease-in-out group-hover:scale-[1.05]"
-                width={266}
-                height={64}
-              />
-              <h3 className="text-b6 leading-b6 text-gray-900 text-center font-semibold">{product.name}</h3>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <section className="mb-[64px] px-[48px]">
+      <div className="max-w-[1160px] mx-auto">
+        <h2 className="text-d3 font-semibold text-gray-900 mb-[24px]">Our product range</h2>
+        <ul className="grid gap-4 grid-cols-2 md:grid-cols-4">
+          {productTypes.map((product, index) => (
+            <li key={index} className="mb-4 group">
+              <Link href={product.path} className="block">
+                <Image 
+                  src={product.imageSrc}
+                  alt={product.name}
+                  className="w-full md:w-[266px] transition-transform duration-500 ease-in-out group-hover:scale-[1.05]"
+                  width={266}
+                  height={64}
+                />
+                <h3 className="text-b6 leading-b6 text-gray-900 text-center font-semibold">{product.name}</h3>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   )
 }

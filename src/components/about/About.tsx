@@ -24,9 +24,7 @@ export default function About({ popularProducts }: AboutProps) {
   return (
     <>
       <HeroHeader/>
-      <div className="max-w-[1160px] mx-auto">
-        <ProductRange/>
-      </div>
+      <ProductRange/>
       <CustomSolutions/>
       <HealthPhysics/>
       <PopularProducts popularProducts={popularProducts}/>
