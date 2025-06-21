@@ -30,13 +30,15 @@ export default function TopNav() {
     <nav className="w-full font-main">
       <div className="padding-content" style={{ boxShadow: 'var(--shadow-nav)' }}>
         <div className="flex items-center min-h-[88px] max-w-[1160px] py-3 mx-auto">
-          <Image 
-            src="/images/top-nav/swe-logo.png"
-            alt="South West Exposures Logo"
-            className="mr-[32px] relative bottom-[6px]"
-            height={47}
-            width={72}
-          />
+          <Link href="/about">
+            <Image
+              src="/images/top-nav/swe-logo.png"
+              alt="South West Exposures Logo"
+              className="mr-[32px] relative bottom-[6px]"
+              height={47}
+              width={72}
+            />
+          </Link>
           <MobileNav navLinks={navLinks} isActiveLink={isActiveLink}/>
           <div className="hidden md:flex flex-wrap justify-between items-center w-full gap-y-2">
             <ul className="flex flex-wrap gap-[32px] text-gray-900 text-b6 leading-b6 relative top-[2px] mr-[32px]">

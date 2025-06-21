@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   
   if (url.pathname === "/") {
-    return NextResponse.redirect(new URL("/products", req.url));
+    return NextResponse.redirect(new URL("/about", req.url));
   }
 
   if (url.pathname.startsWith("/admin")) {
