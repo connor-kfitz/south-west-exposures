@@ -8,7 +8,7 @@ export default function CustomSolutions() {
         <div className="xl:ml-auto max-w-[465px] px-[48px] xl:px-0">
           <h2 className="text-d2 text-gray-900 font-bold mb-4">Custom solutions for your drug therapies</h2>
           <p className="text-b6 text-gray-600 mb-6">SWE combines industry knowledge with innovative engineering and designs to provide practical solutions in support of Drug Development, Distribution and Administration. Theranostics and RLT continue to evolve towards Standard of Care in Oncology. SWE is a trusted industry partner for these new and emerging technologies.</p>
-          <Link href="mailto:robert.kamen@swexposures.com"><Button variant="primary" size="primaryDefault" className="text-md font-medium">Custome your solution</Button></Link>
+          <Link href="mailto:robert.kamen@swexposures.com"><Button variant="primary" size="primaryDefault" className="text-md font-medium">Customize your solution</Button></Link>
         </div>
       </div>
     </section>
