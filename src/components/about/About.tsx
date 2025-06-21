@@ -8,6 +8,7 @@ import ProductRange from "./ProductRange";
 import CustomSolutions from "./CustomSolutions";
 import PopularProducts from "./PopularProducts";
 import HealthPhysics from "./HealthPhysics";
+import Compliance from "./Compliance";
 
 interface AboutProps {
   popularProducts: Product[];
@@ -27,6 +28,7 @@ export default function About({ popularProducts }: AboutProps) {
       <ProductRange/>
       <CustomSolutions/>
       <HealthPhysics/>
+      <Compliance/>
       <PopularProducts popularProducts={popularProducts}/>
     </>
   )
