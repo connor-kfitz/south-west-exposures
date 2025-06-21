@@ -4,7 +4,7 @@ export async function GET() {
   const client = await pool.connect();
 
   try {
-    const productNames = ['TS5 / TS10', '1', 'No Faq', 'Product 2'];
+    const productNames = ['Theranostic Transport Vial Shields', 'Theranostic Vial Shields', 'Theranostic Unit Dose PIG', 'SAFE LEAD Vial Shields'];
 
     const query = `
       SELECT
