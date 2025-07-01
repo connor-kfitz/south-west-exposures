@@ -7,22 +7,22 @@ export default function ProductRange() {
     {
       name: "Syringe shields",
       imageSrc: "/images/about/syringe-shields.png",
-      path: "/products?shields=syringes"
+      path: "/products?shields=syringe"
     },
     {
       name: "Lab & QA Products",
       imageSrc: "/images/about/lab-and-qa.png",
-      path: "/products?shields=syringes"
+      path: "/products?shields=lab/qa"
     },
     {
-      name: "Syringe shields",
+      name: "Vial shields",
       imageSrc: "/images/about/syringe-shields-two.png",
-      path: "/products?shields=syringes"
+      path: "/products?shields=vial"
     },
     {
       name: "Transport packaging",
       imageSrc: "/images/about/transport-packaging.png",
-      path: "/products?shields=syringes"
+      path: "/products?usages=shipping"
     }
   ]
 

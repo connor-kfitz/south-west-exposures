@@ -43,7 +43,7 @@ export default function ProductList({products, filters}: ProductListProps) {
     if (firstEntry.done) return;
     const [filterName, filterValue] = firstEntry.value;
     if (!filterName || !filterValue) return;
-    
+
     setFilterState((prevFilters) =>
       prevFilters.map((group) => {
         if (group.name.toLowerCase() === filterName) {
