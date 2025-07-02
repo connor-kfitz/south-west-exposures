@@ -5,9 +5,9 @@ export default function ProductRange() {
 
   const productTypes = [
     {
-      name: "Syringe shields",
+      name: "Vial shields",
       imageSrc: "/images/about/syringe-shields.png",
-      path: "/products?shields=syringe"
+      path: "/products?shields=vial"
     },
     {
       name: "Lab & QA Products",
@@ -15,9 +15,9 @@ export default function ProductRange() {
       path: "/products?shields=lab/qa"
     },
     {
-      name: "Vial shields",
+      name: "Syringe shields",
       imageSrc: "/images/about/syringe-shields-two.png",
-      path: "/products?shields=vial"
+      path: "/products?shields=syringe"
     },
     {
       name: "Transport packaging",
