@@ -9,6 +9,7 @@ import CustomSolutions from "./CustomSolutions";
 import PopularProducts from "./PopularProducts";
 import HealthPhysics from "./HealthPhysics";
 import Compliance from "./Compliance";
+import HeroImage from "./HeroImage";
 
 interface AboutProps {
   popularProducts: Product[];
@@ -25,6 +26,7 @@ export default function About({ popularProducts }: AboutProps) {
   return (
     <>
       <HeroHeader/>
+      <HeroImage/>
       <ProductRange/>
       <CustomSolutions/>
       <HealthPhysics/>

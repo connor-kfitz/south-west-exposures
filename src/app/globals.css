@@ -217,8 +217,8 @@
 
   --breakpoint-productListXs: 25rem;
 
-  --breakpoint-aboutBpHeroSlide: 98.125rem;
-  --breakpoint-aboutCenterContent: 56.4375rem;
+  --breakpoint-aboutBpHeroSlide: 76.875rem;
+  --breakpoint-aboutCenterContent: 73.4375rem;
 }
 
 @theme inline {

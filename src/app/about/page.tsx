@@ -16,7 +16,7 @@ export default async function AboutPage() {
   
     const popularProducts = await response.json();
 
-    return <main className="bg-gray-50"><About popularProducts={popularProducts}/></main>
+    return <main className="bg-gray-50 relative overflow-hidden"><About popularProducts={popularProducts}/></main>
 
   } catch {
 
