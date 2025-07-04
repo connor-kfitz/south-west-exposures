@@ -5,6 +5,7 @@ import { Product } from "@/types/admin-products";
 import { Filter, SortByOptions } from "@/types/product-list";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useProductFilters } from "@/stores/useProductFilters";
 import Filters from "./Filters";
 import FilterInfo from "./FilterInfo";
 import Products from "./Products";
@@ -27,14 +28,20 @@ export default function ProductList({products, filters}: ProductListProps) {
     ])
   }, [setBreadcrumbs]);
 
+  const { filters: filterStorage, setFilters: setFilterStorage } = useProductFilters();
+
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [sortOption, setSortOption] = useState<SortByOptions>("");
-  const [filterState, setFilterState] = useState<Filter[]>(
+  const [filterState, setFilterState] = useState<Filter[]>(filterStorage.length ? filterStorage :
     filters.map(group => ({
       ...group,
       values: group.values.map(value => ({ ...value, selected: false }))
     }))
   );
+
+  useEffect(() => {
+    setFilterStorage(filterState)
+  }, [filterState, filterStorage, setFilterStorage]);
 
   const searchParams = useSearchParams();
 
