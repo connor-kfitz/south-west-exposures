@@ -24,7 +24,7 @@ function Checkbox({
         }
       }}
       className={cn(
-        "peer border-gray-600 dark:bg-input/30 data-[state=checked]:bg-blue-500 data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-blue-500 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[2px] border shadow-xs transition-shadow outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
+        "peer border-gray-600 dark:bg-input/30 data-[state=checked]:bg-blue-500 data-[state=checked]:text-primary-foreground bg-white dark:data-[state=checked]:bg-primary data-[state=checked]:border-blue-500 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[2px] border shadow-xs transition-shadow outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
         className
       )}
       {...props}
