@@ -6,13 +6,14 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "About",
-  description: '...',
+  description: '...'
 };
 
 export default async function AboutPage() {
 
   try {
 
+    // Headers are used to send authentication cookies to the API
     const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/popular`, {
       headers: { Cookie: cookies().toString() },
     });

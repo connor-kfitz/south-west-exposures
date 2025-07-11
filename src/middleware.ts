@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
-  // 🛡️ Handle OPTIONS requests globally
+  // Allow preview branches access to pages
   if (req.method === "OPTIONS") {
     return new NextResponse(null, {
       status: 204,
@@ -16,12 +16,10 @@ export async function middleware(req: NextRequest) {
     });
   }
 
-  // ➡️ Redirect root to /about
   if (url.pathname === "/") {
     return NextResponse.redirect(new URL("/about", req.url));
   }
 
-  // 🔐 Protect /admin routes
   if (url.pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
@@ -35,4 +33,4 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: ["/", "/admin/:path*", "/about", "/products"]
-};
+}
