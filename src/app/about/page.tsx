@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-
+  console.log(process.env.DOMAIN_NAME);
+  return <></>
   try {
     console.log(process.env.DOMAIN_NAME);
 
