@@ -13,7 +13,7 @@ export default async function AboutPage() {
   try {
     
     // const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/popular`);
-    const response = await fetch('https://swexposures.com/api/admin/products/get/popular', {
+    const response = await fetch('https://swexposures-git-develop-connor-fitzsimmons-projects.vercel.app/api/admin/products/get/popular', {
       cache: 'no-store' // dynamic
     });
     
