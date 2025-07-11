@@ -15,7 +15,6 @@ export default async function AboutPage() {
 
     const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/popular`, {
       headers: { Cookie: cookies().toString() },
-
     });
 
     if (!response.ok) throw new Error(`Failed to fetch popular products, status: ${response.status}`);
