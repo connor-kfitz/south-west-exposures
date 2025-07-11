@@ -1,13 +1,14 @@
 import ProductOverview from "@/components/products/overview/ProductOverview";
 import { Product } from "@/types/admin-products";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const revalidate = 0;
 
 export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
   const { productId } = await params
 
-  const product = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`).then((res) => res.json())
+  const product = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`, { headers: { Cookie: cookies().toString() } }).then((res) => res.json())
 
   return {
     title: product.name,
