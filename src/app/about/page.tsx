@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  console.log(process.env.DOMAIN_NAME);
-  return <></>
+
   try {
-    console.log(process.env.DOMAIN_NAME);
 
     const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/popular`);
     if (!response.ok) throw new Error(`Failed to fetch popular products, status: ${response.status}`);
