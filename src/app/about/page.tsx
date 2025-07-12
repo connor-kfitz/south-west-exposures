@@ -7,7 +7,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "About",
   description: '...'
-};
+}
 
 export default async function AboutPage() {
 
