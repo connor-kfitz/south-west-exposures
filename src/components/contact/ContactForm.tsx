@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useRef } from "react"
+import Image from "next/image"
+import Link from "next/link"
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "First name is required").max(50),
@@ -26,7 +28,15 @@ interface ContactFormProps {
 
 export default function ContactForm({ className }: ContactFormProps) {
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema)
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      website: "",
+      phone: "",
+      message: "",
+    }
   })
 
   const onSubmit = async (data: ContactFormData) => {
@@ -71,6 +81,16 @@ export default function ContactForm({ className }: ContactFormProps) {
           , or use the form below to send a message.
         </p>
         <p className="text-b7 leading-b6 text-gray-600 mb-8">All fields are required unless marked optional.</p>
+
+        <div className="flex items-center gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
+          <Image
+            src="/images/contact/error.svg"
+            alt="Error"
+            width={24}
+            height={24}
+          />
+          <p className="text-b6 leading-b6">Please review 2 errors. <Link href="#" className="text-[#2563EB] underline">Go to first error</Link></p>
+        </div>
 
         <div className="grid gap-6">
           <FormField
@@ -170,6 +190,9 @@ export default function ContactForm({ className }: ContactFormProps) {
                       const raw = field.value.replace(/\D/g, "")
 
                       if (key === "Backspace") {
+                        const caretPos = getFormattedPosition(raw, raw.length)
+                        if (caretPos === 1) return;
+
                         e.preventDefault()
                         field.onChange(raw.slice(0, -1))
 
@@ -200,6 +223,7 @@ export default function ContactForm({ className }: ContactFormProps) {
                   <FormControl>
                     <Textarea
                       {...field}
+                      maxLength={1000}
                       className="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
                     />
                   </FormControl>
