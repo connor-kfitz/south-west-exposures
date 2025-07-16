@@ -33,7 +33,7 @@ function Checkbox({
         data-slot="checkbox-indicator"
         className="flex items-center justify-center text-current transition-none"
       >
-        <Image src="/images/products/list/checkmark.svg" alt="Checkmark" width={12} height={12} />
+        <Image src="/images/shard/checkmark.svg" alt="Checkmark" width={12} height={12} />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )

@@ -10,23 +10,25 @@ import { Button } from "@/components/ui/button"
 import { useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { ConfirmationAlert } from "@/types/global"
 
 const contactFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required").max(50),
-  lastName: z.string().min(1, "Last name is required").max(50),
-  email: z.string().email("Invalid email address"),
-  website: z.string().url("Invalid URL").optional().or(z.literal("")),
-  phone: z.string().length(10, "Phone number must be 10 digits"),
-  message: z.string().min(1, "Message is required").max(1000),
+  firstName: z.string().min(1, "Please enter your first name").max(50),
+  lastName: z.string().min(1, "Please enter your last name").max(50),
+  email: z.string().email("Please enter a valid email address"),
+  website: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  phone: z.string().length(10, "Please enter a valid phone number"),
+  message: z.string().min(1, "Please enter a message").max(1000),
 })
 
 type ContactFormData = z.infer<typeof contactFormSchema>
 
 interface ContactFormProps {
   className?: string
+  setAlertDialog: React.Dispatch<React.SetStateAction<ConfirmationAlert>>;
 }
 
-export default function ContactForm({ className }: ContactFormProps) {
+export default function ContactForm({ className, setAlertDialog }: ContactFormProps) {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -40,6 +42,7 @@ export default function ContactForm({ className }: ContactFormProps) {
   })
 
   const onSubmit = async (data: ContactFormData) => {
+    setAlertDialog((prev) => ({ ...prev, open: true }));
     console.log("Form submitted:", data);
   }
 
@@ -67,7 +70,7 @@ export default function ContactForm({ className }: ContactFormProps) {
     return format.join("");
   }
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Form {...form}>
@@ -82,15 +85,15 @@ export default function ContactForm({ className }: ContactFormProps) {
         </p>
         <p className="text-b7 leading-b6 text-gray-600 mb-8">All fields are required unless marked optional.</p>
 
-        <div className="flex items-center gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
+        {Object.keys(form.formState.errors).length > 0 && <div className="flex items-center gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
           <Image
             src="/images/contact/error.svg"
             alt="Error"
             width={24}
             height={24}
           />
-          <p className="text-b6 leading-b6">Please review 2 errors. <Link href="#" className="text-[#2563EB] underline">Go to first error</Link></p>
-        </div>
+          <p className="text-b6 leading-b6">Please review {Object.keys(form.formState.errors).length} errors. <Link href={`#${Object.keys(form.formState.errors)[0]}`} className="text-[#2563EB] underline">Go to first error</Link></p>
+        </div>}
 
         <div className="grid gap-6">
           <FormField

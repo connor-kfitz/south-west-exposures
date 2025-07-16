@@ -5,6 +5,10 @@
 
 @plugin "tailwindcss-animate";
 
+html {
+  @apply scroll-smooth;
+}
+
 :root {
   --font-main: var(--font-jakarta);
   --shadow-nav: inset 0 -1px 0 0 #BCCCDC;
@@ -54,6 +58,7 @@
   --color-violet-800: #5B21B6;
   --color-violet-900: #4C1D95;
   --color-yellow-300: #FDE047;
+  --color-green-500: #22C55E;
 }
 
 @layer base {
