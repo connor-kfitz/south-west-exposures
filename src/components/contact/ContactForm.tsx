@@ -48,6 +48,7 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
     const success = sendEmail(data.firstName + " " + data.lastName, data.email, data.phone, data.message, data.website)
     if (!success) return;
 
+    form.reset();
     setAlertDialog((prev) => ({ ...prev, open: true }));
   }
 
