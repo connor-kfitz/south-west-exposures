@@ -8,15 +8,18 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useRef } from "react"
+import { ConfirmationAlert } from "@/types/global"
 import Image from "next/image"
 import Link from "next/link"
-import { ConfirmationAlert } from "@/types/global"
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name").max(50),
   lastName: z.string().min(1, "Please enter your last name").max(50),
   email: z.string().email("Please enter a valid email address"),
-  website: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  website: z.string()
+    .url("Please enter a valid website URL")
+    .optional()
+    .or(z.literal("")),
   phone: z.string().length(10, "Please enter a valid phone number"),
   message: z.string().min(1, "Please enter a message").max(1000),
 })
@@ -42,8 +45,47 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
   })
 
   const onSubmit = async (data: ContactFormData) => {
+    const success = sendEmail(data.firstName + " " + data.lastName, data.email, data.phone, data.message, data.website)
+    if (!success) return;
+
     setAlertDialog((prev) => ({ ...prev, open: true }));
-    console.log("Form submitted:", data);
+  }
+
+  async function sendEmail(name: string, email: string, phone: string, message: string, website?: string) {
+    try {
+      const body = `
+        <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
+          <h2 style="color: #444;">New Contact Form Submission</h2>
+
+          <p><strong>Email:</strong> ${email}</p>
+          ${website ? `<p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>` : ""}
+          <p><strong>Phone:</strong> ${phone}</p>
+
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
+
+          <p><strong>Message:</strong></p>
+          <p style="white-space: pre-wrap;">${message}</p>
+        </div>
+      `;
+
+      const res = await fetch('/api/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, message: body }),
+      });
+
+      if (!res.ok) {
+        console.error('Email send failed with status:', res.status);
+        return false;
+      }
+
+      const result = await res.json();
+      return result.success ?? false;
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return false;
+    }
   }
 
   const getFormattedPosition = (rawDigits: string, caretAt: number) => {
@@ -73,8 +115,8 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
+    <Form {...form} >
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
           You can email us directly at&nbsp;
@@ -143,7 +185,13 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
             name="website"
             render={({ field }) => (
               <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Website (optional)</FormLabel>
+                <FormLabel className="text-b7 leading-b7">
+                  <div className="text-start">
+                    Website (optional)
+                    <br/>
+                    <span className="font-normal text-gray-600">E.g. website.com</span>
+                  </div>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
                 </FormControl>
@@ -161,6 +209,7 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
                 <FormControl>
                   <Input
                     ref={inputRef}
+                    id="phone"
                     inputMode="numeric"
                     value={formatPhoneNumber(field.value || "")}
                     onChange={(e) => {
