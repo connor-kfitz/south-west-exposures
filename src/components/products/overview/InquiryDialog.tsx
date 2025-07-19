@@ -76,7 +76,7 @@ interface InquiryContentProps {
 function InquiryContent({ form, productName, setOpen, setDialogState }: InquiryContentProps) {
 
   const onSubmit = async (data: InquiryFormData) => {
-    const success = sendEmail(data.fullName, data.email, data.phone, data.message)
+    const success = sendEmail(data.fullName, data.email, data.phone, data.message, "", productName);
     if (!success) return;
 
     form.reset();

@@ -39,14 +39,15 @@ export function sortVolumeValues(values: FilterValue[]): FilterValue[] {
   return [...values].sort((a, b) => parseVolumeValue(a.name) - parseVolumeValue(b.name));
 }
 
-export async function sendEmail(name: string, email: string, phone?: string, message?: string, website?: string) {
+export async function sendEmail(name: string, email: string, phone?: string, message?: string, website?: string, product?: string) {
   try {
     const body = `
         <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color: #444;">New Contact Form Submission</h2>
+          <h2 style="color: #444;">New ${product ? "Inquiry" : "Contact"} Form Submission</h2>
 
           <p><strong>Email:</strong> ${email}</p>
           ${website ? `<p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>` : ""}
+          ${product ? `<p><strong>Product:</strong> ${product}</p>` : ""}
           <p><strong>Phone:</strong> ${phone}</p>
 
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
