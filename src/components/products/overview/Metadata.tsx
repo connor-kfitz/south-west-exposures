@@ -1,8 +1,8 @@
-// import { Button } from "@/components/ui/button";
 import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Product } from "@/types/admin-products";
 import Image from "next/image";
 import Link from "next/link";
+import InquiryDialog from "./InquiryDialog";
 
 interface MetadataProps {
   product: Product;
@@ -69,7 +69,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           )
         })}
       </ul>
-      {/* <Button variant="primary" size="primaryDefault">Inquire about this product</Button> */}
+      <InquiryDialog productName={product.name}/>
     </section>
   )
 }

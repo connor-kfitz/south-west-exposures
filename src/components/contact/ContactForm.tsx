@@ -3,14 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import { useRef } from "react"
 import { ConfirmationAlert } from "@/types/global"
 import Image from "next/image"
 import Link from "next/link"
+import TextInput from "../shared/forms/TextInput"
+import TextAreaInput from "../shared/forms/TextAreaInput"
+import PhoneNumberInput from "../shared/forms/PhoneNumberInput"
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name").max(50),
@@ -21,10 +21,10 @@ const contactFormSchema = z.object({
     .optional()
     .or(z.literal("")),
   phone: z.string().length(10, "Please enter a valid phone number"),
-  message: z.string().min(1, "Please enter a message").max(1000),
+  message: z.string().min(1, "Please enter a message").max(1000)
 })
 
-type ContactFormData = z.infer<typeof contactFormSchema>
+export type ContactFormData = z.infer<typeof contactFormSchema>
 
 interface ContactFormProps {
   className?: string
@@ -89,34 +89,8 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
     }
   }
 
-  const getFormattedPosition = (rawDigits: string, caretAt: number) => {
-    const format = ["(", "_", "_", "_", ")", " ", "_", "_", "_", "-", "_", "_", "_", "_"]
-    let digitIndex = 0;
-    for (let i = 0; i < format.length; i++) {
-      if (format[i] === "_") {
-        if (digitIndex === caretAt) return i;
-        digitIndex++;
-      }
-    }
-    return format.length;
-  }
-
-  const formatPhoneNumber = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 10)
-    const format = ["(", "_", "_", "_", ")", " ", "_", "_", "_", "-", "_", "_", "_", "_"]
-    let digitIndex = 0;
-    for (let i = 0; i < format.length; i++) {
-      if (format[i] === "_" && digitIndex < digits.length) {
-        format[i] = digits[digitIndex++];
-      }
-    }
-    return format.join("");
-  }
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
   return (
-    <Form {...form} >
+    <Form {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
@@ -139,159 +113,52 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
         </div>}
 
         <div className="grid gap-6">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">First Name</FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="firstName" label="First Name" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Last Name</FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="lastName" label="Last Name" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Email Address</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="email" label="Email Address" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">
-                  <div className="text-start">
-                    Website (optional)
-                    <br/>
-                    <span className="font-normal text-gray-600">E.g. website.com</span>
-                  </div>
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="website" label={<WebsiteLabel/>} 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Phone Number</FormLabel>
-                <FormControl>
-                  <Input
-                    ref={inputRef}
-                    id="phone"
-                    inputMode="numeric"
-                    value={formatPhoneNumber(field.value || "")}
-                    onChange={(e) => {
-                      const input = e.target
-                      const raw = e.target.value.replace(/\D/g, "").slice(0, 10)
-                      const nextLength = raw.length
-
-                      field.onChange(raw)
-
-                      requestAnimationFrame(() => {
-                        const caretPos = getFormattedPosition(raw, nextLength)
-                        input.setSelectionRange(caretPos, caretPos)
-                      })
-                    }}
-                    onClick={(e) => {
-                      const input = e.currentTarget
-                      const raw = (field.value || "").replace(/\D/g, "")
-                      const caretPos = getFormattedPosition(raw, raw.length)
-                      input.setSelectionRange(caretPos, caretPos)
-                    }}
-
-                    onFocus={(e) => {
-                      const input = e.currentTarget
-                      const raw = (field.value || "").replace(/\D/g, "")
-                      const caretPos = getFormattedPosition(raw, raw.length)
-                      input.setSelectionRange(caretPos, caretPos)
-                    }}
-                    onKeyDown={(e) => {
-                      const key = e.key
-                      const raw = field.value.replace(/\D/g, "")
-
-                      if (key === "Backspace") {
-                        const caretPos = getFormattedPosition(raw, raw.length)
-                        if (caretPos === 1) return;
-
-                        e.preventDefault()
-                        field.onChange(raw.slice(0, -1))
-
-                        requestAnimationFrame(() => {
-                          const caretPos = getFormattedPosition(raw, raw.length - 1)
-                          inputRef.current?.setSelectionRange(caretPos, caretPos)
-                        })
-                      }
-                    }}
-                    placeholder="(___)___-____"
-                    className="tracking-wide px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <PhoneNumberInput form={form} name="phone" label="Phone Number"
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            inputClass="tracking-wide px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => {
-              const charsLeft = 1000 - (field.value?.length || 0)
-
-              return (
-                <FormItem className="gap-1">
-                  <FormLabel className="text-b7 leading-b7">Message</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      maxLength={1000}
-                      className="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
-                    />
-                  </FormControl>
-                  <div className="text-b7 leading-b7 text-gray-900">{charsLeft} characters left</div>
-                  <FormMessage />
-                </FormItem>
-              )
-            }}
+          <TextAreaInput form={form} name="message" label="Message"
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7"
+            areaClass="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            maxChars={1000}
           />
         </div>
-
         <Button type="submit" variant="primary" size="primaryDefault" className="mt-6" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? "Sending..." : "Submit"}
         </Button>
       </form>
     </Form>
+  )
+}
+
+function WebsiteLabel() {
+  return (
+    <div className="text-start">
+      Website (optional)
+      <br/>
+      <span className="font-normal text-gray-600">E.g. website.com</span>
+    </div>
   )
 }
