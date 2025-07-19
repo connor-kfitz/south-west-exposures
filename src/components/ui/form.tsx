@@ -15,6 +15,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import Image from "next/image"
 
 const Form = FormProvider
 
@@ -144,14 +145,23 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   }
 
   return (
-    <p
-      data-slot="form-message"
-      id={formMessageId}
-      className={cn("text-destructive-foreground text-sm", className)}
-      {...props}
-    >
-      {body}
-    </p>
+    <div className="flex items-center">
+      <Image
+        src="/images/shared/warning.svg"
+        alt="Warning Icon"
+        className="mr-1 mt-0.5"
+        width={16}
+        height={16}
+      />
+      <p
+        data-slot="form-message"
+        id={formMessageId}
+        className={cn("text-destructive-foreground text-sm", className)}
+        {...props}
+      >
+        {body}
+      </p>
+    </div>
   )
 }
 
