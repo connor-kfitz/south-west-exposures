@@ -30,7 +30,7 @@ export type Product = {
   material: string;
   name: string;
   relatedProducts: ProductPreview[];
-  purchasedTogether: ProductAttribute[];
+  purchasedTogether: ProductPreview[];
   shields: ProductAttribute[];
   specifications: ProductSpecification[];
   customizationOptions: ProductAttribute[];

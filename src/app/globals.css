@@ -225,6 +225,8 @@ html {
 
   --breakpoint-aboutBpHeroSlide: 76.875rem;
   --breakpoint-aboutCenterContent: 73.4375rem;
+
+  --breakpoint-inquiryModalSize: 64.6875rem;
 }
 
 @theme inline {

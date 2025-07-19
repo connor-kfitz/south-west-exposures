@@ -1,8 +1,8 @@
 import { ProductPreview } from "@/types/admin-products";
 import { cn } from "@/lib/utils";
+import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import Image from "next/image";
 import Link from "next/link";
-import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 
 interface ProductCardProps {
   product: ProductPreview;
@@ -19,17 +19,17 @@ export default function ProductCard({product, className}: ProductCardProps) {
       `, className)}
       href={`/products/${product.id}`}
     >
-      <div className="relative aspect-[1/1] w-full bg-gray-100 rounded-[8px] mb-2 overflow-hidden group">
+      <div className="relative aspect-[1/1] w-full bg-gray-100 rounded-[8px] mb-2 overflow-hidden group pointer-events-none">
         {product.images[0].src && (
           <Image
             src={product.images[0].src}
-            alt={product.name} 
+            alt={product.name}
             fill
             className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-[1.05]"
           />
         )}
       </div>
-      <div className="p-0">
+      <div className="p-0 pointer-events-none">
         <h3 className="text-left font-semibold text-gray-900 text-b6 leading-b6 ">{product.name}</h3>
         <ul className="text-b7 leading-b7 text-gray-600">
           <li>

@@ -11,6 +11,7 @@ import Link from "next/link"
 import TextInput from "../shared/forms/TextInput"
 import TextAreaInput from "../shared/forms/TextAreaInput"
 import PhoneNumberInput from "../shared/forms/PhoneNumberInput"
+import { sendEmail } from "@/lib/helpers"
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "Please enter your first name").max(50),
@@ -50,43 +51,6 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
 
     form.reset();
     setAlertDialog((prev) => ({ ...prev, open: true }));
-  }
-
-  async function sendEmail(name: string, email: string, phone: string, message: string, website?: string) {
-    try {
-      const body = `
-        <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color: #444;">New Contact Form Submission</h2>
-
-          <p><strong>Email:</strong> ${email}</p>
-          ${website ? `<p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>` : ""}
-          <p><strong>Phone:</strong> ${phone}</p>
-
-          <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;" />
-
-          <p><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${message}</p>
-        </div>
-      `;
-
-      const res = await fetch('/api/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message: body }),
-      });
-
-      if (!res.ok) {
-        console.error('Email send failed with status:', res.status);
-        return false;
-      }
-
-      const result = await res.json();
-      return result.success ?? false;
-
-    } catch (error) {
-      console.error('Error sending email:', error);
-      return false;
-    }
   }
 
   return (
