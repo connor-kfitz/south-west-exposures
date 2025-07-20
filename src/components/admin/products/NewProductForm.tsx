@@ -449,7 +449,7 @@ export default function NewProductForm({
         </div>
         <div className="flex justify-end mt-4">
           {editProduct && <Button className="block mr-4" variant="outline" onClick={cancelEdit}>Cancel</Button>}
-          <Button className="flex justify-center items-center w-[80px]" type="submit">
+          <Button className="flex justify-center items-center px-[50px] w-[80px]" type="submit">
             {loadingSubmit ? <LoadingSpinner /> : editProduct ? "Update" : "Submit"}
           </Button>
         </div>

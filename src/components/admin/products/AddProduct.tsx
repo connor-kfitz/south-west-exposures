@@ -36,7 +36,7 @@ export default function AddProduct({
 }: AddProductProps) {
 
   return (
-    <Card className={cn("p-6", className)}>
+    <Card className={cn("p-6 mb-6", className)}>
       <CardHeader className="p-0 mb-6 font-bold flex-row justify-between">
         <h2>{editProduct ? "Edit Product" : "New Product"}</h2>
       </CardHeader>

@@ -8,7 +8,7 @@ import { useUsages } from "@/hooks/useUsages";
 import { useProducts } from "@/hooks/useProducts";
 import { useFilters } from "@/hooks/useFilters";
 import { useState } from "react";
-import { Product } from "@/types/admin-products";
+import { Product, ProductPreview } from "@/types/admin-products";
 import { DashboardAlert } from "@/types/admin";
 import AddAttribute from "@/components/admin/products/AddAttribute";
 import AddProduct from "./AddProduct";
@@ -16,6 +16,7 @@ import Products from "./Products";
 import AlertDialog from "./DashboardAlertDialog";
 import Header from "./Header";
 import { useCustomizationOptions } from "@/hooks/useCustomizationOptions";
+import PopularProducts from "./PopularProducts";
 
 export default function Dashboard() {
   const { shields, loading: shieldsLoading, error: shieldsError, addError: shieldsAddError, postShield, deleteShield } = useShields();
@@ -29,7 +30,7 @@ export default function Dashboard() {
 
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [alertDialog, setAlertDialog] = useState<DashboardAlert>({ title: "", description: "", open: false });
-
+  const popularProducts: ProductPreview[] = [];
   if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters || customizationOptionsLoading) 
     return (
       <div className="flex flex-col h-full">
@@ -72,6 +73,24 @@ export default function Dashboard() {
               editProduct={editProduct}
               fetchProducts={fetchProducts}
               setEditProduct={setEditProduct}
+            />
+            <PopularProducts 
+              popularProducts={popularProducts.map(product => ({
+                id: product.id,
+                images: product.images,
+                name: product.name,
+                shields: product.shields,
+                volumes: product.volumes,
+                isotopes: product.isotopes
+              }))} 
+              products={products.map(product => ({
+                id: product.id,
+                images: product.images,
+                name: product.name,
+                shields: product.shields,
+                volumes: product.volumes,
+                isotopes: product.isotopes
+              }))} 
             />
           </section>
         </section>
