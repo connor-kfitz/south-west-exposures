@@ -4,8 +4,6 @@ export async function GET() {
   const client = await pool.connect();
 
   try {
-    const productNames = ['Theranostic Transport Vial Shields', 'Theranostic Vial Shields', 'Theranostic Unit Dose PIG', 'SAFE LEAD Vial Shields'];
-
     const query = `
       SELECT
         p.product_id AS id,
@@ -91,6 +89,7 @@ export async function GET() {
         ) AS images
 
       FROM products p
+      JOIN popular_products pp ON p.product_id = pp.product_id
       LEFT JOIN products_customization_options pco ON p.product_id = pco.product_id
       LEFT JOIN customization_options co ON pco.customization_option_id = co.customization_option_id
       LEFT JOIN products_usages pu ON p.product_id = pu.product_id
@@ -110,14 +109,11 @@ export async function GET() {
       LEFT JOIN products_purchased_together pt ON p.product_id = pt.product_id
       LEFT JOIN products ptp ON pt.purchased_together_product_id = ptp.product_id
 
-      WHERE p.name = ANY($1)
-
-      GROUP BY p.product_id
-      ORDER BY p.product_id ASC;
+      GROUP BY p.product_id, pp.order
+      ORDER BY pp.order ASC;
     `;
 
-    const result = await client.query(query, [productNames]);
-
+    const result = await client.query(query);
     return new Response(JSON.stringify(result.rows), {
       headers: { 'Content-Type': 'application/json' },
     });

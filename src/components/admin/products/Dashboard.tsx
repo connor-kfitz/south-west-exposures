@@ -8,14 +8,15 @@ import { useUsages } from "@/hooks/useUsages";
 import { useProducts } from "@/hooks/useProducts";
 import { useFilters } from "@/hooks/useFilters";
 import { useState } from "react";
-import { Product, ProductPreview } from "@/types/admin-products";
+import { Product } from "@/types/admin-products";
 import { DashboardAlert } from "@/types/admin";
+import { useCustomizationOptions } from "@/hooks/useCustomizationOptions";
+import { usePopularProducts } from "@/hooks/usePopularProducts";
 import AddAttribute from "@/components/admin/products/AddAttribute";
 import AddProduct from "./AddProduct";
 import Products from "./Products";
 import AlertDialog from "./DashboardAlertDialog";
 import Header from "./Header";
-import { useCustomizationOptions } from "@/hooks/useCustomizationOptions";
 import PopularProducts from "./PopularProducts";
 
 export default function Dashboard() {
@@ -27,11 +28,11 @@ export default function Dashboard() {
   const { customizationOptions, loading: customizationOptionsLoading, error: customizationOptionsError, addError: customizationOptionsAddError, postCustomizationOption, deleteCustomizationOption } = useCustomizationOptions();
   const { products, loading: loadingProducts, fetchProducts, deleteProduct } = useProducts();
   const { filters, loading: loadingFilters } = useFilters();
-
+  const { popularProducts, loading: popularProductsLoading, postPopularProducts } = usePopularProducts();
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [alertDialog, setAlertDialog] = useState<DashboardAlert>({ title: "", description: "", open: false });
-  const popularProducts: ProductPreview[] = [];
-  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters || customizationOptionsLoading) 
+  
+  if (shieldsLoading || volumesLoading || isotopesLoading || accessoriesLoading || usagesLoading || loadingProducts || loadingFilters || customizationOptionsLoading || popularProductsLoading) 
     return (
       <div className="flex flex-col h-full">
         <Header page="Products"/>
@@ -90,7 +91,8 @@ export default function Dashboard() {
                 shields: product.shields,
                 volumes: product.volumes,
                 isotopes: product.isotopes
-              }))} 
+              }))}
+              postPopularProducts={postPopularProducts}
             />
           </section>
         </section>

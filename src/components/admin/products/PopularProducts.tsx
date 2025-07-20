@@ -7,28 +7,43 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ProductPreview } from "@/types/admin-products";
 import { Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Combobox } from "./Combobox";
+import { Button } from "@/components/ui/button";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import Image from "next/image";
 
 interface PopularProductsProps {
   products: ProductPreview[];
   popularProducts?: ProductPreview[];
+  postPopularProducts: (products: { productId: string; order: number }[]) => Promise<boolean>;
   className?: string;
 }
 
-export default function PopularProducts({products, popularProducts, className}: PopularProductsProps) {
-  console.log(popularProducts);
-  const blankProduct: ProductPreview = {
+export default function PopularProducts({ products, popularProducts, postPopularProducts, className}: PopularProductsProps) {
+
+  const blankProduct: ProductPreview = useMemo(() => ({
     id: "",
-    images: [{id: "1", src: "/images/admin/products/placeholder-product.png"}],
+    images: [{ id: "", src: "/images/admin/products/placeholder-product.png" }],
     name: "Blank",
     shields: [],
     volumes: [],
     isotopes: []
-  }
+  }), []);
 
   const [productsDnD, setProductsDnD] = useState<ProductPreview[]>(Array.from({ length: 4 }, (_, index) => ({ ...blankProduct, name: "Blank", id: String(index) }))) 
+  const [postProductsLoading, setPostProductsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!popularProducts) return;
+
+    const filled = [...popularProducts];
+    while (filled.length < 4) {
+      filled.push({ ...blankProduct, id: `blank-${filled.length}` });
+    }
+
+    setProductsDnD(filled);
+  }, [popularProducts, blankProduct]);
   
   const handleRemove = (id: string) => {
     setProductsDnD?.(prev => {
@@ -71,12 +86,25 @@ export default function PopularProducts({products, popularProducts, className}: 
   })
 
   const sensors = useSensors(mouseSensor, touchSensor);
+
+  async function updateProducts() {
+    setPostProductsLoading(true);
+    const filteredProducts = productsDnD.filter(product => product.name !== "Blank");
+    await postPopularProducts(
+      filteredProducts.map((product, index) => ({
+        productId: product.id,
+        order: index
+      }))
+    );
+    setPostProductsLoading(false);
+  }
   
   return (
     <Card className={cn("p-6", className)}>
-      <CardHeader className="p-0 mb-6 font-bold flex-row justify-between">
-        <h2>Popular Products</h2>
-        <Combobox products={products} productsDnD={productsDnD} setProductsDnD={setProductsDnD}/>
+      <CardHeader className="p-0 mb-6 font-bold flex-row justify-start">
+        <h2 className="mr-auto">Popular Products</h2>
+        <Combobox products={products} productsDnD={productsDnD} setProductsDnD={setProductsDnD} className="mr-4"/>
+        <Button type="button" className="w-[100px]" onClick={updateProducts}>{postProductsLoading ? <LoadingSpinner/> : "Update"}</Button>
       </CardHeader>
       <CardContent className="p-0">
         <DndContext
@@ -111,7 +139,7 @@ function SortableProduct({ product, removeProduct }: SortableImageProps) {
   }
 
   return (
-    <li ref={setNodeRef} style={style} {...attributes} {...listeners} className="w-full relative rounded-md overflow-hidden cursor-grab">
+    <li ref={setNodeRef} style={style} {...attributes} {...listeners} className="w-full relative rounded-md overflow-hidden cursor-grab m-0 lg:m-2">
       {product.name !== "Blank" && 
         <button
           type="button"

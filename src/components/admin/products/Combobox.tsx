@@ -24,9 +24,10 @@ interface ComboboxProps {
   products: (Product | ProductPreview)[];
   productsDnD: ProductPreview[];
   setProductsDnD?: React.Dispatch<React.SetStateAction<ProductPreview[]>>;
+  className?: string;
 }
 
-export function Combobox({ products, productsDnD, setProductsDnD }: ComboboxProps) {
+export function Combobox({ products, productsDnD, setProductsDnD, className }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
 
   function addProduct(product: Product | ProductPreview) {
@@ -49,7 +50,7 @@ export function Combobox({ products, productsDnD, setProductsDnD }: ComboboxProp
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={`w-[200px] justify-between ${className}`}
           disabled={!productsDnD.some(product => product.name === "Blank")}
         >
           Select Product...
