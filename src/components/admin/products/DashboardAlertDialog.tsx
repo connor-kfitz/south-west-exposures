@@ -27,22 +27,22 @@ export default function DashboardAlertDialog({ alertDialog, setAlertDialog, setE
 
   return (
     <AlertDialog open={alertDialog.open}>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-w-[700px]">
         <AlertDialogHeader>
           <AlertDialogTitle>{alertDialog.title}</AlertDialogTitle>
           <AlertDialogDescription>{alertDialog.description}</AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="gap-4">
           {alertDialog.deleteId ?
             <>
               <AlertDialogCancel
                 style={{ boxShadow: "none", outline: "none", transition: "none" }}
-                className="focus:outline-none focus:ring-0 focus:ring-offset-0 shadow-none"
+                className="focus:outline-none focus:ring-0 focus:ring-offset-0 shadow-none text-white rounded-full"
                 onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}
               >
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction className="w-[90px] flex justify-center items-center" onClick={() => deleteItem()}>
+              <AlertDialogAction className="w-[90px] flex justify-center items-center text-white" onClick={() => deleteItem()}>
                 {loadingDelete ? <LoadingSpinner/> : "Continue"}
               </AlertDialogAction>
             </>

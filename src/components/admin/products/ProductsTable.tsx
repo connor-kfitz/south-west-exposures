@@ -116,7 +116,7 @@ export function ProductsTable<TData extends Product>({
                         <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           onClick={() => setAlertDialog({ 
                             title: `Delete ${data.find(item => item.id === row.original.id)?.name}?`, 
                             description: "This action is irreversible. The product and all related data will be lost forever.",

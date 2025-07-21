@@ -10,8 +10,14 @@ export async function POST(req: Request) {
   try {
     const data: PopularProductInput[] = await req.json();
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!Array.isArray(data)) {
       return NextResponse.json({ error: 'Invalid input data' }, { status: 400 });
+    }
+
+    await pool.query('DELETE FROM popular_products');
+
+    if (data.length === 0) {
+      return NextResponse.json({ message: 'Popular products cleared successfully' }, { status: 200 });
     }
 
     for (const item of data) {
@@ -21,8 +27,6 @@ export async function POST(req: Request) {
         }, { status: 400 });
       }
     }
-
-    await pool.query('DELETE FROM popular_products');
 
     const values = data.flatMap((item) => [item.productId, item.order]);
     const valuePlaceholders = data

@@ -16,7 +16,6 @@ interface AddProductProps {
   products: Product[];
   filters: Filter[];
   editProduct: Product | null;
-  fetchProducts: () => Promise<void>;
   setEditProduct: (product: Product | null) => void;
 }
 
@@ -31,7 +30,6 @@ export default function AddProduct({
   products,
   filters,
   editProduct,
-  fetchProducts,
   setEditProduct 
 }: AddProductProps) {
 
@@ -51,7 +49,6 @@ export default function AddProduct({
           productOptions={products}
           filters={filters}
           editProduct={editProduct}
-          fetchProducts={fetchProducts}
           setEditProduct={setEditProduct}
         />
       </CardContent>

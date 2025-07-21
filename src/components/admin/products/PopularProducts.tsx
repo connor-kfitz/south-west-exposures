@@ -31,7 +31,7 @@ export default function PopularProducts({ products, popularProducts, postPopular
     isotopes: []
   }), []);
 
-  const [productsDnD, setProductsDnD] = useState<ProductPreview[]>(Array.from({ length: 4 }, (_, index) => ({ ...blankProduct, name: "Blank", id: String(index) }))) 
+  const [productsDnD, setProductsDnD] = useState<ProductPreview[]>([]) 
   const [postProductsLoading, setPostProductsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export default function PopularProducts({ products, popularProducts, postPopular
     while (filled.length < 4) {
       filled.push({ ...blankProduct, id: `blank-${filled.length}` });
     }
-
     setProductsDnD(filled);
   }, [popularProducts, blankProduct]);
   
