@@ -55,12 +55,27 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
 
   return (
     <Form {...form}>
-      <form noValidate onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
+      <form 
+        noValidate
+        onSubmit={form.handleSubmit(onSubmit, (errors) => {
+          const firstErrorField = Object.keys(errors)[0];
+          const el = document.getElementById(firstErrorField);
+          if (el) {
+            const elementTop = el.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: elementTop - 24,
+              behavior: "smooth",
+            });
+            el.focus({ preventScroll: true });
+          }
+        })}
+        className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}
+      >
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
           You can email us directly at{" "}
           <Link
-            className="text-gray-900 font-medium rounded-[4px] focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+            className="text-gray-900 font-medium rounded-[4px] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
             href="mailto:info@swexposures.com"
           >
             info@swexposures.com
@@ -69,45 +84,45 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
         </p>
         <p className="text-b7 leading-b6 text-gray-600 mb-8">All fields are required unless marked optional.</p>
 
-        {Object.keys(form.formState.errors).length > 0 && <div className="flex items-center gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
+        {Object.keys(form.formState.errors).length > 0 && <div className="flex items-start gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
           <Image
             src="/images/contact/error.svg"
             alt="Error"
             width={24}
             height={24}
           />
-          <p className="text-b6 leading-b6">Please review {Object.keys(form.formState.errors).length} errors. <Link href={`#${Object.keys(form.formState.errors)[0]}`} className="text-[#2563EB] underline">Go to first error</Link></p>
+          <p className="text-b6 leading-b6">Please review {Object.keys(form.formState.errors).length} errors. <Link href={`#${Object.keys(form.formState.errors)[0]}`} className="text-[#2563EB] underline rounded-[4px] p-[1px] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none">Go to first error</Link></p>
         </div>}
 
         <div className="grid gap-6">
           <TextInput form={form} name="firstName" label="First Name" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="lastName" label="Last Name" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="email" label="Email Address" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="website" label={<WebsiteLabel/>} 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <PhoneNumberInput form={form} name="phone" label="Phone Number"
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             inputClass="tracking-wide px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextAreaInput form={form} name="message" label="Message"
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7 text-gray-900"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
             areaClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] min-h-[168px] max-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
             maxChars={1000}
           />

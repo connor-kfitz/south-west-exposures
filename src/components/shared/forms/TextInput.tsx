@@ -13,6 +13,9 @@ interface TextInputProps<T extends FieldValues> {
 }
 
 export default function TextInput<T extends FieldValues>({form, name, label, formItemClass, formLabelClass, inputClass}: TextInputProps<T>) {
+  
+  const hasError = !!form.formState.errors[name];
+
   return (
     <FormField
       control={form.control}
@@ -21,9 +24,15 @@ export default function TextInput<T extends FieldValues>({form, name, label, for
         <FormItem className={formItemClass}>
           <FormLabel className={formLabelClass}>{label}</FormLabel>
           <FormControl>
-            <Input {...field} className={inputClass}/>
+            <Input 
+              id={name} {...field}
+              className={`${inputClass} ${hasError
+                ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                  : ""
+              }`}
+            />
           </FormControl>
-          <FormMessage />
+          <FormMessage className={`${hasError ? "text-[#D92525]" : ""}`}/>
         </FormItem>
       )}
     />

@@ -14,6 +14,9 @@ interface TextAreaInputProps<T extends FieldValues> {
 }
 
 export default function TextAreaInput<T extends FieldValues>({form, name, label, formItemClass, formLabelClass, areaClass, maxChars}: TextAreaInputProps<T>) {
+  
+  const hasError = !!form.formState.errors[name];
+
   return (
     <FormField
       control={form.control}
@@ -25,9 +28,13 @@ export default function TextAreaInput<T extends FieldValues>({form, name, label,
             <FormLabel className={formLabelClass}>{label}</FormLabel>
             <FormControl>
               <Textarea
+                id={name}
                 {...field}
                 maxLength={1000}
-                className={areaClass}
+                className={`${areaClass} ${hasError
+                  ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                  : ""
+                }`}
               />
             </FormControl>
             <div className="text-b7 leading-b7 text-gray-900">{charsLeft} characters left</div>

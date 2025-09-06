@@ -40,6 +40,8 @@ export default function PhoneNumberInput<T extends FieldValues>({form, name, lab
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const hasError = !!form.formState.errors[name];
+
   return (
     <FormField
       control={form.control}
@@ -50,7 +52,7 @@ export default function PhoneNumberInput<T extends FieldValues>({form, name, lab
           <FormControl>
             <Input
               ref={inputRef}
-              id="phone"
+              id={name}
               inputMode="numeric"
               value={formatPhoneNumber(field.value || "")}
               onChange={(e) => {
@@ -96,7 +98,10 @@ export default function PhoneNumberInput<T extends FieldValues>({form, name, lab
                 }
               }}
               placeholder="(___)___-____"
-              className={inputClass}
+              className={`${inputClass} ${hasError
+                ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                : ""
+              }`}
             />
           </FormControl>
           <FormMessage />
