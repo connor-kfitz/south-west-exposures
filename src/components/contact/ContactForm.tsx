@@ -58,10 +58,13 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
-          You can email us directly at&nbsp;
-          <a className="text-gray-900 font-medium" href="mailto:info@swexposures.com">
+          You can email us directly at{" "}
+          <Link
+            className="text-gray-900 font-medium rounded-[4px] focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+            href="mailto:info@swexposures.com"
+          >
             info@swexposures.com
-          </a>
+          </Link>
           , or use the form below to send a message.
         </p>
         <p className="text-b7 leading-b6 text-gray-600 mb-8">All fields are required unless marked optional.</p>
@@ -79,37 +82,37 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
         <div className="grid gap-6">
           <TextInput form={form} name="firstName" label="First Name" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="lastName" label="Last Name" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="email" label="Email Address" 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextInput form={form} name="website" label={<WebsiteLabel/>} 
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            inputClass="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <PhoneNumberInput form={form} name="phone" label="Phone Number"
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            inputClass="tracking-wide px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            inputClass="tracking-wide px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
           <TextAreaInput form={form} name="message" label="Message"
             formItemClass="gap-1"
-            formLabelClass="text-b7 leading-b7"
-            areaClass="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            formLabelClass="text-b7 leading-b7 text-gray-900"
+            areaClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] min-h-[168px] max-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
             maxChars={1000}
           />
         </div>
-        <Button type="submit" variant="primary" size="primaryDefault" className="mt-6" disabled={form.formState.isSubmitting}>
+        <Button type="submit" variant="primary" size="primaryDefault" className="mt-6 w-full sm:w-auto" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? "Sending..." : "Submit"}
         </Button>
       </form>

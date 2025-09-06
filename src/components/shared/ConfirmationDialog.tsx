@@ -1,9 +1,12 @@
+"use client";
+
 import { ConfirmationAlert } from "@/types/global";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "../ui/drawer";
 import Image from "next/image";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useEffect } from "react";
 
 interface ConfirmationDialogProps {
   alertDialog: ConfirmationAlert;
@@ -14,10 +17,26 @@ export default function ConfirmationDialog({alertDialog, setAlertDialog}: Confir
 
   const isMediumBreakpoint = useMediaQuery("(min-width: 768px)");
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setAlertDialog(prev => ({ ...prev, open: false }));
+      }
+    };
+
+    if (alertDialog.open) {
+      document.addEventListener("keydown", handleEsc);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [alertDialog.open, setAlertDialog]);
+
   if (isMediumBreakpoint) { 
     return (
       <AlertDialog open={alertDialog.open}>
-        <AlertDialogContent className="font-main bg-white rounded-[24px] p-[48px] max-w-[564px] gap-6 border-0">
+        <AlertDialogContent className="font-main bg-white rounded-[24px] p-[48px] max-w-[564px] gap-6 border-0 shadow-2xl">
           <button className="flex justify-center items-center absolute w-[44px] h-[44px] top-[8px] right-[8px] cursor-pointer" onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}>
             <Image
               src="/images/shared/alert-close.svg"
