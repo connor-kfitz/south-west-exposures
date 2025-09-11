@@ -16,10 +16,6 @@ export async function middleware(req: NextRequest) {
     });
   }
 
-  if (url.pathname === "/") {
-    return NextResponse.redirect(new URL("/about", req.url));
-  }
-
   if (url.pathname.startsWith("/admin")) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
@@ -32,5 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*", "/about", "/products"]
+  matcher: ["/", "/admin/:path*", "/products"]
 }
