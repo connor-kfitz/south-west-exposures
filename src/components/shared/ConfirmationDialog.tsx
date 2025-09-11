@@ -68,15 +68,20 @@ export default function ConfirmationDialog({alertDialog, setAlertDialog}: Confir
     return (
       <Drawer open={alertDialog.open} onClose={() => setAlertDialog(prev => ({ ...prev, open: false }))}>
         <DrawerContent className="bg-white min-h-[336px] border-0 px-[24px]">
-          <button className="flex justify-center items-center absolute w-[44px] h-[44px] top-[8px] right-[8px] cursor-pointer" onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}>
+          <button 
+            className="flex justify-center items-center rounded-full absolute w-[44px] h-[44px] top-[8px] 
+            right-[8px] hover:bg-gray-200 focus-visible:bg-gray-200 active:bg-gray-300 touch-manipulation focus-visible:ring-offset-2
+            focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none" 
+            onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}
+          >
             <Image
               src="/images/shared/alert-close.svg"
               alt="Close"
               width={20}
-              height={20}
+              height={20} 
             />
           </button>
-          <DrawerHeader className="flex flex-col justify-center px-0 pt-[32px]">
+          <DrawerHeader className="font-main flex flex-col justify-center px-0 pt-[32px]">
             <div className="flex justify-center items-center p-[4.5px] mb-2">
               <div className="w-[39px] h-[39px] bg-green-500 rounded-full flex justify-center items-center">
                 <Image src="/images/shared/checkmark.svg" alt="Checkmark" width={27} height={27} />
@@ -85,8 +90,8 @@ export default function ConfirmationDialog({alertDialog, setAlertDialog}: Confir
             <DrawerTitle className="text-h2 mb-4">{alertDialog.title}</DrawerTitle>
             <DrawerDescription className="text-b6 text-gray-600">{alertDialog.description}</DrawerDescription>
           </DrawerHeader>
-          <DrawerFooter className="pb-[32px]">
-            <Button variant="primary" size="primaryDefault" className="w-full" onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}>
+          <DrawerFooter className="pb-[32px] px-0">
+            <Button variant="primary" size="primaryDefault" autoFocus className="w-full font-medium" onClick={() => setAlertDialog(prev => ({ ...prev, open: false }))}>
               Close
             </Button>
           </DrawerFooter>

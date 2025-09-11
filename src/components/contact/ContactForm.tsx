@@ -63,7 +63,7 @@ export default function ContactForm({ className, setAlertDialog }: ContactFormPr
           if (el) {
             const elementTop = el.getBoundingClientRect().top + window.scrollY;
             window.scrollTo({
-              top: elementTop - 24,
+              top: elementTop - 36,
               behavior: "smooth",
             });
             el.focus({ preventScroll: true });
