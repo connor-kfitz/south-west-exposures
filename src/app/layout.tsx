@@ -14,6 +14,11 @@ const jakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
 })
 
+export const metadata = {
+  title: "South West Exposures",
+  description: "Solutions for innovative drug therapies. South West Exposures is a firm specializing in the design and fabrication of disruptive shielding technology.",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
