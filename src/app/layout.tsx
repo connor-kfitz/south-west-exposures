@@ -1,5 +1,6 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import TopNav from "@/components/nav/TopNav";
 import "./globals.css";
 import Footer from "@/components/nav/Footer";
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Footer/>
         </BreadcrumbProvider>
       </body>
+      {process.env.NODE_ENV === "production" ? <GoogleAnalytics gaId="G-V4002057Y5"/> : null}
     </html>
   )
 }
