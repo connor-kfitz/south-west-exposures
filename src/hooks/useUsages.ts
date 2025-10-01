@@ -1,52 +1,28 @@
-import { ProductAttribute } from "@/types/admin-products";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface useUsagesReturn {
-  usages: ProductAttribute[];
-  loading: boolean;
-  error: string;
   addError: string;
   postUsage: (name?: string) => Promise<boolean>;
   deleteUsage: (id: string) => Promise<string>;
 }
 
 export function useUsages(): useUsagesReturn {
-  const [usages, setUsages] = useState<ProductAttribute[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+
   const [addError, setAddError] = useState<string>("");
 
-  useEffect(() => {
-    fetchUsages();
-  }, []);
-
-  async function fetchUsages(): Promise<void> {
-    try {
-      const response = await fetch("/api/admin/products/usages/get");
-      if (!response.ok) throw new Error(`${response.status}`);
-      const usages = await response.json();
-      setUsages(usages);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const router = useRouter();
 
   async function postUsage(name?: string): Promise<boolean> {
     try {
       const response = await fetch("/api/admin/products/usages/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name })
+        body: JSON.stringify({ name })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchUsages();
       setAddError("");
+      router.refresh();
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -74,7 +50,7 @@ export function useUsages(): useUsagesReturn {
         const data = await response.json();
         throw new Error(data.message || "Something went wrong");
       }
-      await fetchUsages();
+      router.refresh();
       return "";
     } catch (error) {
       if (error instanceof Error) {
@@ -86,9 +62,6 @@ export function useUsages(): useUsagesReturn {
   }
 
   return {
-    usages,
-    loading,
-    error,
     addError,
     postUsage,
     deleteUsage

@@ -26,24 +26,24 @@ export default function SideNav() {
         size: 20
       }
     },
-    {
-      name: "Articles",
-      href: "/admin/articles",
-      image: {
-        path: "/images/side-nav/news-paper.svg",
-        alt: "News Paper",
-        size: 18
-      }
-    },
-    {
-      name: "Messages",
-      href: "/admin/messages",
-      image: {
-        path: "/images/side-nav/mail.svg",
-        alt: "Mail",
-        size: 18
-      }
-    }
+    // {
+    //   name: "Articles",
+    //   href: "/admin/articles",
+    //   image: {
+    //     path: "/images/side-nav/news-paper.svg",
+    //     alt: "News Paper",
+    //     size: 18
+    //   }
+    // },
+    // {
+    //   name: "Messages",
+    //   href: "/admin/messages",
+    //   image: {
+    //     path: "/images/side-nav/mail.svg",
+    //     alt: "Mail",
+    //     size: 18
+    //   }
+    // }
   ];
 
   return (

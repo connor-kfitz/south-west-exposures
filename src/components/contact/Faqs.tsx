@@ -13,9 +13,8 @@ export default function Faqs({ className }: FaqsProps) {
           alt="Speech Bubble"
           width={97}
           height={73}
-          className=""
         />
-        <h2 className="text-violet-900 text-h4 leading-h4 absolute top-[12px] left-1/2 -translate-x-1/2 font-semibold text-center">FAQs</h2>
+        <h2 className="text-violet-900 text-h4 leading-h4 absolute top-[14px] sm:top-[12px] left-1/2 -translate-x-1/2 font-semibold text-center">FAQs</h2>
       </div>
       <ul className="flex flex-col gap-6 text-gray-600">
         <li>

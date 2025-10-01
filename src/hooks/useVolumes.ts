@@ -1,41 +1,17 @@
-import { ProductAttribute } from "@/types/admin-products";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface useVolumesReturn {
-  volumes: ProductAttribute[];
-  loading: boolean;
-  error: string;
   addError: string;
   postVolume: (name?: string) => Promise<boolean>;
   deleteVolume: (id: string) => Promise<string>;
 }
 
 export function useVolumes(): useVolumesReturn {
-  const [volumes, setVolumes] = useState<ProductAttribute[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+
   const [addError, setAddError] = useState<string>("");
 
-  useEffect(() => {
-    fetchVolumes();
-  },[]);
-
-  async function fetchVolumes(): Promise<void> {
-    try {
-      const response = await fetch("/api/admin/products/volumes/get");
-      if (!response.ok) throw new Error(`${response.status}`);
-      const volumes = await response.json();
-      setVolumes(volumes);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const router = useRouter()
 
   async function postVolume(name?: string): Promise<boolean> {
     try {
@@ -45,8 +21,8 @@ export function useVolumes(): useVolumesReturn {
         body: JSON.stringify({ name: name })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchVolumes();
       setAddError("");
+      router.refresh();
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -74,7 +50,7 @@ export function useVolumes(): useVolumesReturn {
         const data = await response.json();
         throw new Error(data.message || "Something went wrong");
       }
-      await fetchVolumes();
+      router.refresh();
       return "";
     } catch (error) {
       if (error instanceof Error) {
@@ -86,9 +62,6 @@ export function useVolumes(): useVolumesReturn {
   }
 
   return {
-    volumes,
-    loading,
-    error,
     addError,
     postVolume,
     deleteVolume

@@ -30,7 +30,7 @@ export default function TopNav() {
     <nav className="w-full font-main">
       <div className="padding-content" style={{ boxShadow: 'var(--shadow-nav)' }}>
         <div className="flex items-center min-h-[88px] max-w-[1160px] py-3 mx-auto">
-          <Link href="/about">
+          <Link href="/">
             <Image
               src="/images/top-nav/swe-logo.png"
               alt="South West Exposures Logo"

@@ -1,5 +1,6 @@
 import ProductList from '@/components/products/list/ProductList';
 import type { Metadata } from 'next';
+import { cookies } from "next/headers";
 
 export const revalidate = 0;
 
@@ -11,8 +12,12 @@ export const metadata: Metadata = {
 export default async function ProductsPage() {
   try {
     const [productsRes, filtersRes] = await Promise.all([
-      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`),
-      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/filters/all/get`)
+      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`, {
+        headers: { Cookie: cookies().toString() }
+      }),
+      fetch(`${process.env.DOMAIN_NAME}/api/admin/products/filters/all/get`, {
+        headers: { Cookie: cookies().toString() }
+      })
     ]);
 
     if (!productsRes.ok || !filtersRes.ok) {

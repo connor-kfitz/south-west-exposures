@@ -1,52 +1,27 @@
-import { ProductAttribute } from "@/types/admin-products";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface useAccessoriesReturn {
-  accessories: ProductAttribute[];
-  loading: boolean;
-  error: string;
   addError: string;
   postAccessory: (name?: string) => Promise<boolean>;
   deleteAccessory: (id: string) => Promise<string>;
 }
 
 export function useAccessories(): useAccessoriesReturn {
-  const [accessories, setAccessories] = useState<ProductAttribute[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
 
-  useEffect(() => {
-    fetchAccessories();
-  }, []);
-
-  async function fetchAccessories(): Promise<void> {
-    try {
-      const response = await fetch("/api/admin/products/accessories/get");
-      if (!response.ok) throw new Error(`${response.status}`);
-      const accessories = await response.json();
-      setAccessories(accessories);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const router = useRouter();
 
   async function postAccessory(name?: string): Promise<boolean> {
     try {
       const response = await fetch("/api/admin/products/accessories/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name })
+        body: JSON.stringify({ name })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchAccessories();
       setAddError("");
+      router.refresh();
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -74,7 +49,7 @@ export function useAccessories(): useAccessoriesReturn {
         const data = await response.json();
         throw new Error(data.message || "Something went wrong");
       }
-      await fetchAccessories();
+      router.refresh();
       return "";
     } catch (error) {
       if (error instanceof Error) {
@@ -86,9 +61,6 @@ export function useAccessories(): useAccessoriesReturn {
   }
 
   return {
-    accessories,
-    loading,
-    error,
     addError,
     postAccessory,
     deleteAccessory

@@ -5,6 +5,10 @@
 
 @plugin "tailwindcss-animate";
 
+html {
+  @apply scroll-smooth;
+}
+
 :root {
   --font-main: var(--font-jakarta);
   --shadow-nav: inset 0 -1px 0 0 #BCCCDC;
@@ -51,9 +55,11 @@
   --color-blue-500: #3B82F6;
   --color-blue-600: #2563EB;
   --color-blue-800: #1E40AF;
+  --color-violet-400: #A78BFA;
   --color-violet-800: #5B21B6;
   --color-violet-900: #4C1D95;
   --color-yellow-300: #FDE047;
+  --color-green-500: #22C55E;
 }
 
 @layer base {
@@ -213,12 +219,14 @@
 
 @theme {
   --breakpoint-tableBpSm: 34.875rem;
-  --breakpoint-tableBpMd: 44.5rem;
+  --breakpoint-tableBpMd: 45.5rem;
 
   --breakpoint-productListXs: 25rem;
 
   --breakpoint-aboutBpHeroSlide: 76.875rem;
   --breakpoint-aboutCenterContent: 73.4375rem;
+
+  --breakpoint-inquiryModalSize: 64.6875rem;
 }
 
 @theme inline {

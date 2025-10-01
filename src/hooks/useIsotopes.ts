@@ -1,52 +1,28 @@
-import { ProductAttribute } from "@/types/admin-products";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface useIsotopesReturn {
-  isotopes: ProductAttribute[];
-  loading: boolean;
-  error: string;
   addError: string;
   postIsotope: (value?: string) => Promise<boolean>;
   deleteIsotope: (id: string) => Promise<string>;
 }
 
 export function useIsotopes(): useIsotopesReturn {
-  const [isotopes, setIsotopes] = useState<ProductAttribute[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+
   const [addError, setAddError] = useState<string>("");
 
-  useEffect(() => {
-    fetchIsotopes();
-  }, []);
+  const router = useRouter();
 
-  async function fetchIsotopes(): Promise<void> {
-    try {
-      const response = await fetch("/api/admin/products/isotopes/get");
-      if (!response.ok) throw new Error(`${response.status}`);
-      const isotopes = await response.json();
-      setIsotopes(isotopes);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function postIsotope(name?: string): Promise<boolean> {
+  async function postIsotope(value?: string): Promise<boolean> {
     try {
       const response = await fetch("/api/admin/products/isotopes/post", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name })
+        body: JSON.stringify({ name: value })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchIsotopes();
       setAddError("");
+      router.refresh();
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -74,7 +50,7 @@ export function useIsotopes(): useIsotopesReturn {
         const data = await response.json();
         throw new Error(data.message || "Something went wrong");
       }
-      await fetchIsotopes();
+      router.refresh();
       return "";
     } catch (error) {
       if (error instanceof Error) {
@@ -86,9 +62,6 @@ export function useIsotopes(): useIsotopesReturn {
   }
 
   return {
-    isotopes,
-    loading,
-    error,
     addError,
     postIsotope,
     deleteIsotope

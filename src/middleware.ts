@@ -3,9 +3,17 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  
-  if (url.pathname === "/") {
-    return NextResponse.redirect(new URL("/about", req.url));
+
+  // Allow preview branches access to pages
+  if (req.method === "OPTIONS") {
+    return new NextResponse(null, {
+      status: 204,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   }
 
   if (url.pathname.startsWith("/admin")) {
@@ -20,5 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*"]
+  matcher: ["/", "/admin/:path*", "/products"]
 }

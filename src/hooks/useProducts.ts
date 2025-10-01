@@ -1,42 +1,16 @@
-import { Product } from "@/types/admin-products";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface useProductsReturn {
-  products: Product[];
-  loading: boolean;
-  error: string;
   addError: string;
   postProduct: (value?: string) => Promise<boolean>;
-  fetchProducts: () => Promise<void>;
   deleteProduct: (id: string) => Promise<boolean>;
 }
 
 export function useProducts(): useProductsReturn {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
   const [addError, setAddError] = useState<string>("");
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  async function fetchProducts(): Promise<void> {
-    try {
-      const response = await fetch("/api/admin/products/get");
-      if (!response.ok) throw new Error(`${response.status}`);
-      const products = await response.json();
-      setProducts(products);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const router = useRouter();
 
   async function postProduct(name?: string): Promise<boolean> {
     try {
@@ -46,7 +20,7 @@ export function useProducts(): useProductsReturn {
         body: JSON.stringify({ name: name })
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchProducts();
+      router.refresh();
       setAddError("");
       return true;
     } catch (error) {
@@ -72,7 +46,7 @@ export function useProducts(): useProductsReturn {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`${response.status}`);
-      await fetchProducts();
+      router.refresh();
       return true;
     } catch {
       return false;
@@ -80,12 +54,8 @@ export function useProducts(): useProductsReturn {
   }
 
   return {
-    products,
-    loading,
-    error,
     addError,
     postProduct,
-    fetchProducts,
     deleteProduct
   }
 }

@@ -15,6 +15,7 @@ import { FaqsFields } from "./FaqsFields";
 import { generateUUID } from "@/lib/utils";
 import z from "zod";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { useRouter } from "next/navigation";
 
 export const volumeFormSchema = z.object({
   volume: z.string(),
@@ -125,7 +126,6 @@ interface NewProductFormProps {
   productOptions: Product[];
   filters: Filter[];
   editProduct: Product | null;
-  fetchProducts: () => Promise<void>;
   setEditProduct: (product: Product | null) => void;
 }
 
@@ -139,7 +139,6 @@ export default function NewProductForm({
   productOptions,
   filters,
   editProduct,
-  fetchProducts,
   setEditProduct
 }: NewProductFormProps) {
 
@@ -297,7 +296,7 @@ export default function NewProductForm({
       if (!response.ok) throw new Error();
       if (editProduct) setEditProduct(null);
       form.reset(defaultFormValues);
-      fetchProducts();
+      router.refresh();
     } catch (error) {
       console.error("Error posting product:", error);
     }
@@ -375,6 +374,8 @@ export default function NewProductForm({
     form.reset(defaultFormValues);
   }
 
+  const router = useRouter();
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -449,7 +450,7 @@ export default function NewProductForm({
         </div>
         <div className="flex justify-end mt-4">
           {editProduct && <Button className="block mr-4" variant="outline" onClick={cancelEdit}>Cancel</Button>}
-          <Button className="flex justify-center items-center w-[80px]" type="submit">
+          <Button className="flex justify-center items-center w-[100px]" type="submit">
             {loadingSubmit ? <LoadingSpinner /> : editProduct ? "Update" : "Submit"}
           </Button>
         </div>

@@ -3,218 +3,144 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import { useRef } from "react"
+import { ConfirmationAlert } from "@/types/global"
+import Image from "next/image"
+import Link from "next/link"
+import TextInput from "../shared/forms/TextInput"
+import TextAreaInput from "../shared/forms/TextAreaInput"
+import PhoneNumberInput from "../shared/forms/PhoneNumberInput"
+import { sendEmail } from "@/lib/helpers"
 
 const contactFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required").max(50),
-  lastName: z.string().min(1, "Last name is required").max(50),
-  email: z.string().email("Invalid email address"),
-  website: z.string().url("Invalid URL").optional().or(z.literal("")),
-  phone: z.string().length(10, "Phone number must be 10 digits"),
-  message: z.string().min(1, "Message is required").max(1000),
+  firstName: z.string().min(1, "Please enter your first name").max(50),
+  lastName: z.string().min(1, "Please enter your last name").max(50),
+  email: z.string().email("Please enter a valid email address"),
+  website: z.string()
+    .url("Please enter a valid website URL")
+    .optional()
+    .or(z.literal("")),
+  phone: z.string().length(10, "Please enter a valid phone number"),
+  message: z.string().min(1, "Please enter a message").max(1000)
 })
 
-type ContactFormData = z.infer<typeof contactFormSchema>
+export type ContactFormData = z.infer<typeof contactFormSchema>
 
 interface ContactFormProps {
   className?: string
+  setAlertDialog: React.Dispatch<React.SetStateAction<ConfirmationAlert>>;
 }
 
-export default function ContactForm({ className }: ContactFormProps) {
+export default function ContactForm({ className, setAlertDialog }: ContactFormProps) {
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema)
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      website: "",
+      phone: "",
+      message: "",
+    }
   })
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log("Form submitted:", data);
-  }
+    const success = sendEmail(data.firstName + " " + data.lastName, data.email, data.phone, data.message, data.website)
+    if (!success) return;
 
-  const getFormattedPosition = (rawDigits: string, caretAt: number) => {
-    const format = ["(", "_", "_", "_", ")", " ", "_", "_", "_", "-", "_", "_", "_", "_"]
-    let digitIndex = 0;
-    for (let i = 0; i < format.length; i++) {
-      if (format[i] === "_") {
-        if (digitIndex === caretAt) return i;
-        digitIndex++;
-      }
-    }
-    return format.length;
+    form.reset();
+    setAlertDialog((prev) => ({ ...prev, open: true }));
   }
-
-  const formatPhoneNumber = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 10)
-    const format = ["(", "_", "_", "_", ")", " ", "_", "_", "_", "-", "_", "_", "_", "_"]
-    let digitIndex = 0;
-    for (let i = 0; i < format.length; i++) {
-      if (format[i] === "_" && digitIndex < digits.length) {
-        format[i] = digits[digitIndex++];
-      }
-    }
-    return format.join("");
-  }
-
-  const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}>
+      <form 
+        noValidate
+        onSubmit={form.handleSubmit(onSubmit, (errors) => {
+          const firstErrorField = Object.keys(errors)[0];
+          const el = document.getElementById(firstErrorField);
+          if (el) {
+            const elementTop = el.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: elementTop - 36,
+              behavior: "smooth",
+            });
+            el.focus({ preventScroll: true });
+          }
+        })}
+        className={`px-6 bg-white rounded-[24px] sm:px-[64px] ${className}`}
+      >
         <h1 className="text-h2 leading-h2 font-semibold text-gray-900 mb-4">Send us a message</h1>
         <p className="text-b6 leading-b6 text-gray-600 mb-4">
-          You can email us directly at&nbsp;
-          <a className="text-gray-900 font-medium" href="mailto:info@swexposures.com">
+          You can email us directly at{" "}
+          <Link
+            className="text-gray-900 font-medium rounded-[4px] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+            href="mailto:info@swexposures.com"
+          >
             info@swexposures.com
-          </a>
+          </Link>
           , or use the form below to send a message.
         </p>
         <p className="text-b7 leading-b6 text-gray-600 mb-8">All fields are required unless marked optional.</p>
 
+        {Object.keys(form.formState.errors).length > 0 && <div className="flex items-start gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-[32px] rounded rounded-[8px]">
+          <Image
+            src="/images/contact/error.svg"
+            alt="Error"
+            width={24}
+            height={24}
+          />
+          <p className="text-b6 leading-b6">Please review {Object.keys(form.formState.errors).length} errors. <Link href={`#${Object.keys(form.formState.errors)[0]}`} className="text-[#2563EB] underline rounded-[4px] p-[1px] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none">Go to first error</Link></p>
+        </div>}
+
         <div className="grid gap-6">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">First Name</FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="firstName" label="First Name" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Last Name</FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="lastName" label="Last Name" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Email Address</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="email" label="Email Address" 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Website (optional)</FormLabel>
-                <FormControl>
-                  <Input {...field} className="px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <TextInput form={form} name="website" label={<WebsiteLabel/>} 
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="gap-1">
-                <FormLabel className="text-b7 leading-b7">Phone Number</FormLabel>
-                <FormControl>
-                  <Input
-                    ref={inputRef}
-                    inputMode="numeric"
-                    value={formatPhoneNumber(field.value || "")}
-                    onChange={(e) => {
-                      const input = e.target
-                      const raw = e.target.value.replace(/\D/g, "").slice(0, 10)
-                      const nextLength = raw.length
-
-                      field.onChange(raw)
-
-                      requestAnimationFrame(() => {
-                        const caretPos = getFormattedPosition(raw, nextLength)
-                        input.setSelectionRange(caretPos, caretPos)
-                      })
-                    }}
-                    onClick={(e) => {
-                      const input = e.currentTarget
-                      const raw = (field.value || "").replace(/\D/g, "")
-                      const caretPos = getFormattedPosition(raw, raw.length)
-                      input.setSelectionRange(caretPos, caretPos)
-                    }}
-
-                    onFocus={(e) => {
-                      const input = e.currentTarget
-                      const raw = (field.value || "").replace(/\D/g, "")
-                      const caretPos = getFormattedPosition(raw, raw.length)
-                      input.setSelectionRange(caretPos, caretPos)
-                    }}
-                    onKeyDown={(e) => {
-                      const key = e.key
-                      const raw = field.value.replace(/\D/g, "")
-
-                      if (key === "Backspace") {
-                        e.preventDefault()
-                        field.onChange(raw.slice(0, -1))
-
-                        requestAnimationFrame(() => {
-                          const caretPos = getFormattedPosition(raw, raw.length - 1)
-                          inputRef.current?.setSelectionRange(caretPos, caretPos)
-                        })
-                      }
-                    }}
-                    placeholder="(___)___-____"
-                    className="tracking-wide px-4 py-3 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <PhoneNumberInput form={form} name="phone" label="Phone Number"
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            inputClass="tracking-wide px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
           />
-
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => {
-              const charsLeft = 1000 - (field.value?.length || 0)
-
-              return (
-                <FormItem className="gap-1">
-                  <FormLabel className="text-b7 leading-b7">Message</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      className="px-4 py-3 border border-gray-500 rounded-[8px] min-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
-                    />
-                  </FormControl>
-                  <div className="text-b7 leading-b7 text-gray-900">{charsLeft} characters left</div>
-                  <FormMessage />
-                </FormItem>
-              )
-            }}
+          <TextAreaInput form={form} name="message" label="Message"
+            formItemClass="gap-1"
+            formLabelClass="text-b7 leading-b7 !text-gray-900"
+            areaClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] min-h-[168px] max-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+            maxChars={1000}
           />
         </div>
-
-        <Button type="submit" variant="primary" size="primaryDefault" className="mt-6" disabled={form.formState.isSubmitting}>
+        <Button type="submit" variant="primary" size="primaryDefault" className="mt-6 w-full sm:w-auto" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? "Sending..." : "Submit"}
         </Button>
       </form>
     </Form>
+  )
+}
+
+function WebsiteLabel() {
+  return (
+    <div className="text-start">
+      Website (optional)
+      <br/>
+      <span className="font-normal text-gray-600">E.g. website.com</span>
+    </div>
   )
 }

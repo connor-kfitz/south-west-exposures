@@ -18,7 +18,7 @@ function SortableImage({ image, removeImage }: SortableImageProps) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-  };
+  }
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="relative w-24 h-24 border border-border rounded-md overflow-hidden cursor-grab">
@@ -32,7 +32,7 @@ function SortableImage({ image, removeImage }: SortableImageProps) {
       </button>
     </div>
   );
-};
+}
 
 interface SortableImagesProps {
   form: UseFormReturn<FormValues>;
@@ -44,7 +44,7 @@ export function SortableImages({ form, images }: SortableImagesProps) {
   const handleRemove = (id: string) => {
     const updatedImages = images.filter((image) => image.id !== id);
     form.setValue("images", updatedImages, { shouldValidate: true });
-  };
+  }
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -54,21 +54,22 @@ export function SortableImages({ form, images }: SortableImagesProps) {
         arrayMove(images, images.findIndex(i => i.id === active.id), images.findIndex(i => i.id === over?.id))
       );
     }
-  };
+  }
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10
     },
-  });
+  })
 
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       distance: 10
     },
-  });
+  })
 
   const sensors = useSensors(mouseSensor, touchSensor);
+  
   return (
     <DndContext
       collisionDetection={closestCenter}

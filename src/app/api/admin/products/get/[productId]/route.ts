@@ -110,7 +110,43 @@ export async function GET(req: Request, { params }: { params: Promise<{ productI
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pt.purchased_together_product_id,
-          'name', ptp.name
+          'name', ptp.name,
+          'images', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', ppi.image_id,
+              'src', ppi.src,
+              'display_order', ppi.display_order
+            ))
+            FROM product_images ppi
+            WHERE ppi.product_id = ptp.product_id
+          ),
+          'isotopes', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', i.isotope_id,
+              'name', i.name
+            ))
+            FROM products_isotopes pi
+            JOIN isotopes i ON pi.isotope_id = i.isotope_id
+            WHERE pi.product_id = ptp.product_id
+          ),
+          'shields', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', s.shield_id,
+              'name', s.name
+            ))
+            FROM products_shields ps
+            JOIN shields s ON ps.shield_id = s.shield_id
+            WHERE ps.product_id = ptp.product_id
+          ),
+          'volumes', (
+            SELECT jsonb_agg(DISTINCT jsonb_build_object(
+              'id', v.volume_id,
+              'name', v.name
+            ))
+            FROM products_volumes pv
+            JOIN volumes v ON pv.volume_id = v.volume_id
+            WHERE pv.product_id = ptp.product_id
+          )
         )) FILTER (WHERE pt.purchased_together_product_id IS NOT NULL), '[]') AS "purchasedTogether",
 
         COALESCE(
