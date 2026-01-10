@@ -37,11 +37,27 @@ export async function GET() {
 
   const products = await getProducts();
 
-  const urls = [...staticPaths.map((p) => `${DOMAIN}/${p}`), ...products.map((p) => `${DOMAIN}/products/${p.id}`)];
+  const urls = [
+    ...staticPaths.map(p => ({
+      loc: `${DOMAIN}/${p.path}`,
+      lastmod: new Date().toISOString().split('T')[0],
+      priority: p.priority,
+    })),
+    ...products.map(p => ({
+      loc: `${DOMAIN}/products/${p.id}`,
+      lastmod: new Date().toISOString().split('T')[0],
+      priority: 0.7,
+    })),
+  ];
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((u) => `  <url>\n    <loc>${escapeXml(u)}</loc>\n  </url>`)
-    .join('\n')}\n</urlset>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+                ${urls.map(u => `  <url>
+                    <loc>${escapeXml(u.loc)}</loc>
+                    <lastmod>${u.lastmod}</lastmod>
+                    <priority>${u.priority}</priority>
+                  </url>`).join('\n')}
+                </urlset>`;
 
   return new Response(xml, {
     headers: {
