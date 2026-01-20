@@ -19,11 +19,12 @@ export default function Footer() {
         <div className="flex-col flex max-w-[1160px] pb-5 pt-[32px] mx-auto border-b border-[#BFDBFE] sm:flex-row sm:items-center sm:pt-6">
           <Image
             src="/images/footer/swe-logo.png"
-            alt="South West Exposures Logo"
+            alt="South West Exposures"
             className="mr-[37px] mb-[7px] relative bottom-[6px] sm:mb-0"
             height={66}
             width={68}
           />
+          <span className="sr-only">South West Exposures</span>
           <div className="flex-col flex flex-wrap justify-between w-full space-y-2 sm:flex-row sm:items-center">
             <ul className="flex-col flex flex-wrap gap-[32px] gap-y-4 pb-6 mb-6 border-b border-[#BFDBFE] text-b6 leading-b6 relative top-[2px] pr-[32px] sm:flex-row sm:pb-0 sm:mb-0 sm:border-b-0 sm:gap-y-2">
               {navLinks.map((link, index) => (

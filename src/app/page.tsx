@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "About",
-  description: '...'
+  title: "South West Exposures",
+  description: "Solutions for innovative drug therapies. South West Exposures is a firm specializing in the design and fabrication of disruptive shielding technology.",
 }
 
 export default async function AboutPage() {

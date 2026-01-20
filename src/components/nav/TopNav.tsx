@@ -33,11 +33,12 @@ export default function TopNav() {
           <Link href="/">
             <Image
               src="/images/top-nav/swe-logo.png"
-              alt="South West Exposures Logo"
+              alt="South West Exposures"
               className="mr-[32px] relative bottom-[6px]"
               height={47}
               width={72}
             />
+            <span className="sr-only">South West Exposures</span>
           </Link>
           <MobileNav navLinks={navLinks} isActiveLink={isActiveLink}/>
           <div className="hidden md:flex flex-wrap justify-between items-center w-full gap-y-2">
