@@ -13,9 +13,11 @@ export default async function AboutPage() {
 
   try {
 
+    const cookieStore = await cookies();
+
     // Headers are used to send authentication cookies to the API
     const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/popular/get`, {
-      headers: { Cookie: cookies().toString() },
+      headers: { Cookie: cookieStore.toString() }
     });
 
     if (!response.ok) throw new Error(`Failed to fetch popular products, status: ${response.status}`);

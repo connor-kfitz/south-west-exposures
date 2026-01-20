@@ -11,12 +11,15 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
   try {
+
+    const cookieStore = await cookies();
+
     const [productsRes, filtersRes] = await Promise.all([
       fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`, {
-        headers: { Cookie: cookies().toString() }
+        headers: { Cookie: cookieStore.toString() }
       }),
       fetch(`${process.env.DOMAIN_NAME}/api/admin/products/filters/all/get`, {
-        headers: { Cookie: cookies().toString() }
+        headers: { Cookie: cookieStore.toString() }
       })
     ]);
 

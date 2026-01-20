@@ -8,8 +8,10 @@ export const revalidate = 0;
 export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
   const { productId } = await params
 
+  const cookieStore = await cookies();
+
   const product = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`, {
-    headers: { Cookie: cookies().toString() }
+    headers: { Cookie: cookieStore.toString() }
   }).then((res) => res.json())
 
   return {
@@ -20,9 +22,7 @@ export async function generateMetadata({ params }: {params: Promise<{ productId:
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`, {
-      headers: { Cookie: cookies().toString() }
-    });
+    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`);
     if (!response.ok) throw new Error(`Failed to fetch products: ${response.status}`);
     
     const products = await response.json();
@@ -44,9 +44,11 @@ interface ProductPageProps {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productId } = await params;
 
+  const cookieStore = await cookies();
+
   try {
     const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`, {
-      headers: { Cookie: cookies().toString() }
+      headers: { Cookie: cookieStore.toString() }
     });
     if (!response.ok) throw new Error(`Failed to fetch product, status: ${response.status}`);
   

@@ -1,6 +1,7 @@
 import Dashboard from "@/components/admin/products/Dashboard";
 import { cookies } from "next/headers";
 import { Product, ProductAttribute, ProductPreview } from "@/types/admin-products";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 interface DataWithError<T> {
   data: T;
@@ -36,9 +37,11 @@ export default async function AdminProductsPage() {
 
   const data = {} as AdminProductsData;
 
+  const cookieStore = await cookies();
+
   await Promise.all(
     keys.map(async (key) => {
-      const res = await fetchByRoute(routes[key]);
+      const res = await fetchByRoute(routes[key], cookieStore);
       if (!res.ok) {
         data[key] = { data: [], error: `Failed to load ${key} (${res.status})` };
         return;
@@ -55,11 +58,11 @@ export default async function AdminProductsPage() {
   );
 }
 
-function fetchByRoute(route: string): Promise<Response> {
+async function fetchByRoute(route: string, cookieStore: ReadonlyRequestCookies): Promise<Response> {
   return fetch(`${process.env.DOMAIN_NAME}/${route}`, {
     headers: {
-      Cookie: cookies().toString(),
+      Cookie: cookieStore.toString()
     },
-    cache: "no-store",
+    cache: "no-store"
   });
 }
