@@ -1,6 +1,7 @@
 import pool from '@/lib/db';
 
-const DOMAIN = process.env.DOMAIN_NAME || process.env.NEXT_PUBLIC_DOMAIN || process.env.VERCEL_URL || 'http://localhost:3000';
+const rawDomain = process.env.DOMAIN_NAME || process.env.NEXT_PUBLIC_DOMAIN || process.env.VERCEL_URL || 'http://localhost:3000';
+const DOMAIN = rawDomain.startsWith('http') ? rawDomain.replace(/\/+$/g, '') : `https://${rawDomain.replace(/\/+$/g, '')}`;
 
 function escapeXml(unsafe: string) {
   return unsafe.replace(/[<>&"']/g, (c) => {
@@ -39,12 +40,12 @@ export async function GET() {
 
   const urls = [
     ...staticPaths.map(p => ({
-      loc: `${DOMAIN}/${p.path}`,
+      loc: new URL(p.path, DOMAIN).toString(),
       lastmod: new Date().toISOString().split('T')[0],
       priority: p.priority,
     })),
     ...products.map(p => ({
-      loc: `${DOMAIN}/products/${p.id}`,
+      loc: new URL(`products/${p.id}`, DOMAIN).toString(),
       lastmod: new Date().toISOString().split('T')[0],
       priority: 0.7,
     })),
