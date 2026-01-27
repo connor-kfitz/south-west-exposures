@@ -1,4 +1,5 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Metadata } from "next";
 import { BreadcrumbProvider } from "@/contexts/BreadcrumbContext";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import TopNav from "@/components/nav/TopNav";
@@ -15,7 +16,14 @@ const jakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
 })
 
-export const metadata = {
+// Build a canonical site domain to be used by Next's metadata APIs when needed.
+const rawDomain = process.env.DOMAIN_NAME || process.env.NEXT_PUBLIC_DOMAIN || process.env.VERCEL_URL || 'http://localhost:3000';
+const DOMAIN = rawDomain.startsWith('http') ? rawDomain.replace(/\/+$/g, '') : `https://${rawDomain.replace(/\/+$/g, '')}`;
+
+export const metadata: Metadata = {
+  // metadataBase makes Next resolve relative metadata URLs (and is useful when
+  // building canonical/alternate links). It should be an absolute URL.
+  metadataBase: new URL(DOMAIN),
   title: "South West Exposures",
   description: "Solutions for innovative drug therapies. South West Exposures is a firm specializing in the design and fabrication of disruptive shielding technology.",
   alternates: {
