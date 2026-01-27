@@ -18,6 +18,9 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata = {
   title: "South West Exposures",
   description: "Solutions for innovative drug therapies. South West Exposures is a firm specializing in the design and fabrication of disruptive shielding technology.",
+  alternates: {
+    canonical: process.env.DOMAIN_NAME
+  }
 }
 
 export default function RootLayout({
