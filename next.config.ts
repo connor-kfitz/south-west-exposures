@@ -8,6 +8,21 @@ const nextConfig: NextConfig = {
         hostname: '9wlfj5sp6hz84cyh.public.blob.vercel-storage.com',
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'swexposures.vercel.app',
+          },
+        ],
+        destination: 'https://swexposures.com/:path*',
+        permanent: true,
+      },
+    ];
   }
 };
 
