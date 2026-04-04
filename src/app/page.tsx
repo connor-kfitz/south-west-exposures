@@ -1,4 +1,4 @@
-import About from "@/components/about/About";
+import Home from "@/components/home/Home";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 
@@ -31,10 +31,10 @@ export default async function AboutPage() {
   
     const popularProducts = await response.json();
 
-    return <main className="bg-gray-50 relative overflow-hidden"><About popularProducts={popularProducts}/></main>
+    return <main className="bg-gray-50 relative overflow-hidden"><Home popularProducts={popularProducts}/></main>
 
   } catch {
 
-     return <main><About popularProducts={[]}/></main>
+    return <main><Home popularProducts={[]}/></main>
   }
 }

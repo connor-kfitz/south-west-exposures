@@ -1,23 +1,23 @@
 "use client";
 
-import HeroHeader from "./HeroHeader";
-import CustomEngineeringImage from "./CustomEngineeringImage";
-import CustomEngineeringGradient from "./CustomEngineeringGradient";
-import ProductRange from "./ProductRange";
-import CustomSolutions from "./CustomSolutions";
-import PopularProducts from "./PopularProducts";
-import HeroImage from "./HeroImage";
+import HeroHeader from "@/components/home/HeroHeader";
+import HeroImage from "@/components/home/HeroImage";
+import CustomEngineeringImage from "@/components/home/CustomEngineeringImage";
+import CustomEngineeringGradient from "@/components/home/CustomEngineeringGradient";
+import ProductRange from "@/components/home/ProductRange";
+import CustomSolutions from "@/components/home/CustomEngineering";
+import PopularProducts from "@/components/home/PopularProducts";
+import SpecializedServices from "@/components/home/SpecializedServices";
 
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { useEffect } from "react";
 import { Product } from "@/types/admin-products";
-import SpecializedServices from "./SpecializedServices";
 
-interface AboutProps {
+interface HomeProps {
   popularProducts: Product[];
 }
 
-export default function About({ popularProducts }: AboutProps) {
+export default function Home({ popularProducts }: HomeProps) {
 
   const { setBreadcrumbs } = useBreadcrumbs();
 
