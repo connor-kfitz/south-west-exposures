@@ -1,5 +1,6 @@
-import { ProductPreview } from "@/types/admin-products";
 import ProductCard from "../products/ProductCard";
+
+import { ProductPreview } from "@/types/admin-products";
 
 interface PopularProductsProps {
   popularProducts: ProductPreview[];
@@ -34,5 +35,5 @@ export default function PopularProducts({ popularProducts }: PopularProductsProp
         </ul>
       </div>
     </section>
-  )
+  );
 }

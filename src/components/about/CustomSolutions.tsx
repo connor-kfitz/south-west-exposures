@@ -1,16 +1,19 @@
 import Link from "next/link";
+
 import { Button } from "../ui/button";
 
 export default function CustomSolutions() {
   return (
-    <section className="mb-[48px] px-[24px] sm:px-[48px]">
-      <div className="flex xl:block justify-center items-center xl-block rounded-[24px] max-w-[1344px] min-h-[560px] md:min-h-[871px] mx-auto xl:pt-[217px] bg-custom-solutions xl:pr-[141px]">
-        <div className="xl:ml-auto max-w-[465px] px-[48px] xl:px-0">
-          <h2 className="text-d2 text-gray-900 font-bold mb-4">Custom solutions for your drug therapies</h2>
-          <p className="text-b6 text-gray-600 mb-6">SWE combines industry knowledge with innovative engineering and designs to provide practical solutions in support of Drug Development, Distribution and Administration. Theranostics and RLT continue to evolve towards Standard of Care in Oncology. SWE is a trusted industry partner for these new and emerging technologies.</p>
-          <Link href="mailto:robert.kamen@swexposures.com"><Button variant="primary" size="primaryDefault" className="text-md font-medium">Customize your solution</Button></Link>
+    <section className="mb-[278px] px-[24px] sm:px-[48px] pb-[173px]">
+      <div className="max-w-[1344px] mx-auto rounded-[24px]">
+        <div className="ml-[92px] max-w-[565px]">
+          <h2 className="text-h1 text-gray-900 font-semibold mb-6">Custom-engineered shielding for emerging therapies</h2>
+          <p className="text-b5 text-gray-600 mb-6">
+            SWE combines industry knowledge with innovative design to deliver practical shielding systems for drug development, distribution, and administration. As theranostics and RLT advance toward becoming the standard of care in oncology, we partner with teams to make these breakthroughs safe, reliable, and scalable.
+          </p>
+          <Link href="mailto:robert.kamen@swexposures.com"><Button variant="primary" size="primaryDefault" className="text-md font-medium pt-[13px] pb-[15px]">Explore custom solutions</Button></Link>
         </div>
       </div>
     </section>
-  )
+  );
 }
