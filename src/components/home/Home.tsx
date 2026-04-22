@@ -1,7 +1,6 @@
 "use client";
 
 import HeroHeader from "@/components/home/HeroHeader";
-import HeroImage from "@/components/home/HeroImage";
 import CustomEngineeringImage from "@/components/home/CustomEngineeringImage";
 import CustomEngineeringGradient from "@/components/home/CustomEngineeringGradient";
 import ProductRange from "@/components/home/ProductRange";
@@ -28,7 +27,6 @@ export default function Home({ popularProducts }: HomeProps) {
   return (
     <main className="font-main">
       <HeroHeader/>
-      <HeroImage/>
       <div className="relative">
         <ProductRange/>
         <CustomSolutions/>

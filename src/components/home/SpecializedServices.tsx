@@ -5,10 +5,10 @@ import { Button } from "../ui/button";
 export default function SpecializedServices() {
   return (
     <section className="mb-[96px] px-[24px] sm:px-[48px]">
-      <div className="max-w-[1160px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[66px] items-center">
-        <div className="w-full flex justify-center md:justify-start">
+      <div className="max-w-[1160px] mx-auto flex gap-[66px] justify-start items-center">
+        <div className="flex justify-center md:justify-start">
           <div
-            className="w-[564px] h-[649px] rounded-[16px] overflow-hidden bg-[#F3F4F6]"
+            className="min-w-[564px] h-[649px] rounded-[16px] overflow-hidden bg-[#F3F4F6]"
             style={{
               background: "url('/images/about/specialized-services.png') lightgray -470.332px -61.275px / 238.516% 118.487% no-repeat",
               transform: "scaleX(-1)"

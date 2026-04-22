@@ -7,7 +7,42 @@ export default function HeroImage() {
       alt="Isotope Shield"
       width={781}
       height={781}
-      className="hidden absolute left-1/2 transform max-w-[781px] w-[63.5vw] translate-x-[-62px] top-[5vw] aboutBpHeroSlide:top-0 aboutBpHeroSlide:w-full aboutCenterContent:block"
+      className="
+        absolute transform
+        
+        w-full max-w-[340px]
+        bottom-0
+        left-[50%]
+        -translate-x-1/2
+        translate-y-[36%]
+        
+        sm:max-w-[480px]
+        sm:translate-y-[34%]
+        sm:bottom-[-5px]
+        
+        md:max-w-[560px]
+        md:left-[calc(50%-40px)]
+        md:-translate-x-[20%]
+        md:translate-y-[31%]
+        md:bottom-[-12px]
+        
+        lg:max-w-[660px]
+        lg:left-[calc(50%-60px)]
+        lg:-translate-x-[10%]
+        lg:translate-y-[27%]
+        lg:bottom-[-26px]
+        
+        xl:max-w-[740px]
+        xl:-translate-x-[3%]
+        xl:translate-y-[23%]
+        xl:bottom-[-38px]
+        
+        min-[1440px]:!min-w-[803px]
+        min-[1440px]:!translate-y-[20%]
+        min-[1440px]:!translate-x-[0%]
+        min-[1440px]:!left-[calc(50%-75px)]
+        min-[1440px]:!bottom-[-32px]
+      "
     />
-  )
+  );
 }
