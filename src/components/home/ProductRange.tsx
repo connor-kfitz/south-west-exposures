@@ -27,7 +27,7 @@ export default function ProductRange() {
   ]
 
   return (
-    <section className="mb-[96px] px-[48px]">
+    <section className="mb-[64px] sm:mb-[96px] px-6 sm:px-[48px]">
       <div className="max-w-[1160px] mx-auto">
         <h2 className="text-h1 font-semibold text-gray-900 mb-8">Our product range</h2>
         <ul className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">

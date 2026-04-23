@@ -29,9 +29,9 @@ export default function Home({ popularProducts }: HomeProps) {
       <HeroHeader/>
       <div className="relative">
         <ProductRange/>
-        <CustomSolutions/>
         <CustomEngineeringImage/>
         <CustomEngineeringGradient/>
+        <CustomSolutions/>
       </div>
       <SpecializedServices/>
       <PopularProducts popularProducts={popularProducts}/>

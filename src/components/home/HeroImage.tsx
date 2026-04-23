@@ -32,11 +32,7 @@ export default function HeroImage() {
         md:translate-y-[calc(27%-(100vw-1024px)*0.0275)]
         md:bottom-[calc(-26px-(100vw-1024px)*0.0235)]
         
-        lg:max-w-[calc(660px+(100vw-1024px)*0.5608)]
-        lg:left-[calc(50%-60px-(100vw-1024px)*0.0588)]
         lg:translate-x-[calc((100vw-1280px)*0.00)]
-        lg:translate-y-[calc(27%-(100vw-1024px)*0.0275)]
-        lg:bottom-[calc(-26px-(100vw-1024px)*0.0235)]
         
         xl:max-w-[803px]
         xl:left-[calc(50%-75px)]
