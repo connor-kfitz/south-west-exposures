@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export default function HeroHeader() {
   return (
-    <header className="relative flex justify-center mb-[144px] min-h-[622px]">
+    <header className="relative flex justify-center mb-[calc(158px+(100vw-375px)*0.05)] md:mb-[144px] min-h-[622px]">
       <div
         className="absolute inset-0"
         style={{
@@ -16,7 +16,7 @@ export default function HeroHeader() {
         <HeroImage/>
       </div>
       <div className="w-full max-w-[1440px] relative">
-        <div className="flex justify-center px-6 w-full max-w-[1060px] pt-[48px] md:py-[96px] aboutCenterContent:pl-[140px] aboutCenterContent:block">
+        <div className="flex justify-center px-6 w-full max-w-[1060px] pt-[48px] lg:py-[96px] lg:pl-[82px] xl:pl-[140px] md:block">
           <div className="max-w-[663px] relative z-10">
             <h1 className="text-d2 font-bold text-white mb-6">
               Redefining

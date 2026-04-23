@@ -87,19 +87,19 @@ html {
     --padding-content: 88px;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1279px) {
     :root {
       --padding-content: clamp(32px, calc(31.818vw - 293.82px),88px);
     } 
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1023px) {
     :root {
       --padding-content: 32px;
      }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     :root {
       --font-size-d1: 68px;
       --line-height-d1: 72px;
@@ -116,7 +116,7 @@ html {
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 639px) {
     :root {
       --font-size-d1: 41px; 
       --line-height-d1: 44px;

@@ -10,37 +10,41 @@ export default function HeroImage() {
       className="
         absolute transform
         
-        w-full max-w-[340px]
+        w-[424px] max-w-[424px]
         bottom-0
         left-[50%]
         -translate-x-1/2
-        translate-y-[36%]
+        translate-y-[37%]
         
-        sm:max-w-[480px]
-        sm:translate-y-[34%]
-        sm:bottom-[-5px]
+        min-[375px]:w-[calc(424px+(100vw-375px)*0.347)]
+        min-[375px]:max-w-[calc(424px+(100vw-375px)*0.347)]
         
-        md:max-w-[560px]
-        md:left-[calc(50%-40px)]
-        md:-translate-x-[20%]
-        md:translate-y-[31%]
-        md:bottom-[-12px]
+        sm:max-w-[516px]
+        sm:w-full
+        sm:left-[calc(50%-60px-(100vw-1024px)*0.0588)]
+        sm:translate-x-[calc((100vw-1280px)*0.15)]
+        sm:translate-y-[calc(27%-(100vw-1024px)*0.0475)]
+        sm:bottom-[calc(-26px-(100vw-1024px)*0.0235)]
         
-        lg:max-w-[660px]
-        lg:left-[calc(50%-60px)]
-        lg:-translate-x-[10%]
-        lg:translate-y-[27%]
-        lg:bottom-[-26px]
+        md:max-w-[calc(660px+(100vw-1024px)*0.5608)]
+        md:left-[calc(50%-60px-(100vw-1024px)*0.0588)]
+        md:translate-x-[calc((100vw-1280px)*0.02)]
+        md:translate-y-[calc(27%-(100vw-1024px)*0.0275)]
+        md:bottom-[calc(-26px-(100vw-1024px)*0.0235)]
         
-        xl:max-w-[740px]
-        xl:-translate-x-[3%]
-        xl:translate-y-[23%]
-        xl:bottom-[-38px]
+        lg:max-w-[calc(660px+(100vw-1024px)*0.5608)]
+        lg:left-[calc(50%-60px-(100vw-1024px)*0.0588)]
+        lg:translate-x-[calc((100vw-1280px)*0.00)]
+        lg:translate-y-[calc(27%-(100vw-1024px)*0.0275)]
+        lg:bottom-[calc(-26px-(100vw-1024px)*0.0235)]
         
-        min-[1440px]:!min-w-[803px]
+        xl:max-w-[803px]
+        xl:left-[calc(50%-75px)]
+        xl:translate-x-[0%]
+        xl:translate-y-[20%]
+        xl:bottom-[-32px]
+        
         min-[1440px]:!translate-y-[20%]
-        min-[1440px]:!translate-x-[0%]
-        min-[1440px]:!left-[calc(50%-75px)]
         min-[1440px]:!bottom-[-32px]
       "
     />
