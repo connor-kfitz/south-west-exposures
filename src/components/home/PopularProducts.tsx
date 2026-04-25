@@ -12,7 +12,7 @@ export default function PopularProducts({ popularProducts }: PopularProductsProp
   if (!popularProducts || popularProducts.length === 0) return null;
 
   return (
-    <section className="px-[48px] pb-[96px]">
+    <section className="px-[48px] pb-[65px] md:pb-[96px]">
       <div className="max-w-[1157px] mx-auto">
         <h2 className="text-h1 text-gray-900 font-semibold mb-4">
           Popular Products

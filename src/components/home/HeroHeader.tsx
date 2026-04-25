@@ -16,9 +16,9 @@ export default function HeroHeader() {
         <HeroImage/>
       </div>
       <div className="w-full max-w-[1440px] relative">
-        <div className="flex justify-center px-6 w-full max-w-[1060px] pt-[48px] lg:py-[96px] lg:pl-[82px] xl:pl-[140px] md:block">
+        <div className="flex justify-center px-6 w-full max-w-[1060px] pt-[48px] md:pl-[48px] lg:py-[96px] lg:pl-[82px] xl:pl-[140px] md:block">
           <div className="max-w-[663px] relative z-10">
-            <h1 className="text-d2 font-bold text-white mb-6">
+            <h1 className="text-[41px] leading-[44px] sm:text-[56px] sm:leading-[60px] md:text-[75px] md:leading-[80px] font-bold text-white mb-6">
               Redefining
               <br/>
               protection in

@@ -15,11 +15,11 @@ export default function SpecializedServices() {
               rounded-none sm:rounded-[16px] 
               overflow-hidden 
               bg-[#F3F4F6] 
-              bg-[length:208.622%_118.487%] 
+              bg-[length:208.622%_118.487%]
               bg-[position:calc(-264.04px-(100vw-375px)*0.6)_-0.373px] 
               sm:bg-cover sm:bg-center 
-              lg:bg-[length:238.516%_118.487%] 
-              lg:bg-[position:calc(-400px-(100vw-1024px)*0.525)_-30px] 
+              lg:bg-[length:1345px_769px]
+              lg:bg-[position:-600px_-30px]
               xl:bg-[length:238.516%_118.487%] 
               xl:bg-[position:-470.332px_-61.275px]
             "
