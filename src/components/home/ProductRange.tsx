@@ -6,7 +6,7 @@ export default function ProductRange() {
   const productTypes = [
     {
       name: "Vial shields",
-      imageSrc: "/images/about/syringe-shields.png",
+      imageSrc: "/images/about/vial-shields.png",
       path: "/products?shields=vial"
     },
     {
@@ -16,7 +16,7 @@ export default function ProductRange() {
     },
     {
       name: "Syringe shields",
-      imageSrc: "/images/about/syringe-shields-two.png",
+      imageSrc: "/images/about/syringe-shields.png",
       path: "/products?shields=syringe"
     },
     {
@@ -32,9 +32,9 @@ export default function ProductRange() {
         <h2 className="text-h1 font-semibold text-gray-900 mb-8">Our product range</h2>
         <ul className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           {productTypes.map((product, index) => (
-            <li key={index} className="group">
-              <Link href={product.path} className="block">
-                <div className="bg-[#F3F4F6] rounded-[16px] w-full h-[320px] flex flex-col items-center justify-center gap-4 p-6 transition-transform duration-200 ease-in-out hover:shadow-md">
+            <li key={index} className="group h-full">
+              <Link href={product.path} className="block h-full">
+                <div className="bg-[#F3F4F6] rounded-[16px] w-full h-full pt-5 flex flex-col items-center justify-end gap-1 transition-transform duration-200 ease-in-out hover:shadow-md pb-8">
                   <div className="w-full flex justify-center">
                     <Image
                       src={product.imageSrc}

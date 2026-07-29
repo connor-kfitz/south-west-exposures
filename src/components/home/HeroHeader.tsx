@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import HeroImage from "./HeroImage";
 
@@ -6,13 +7,23 @@ import { Button } from "../ui/button";
 export default function HeroHeader() {
   return (
     <header className="relative flex justify-center mb-[calc(158px+(100vw-375px)*0.05)] md:mb-[144px] min-h-[622px]">
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "url('/images/about/hero-background.png') center / cover no-repeat, var(--Radial, radial-gradient(232.17% 107.77% at 67.7% 69.6%, #5B21B6 0%, #4338CA 68.79%, #2E1065 100%))"
-        }}
-        aria-hidden="true"
-      >
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute inset-0 contain-paint">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "var(--Radial, radial-gradient(232.17% 107.77% at 67.7% 69.6%, #5B21B6 0%, #4338CA 68.79%, #2E1065 100%))"
+            }}
+          />
+          <Image
+            src="/images/about/hero-background.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
         <HeroImage/>
       </div>
       <div className="w-full max-w-[1440px] relative">
