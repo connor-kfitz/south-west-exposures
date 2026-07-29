@@ -254,7 +254,7 @@ export default function NewProductForm({
         message: "At least one image is required",
       });
     }
-  };
+  }
 
   function handleAddVolume(name: string): void {
     const specifications = form.getValues("specifications");
@@ -284,7 +284,7 @@ export default function NewProductForm({
   async function postProduct(form: UseFormReturn<FormValues>): Promise<void> {
     const formData = prepareFormData();
 
-    const endpoint = editProduct ? "/api/admin/products/put" : "/api/admin/products/post";
+    const endpoint = editProduct ? `/api/products/${editProduct.id}` : "/api/products";
     const method = editProduct ? "PUT" : "POST";
 
     try {
@@ -327,7 +327,6 @@ export default function NewProductForm({
     formData.append("relatedProducts", JSON.stringify(getAttributeIds(data.relatedProducts || [], productOptions)));
     formData.append("purchasedTogether", JSON.stringify(getAttributeIds(data.purchasedTogether || [], productOptions)));
     formData.append("images", JSON.stringify(data.images));
-    formData.append("productId", editProduct?.id ?? "");
 
     data.images.forEach((image) => {
       let fileToAppend: File;
@@ -462,7 +461,7 @@ export default function NewProductForm({
 type FormFieldProps<T extends FieldValues> = {
   control: Control<T>;
   formSpacing: string;
-};
+}
 
 function NameField<T extends FieldValues>({ control, formSpacing }: FormFieldProps<T>) {
   return (
@@ -526,7 +525,7 @@ type FeaturesFieldProps = {
   form: UseFormReturn<FormValues>;
   formFeatures: string[];
   formSpacing: string;
-};
+}
 
 function FeaturesField({ form, formFeatures, formSpacing }: FeaturesFieldProps) {
   return (
@@ -579,7 +578,7 @@ type CustomizationOptionsFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
   customizationOptions: ProductAttribute[];
-};
+}
 
 function CustomizationOptionsField({ form, formSpacing, customizationOptions }: CustomizationOptionsFieldProps) {
 
@@ -609,7 +608,7 @@ type UsagesFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
   usageOptions: ProductAttribute[];
-};
+}
 
 function UsagesField({ form, formSpacing, usageOptions }: UsagesFieldProps) {
 
@@ -638,7 +637,7 @@ type IsotopesFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
   isotopeOptions: ProductAttribute[];
-};
+}
 
 function IsotopesField({ form, formSpacing, isotopeOptions }: IsotopesFieldProps) {
   return (
@@ -666,7 +665,7 @@ type ShieldsFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
   shieldOptions: ProductAttribute[];
-};
+}
 
 function ShieldsField({ form, formSpacing, shieldOptions }: ShieldsFieldProps) {
   return (
@@ -694,7 +693,7 @@ type AccessoriesFieldProps = {
   form: UseFormReturn<FormValues>;
   formSpacing: string;
   accessoryOptions: ProductAttribute[];
-};
+}
 
 function AccessoriesField({ form, formSpacing, accessoryOptions }: AccessoriesFieldProps) {
   return (
@@ -723,7 +722,7 @@ type VolumesFieldProps = {
   volumeOptions: ProductAttribute[];
   handleRemoveVolume: (name: string) => void;
   handleAddVolume: (name: string) => void;
-};
+}
 
 function VolumesField({ form, volumeOptions, handleRemoveVolume, handleAddVolume }: VolumesFieldProps) {
   return (
@@ -753,7 +752,7 @@ type ImagesFieldProps = {
   form: UseFormReturn<FormValues>;
   images: ProductImage[];
   handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 function ImagesField({ form, images, handleUpload }: ImagesFieldProps) {
   return (

@@ -6,13 +6,13 @@ export function capitalizeFirstLetter(string: string): string {
 
 function parseIsotopeName(name: string): { element: string; mass: number } {
   const match = name.match(/^(\d+)?([A-Za-z]+)(\d+)?$/);
-  if (!match) return { element: name, mass: Number.MAX_VALUE };
+  if (!match) return { element: name, mass: Number.MAX_VALUE }
 
   const [, prefixNumber, elementPart, suffixNumber] = match;
   const element = elementPart.charAt(0).toUpperCase() + elementPart.slice(1).toLowerCase();
   const mass = parseInt(prefixNumber || suffixNumber || "", 10);
 
-  return { element, mass: isNaN(mass) ? Number.MAX_VALUE : mass };
+  return { element, mass: isNaN(mass) ? Number.MAX_VALUE : mass }
 }
 
 export function sortIsotopeValues(values: FilterValue[]): FilterValue[] {

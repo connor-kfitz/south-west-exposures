@@ -14,7 +14,7 @@ export function usePopularProducts(): usePopularProductsReturn {
   async function postPopularProducts(products: { productId: string; order: number }[]): Promise<boolean> {
 
     try {
-      const response = await fetch("/api/admin/products/popular/post", {
+      const response = await fetch("/api/products/popular", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(products),

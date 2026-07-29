@@ -17,7 +17,7 @@ export function useUser(): useUserReturn {
 
   async function fetchUsers(): Promise<void> {
     try {
-      const response = await fetch("/api/admin/user/get");
+      const response = await fetch("/api/user");
       if (!response.ok) throw new Error(`${response.status}`);
       const user = await response.json();
       setUser(user);

@@ -14,7 +14,7 @@ export function useProducts(): useProductsReturn {
 
   async function postProduct(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/post", {
+      const response = await fetch("/api/products", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -42,7 +42,7 @@ export function useProducts(): useProductsReturn {
   async function deleteProduct(id: string): Promise<boolean> {
     if (!id) return false;
     try {
-      const response = await fetch(`/api/admin/products/delete/${id}`, {
+      const response = await fetch(`/api/products/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`${response.status}`);

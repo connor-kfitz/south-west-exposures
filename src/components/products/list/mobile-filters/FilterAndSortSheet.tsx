@@ -38,12 +38,12 @@ export default function FilterAndSortSheet({ filterState, sortOption, sortByOpti
 
     setFilterState(clearedFilters);
     setSortOption("");
-  };
+  }
   
   const handleApply = () => {
     setFilterState(localFilters);
     setSortOption(localSortOption);
-  };
+  }
 
   function getTotalActiveSelections(filters: Filter[], sortOption: SortByOptions): number {
     const activeFilterCount = filters.reduce((count, filter) => {

@@ -12,6 +12,6 @@ const AdminPage = () => {
   }, [pathname, router]);
 
   return null;
-};
+}
 
 export default AdminPage;

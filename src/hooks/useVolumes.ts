@@ -15,7 +15,7 @@ export function useVolumes(): useVolumesReturn {
 
   async function postVolume(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/volumes/post", {
+      const response = await fetch("/api/products/volumes", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
@@ -43,7 +43,7 @@ export function useVolumes(): useVolumesReturn {
   async function deleteVolume(id: string): Promise<string> {
     if (!id) return "The Id for this Volume was not found.";
     try {
-      const response = await fetch(`/api/admin/products/volumes/delete/${id}`, {
+      const response = await fetch(`/api/products/volumes/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

@@ -29,7 +29,7 @@ export default function LoginForm() {
     } else {
       router.push("/admin/products");
     }
-  };
+  }
 
   return (
     <div className="flex flex-col bg-[#09090b] items-center justify-center p-4">

@@ -22,16 +22,16 @@ export interface AdminProductsData {
 
 export default async function AdminProductsPage() {
   const routes = {
-    shields: "api/admin/products/shields/get",
-    volumes: "api/admin/products/volumes/get",
-    isotopes: "api/admin/products/isotopes/get",
-    accessories: "api/admin/products/accessories/get",
-    usages: "api/admin/products/usages/get",
-    customizationOptions: "api/admin/products/customization-options/get",
-    products: "api/admin/products/get",
-    filters: "api/admin/products/filters/get",
-    popularProducts: "api/admin/products/popular/get",
-  };
+    shields: "api/products/shields",
+    volumes: "api/products/volumes",
+    isotopes: "api/products/isotopes",
+    accessories: "api/products/accessories",
+    usages: "api/products/usages",
+    customizationOptions: "api/products/customization-options",
+    products: "api/products",
+    filters: "api/products/filters",
+    popularProducts: "api/products/popular",
+  }
 
   const keys = Object.keys(routes) as (keyof AdminProductsData)[];
 
@@ -43,11 +43,11 @@ export default async function AdminProductsPage() {
     keys.map(async (key) => {
       const res = await fetchByRoute(routes[key], cookieStore);
       if (!res.ok) {
-        data[key] = { data: [], error: `Failed to load ${key} (${res.status})` };
+        data[key] = { data: [], error: `Failed to load ${key} (${res.status})` }
         return;
       }
       const jsonData = await res.json();
-      data[key] = { data: jsonData };
+      data[key] = { data: jsonData }
     })
   );
 

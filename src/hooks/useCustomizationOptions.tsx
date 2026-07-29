@@ -15,7 +15,7 @@ export function useCustomizationOptions(): useCustomizationOptionsReturn {
 
   async function postCustomizationOption(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/customization-options/post", {
+      const response = await fetch("/api/products/customization-options", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name })
@@ -43,7 +43,7 @@ export function useCustomizationOptions(): useCustomizationOptionsReturn {
   async function deleteCustomizationOption(id: string): Promise<string> {
     if (!id) return "The Id for this customization option was not found.";
     try {
-      const response = await fetch(`/api/admin/products/customization-options/delete/${id}`, {
+      const response = await fetch(`/api/products/customization-options/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

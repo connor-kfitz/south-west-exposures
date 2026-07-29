@@ -4,7 +4,7 @@ import { create } from 'zustand';
 type FilterStore = {
   filters: Filter[];
   setFilters: (filters: Filter[]) => void;
-};
+}
 
 const initialState: Filter[] = [];
 

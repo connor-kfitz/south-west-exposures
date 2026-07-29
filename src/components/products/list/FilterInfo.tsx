@@ -64,11 +64,11 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
           ...group,
           values: group.values.map(value => {
             if (value.name === name) {
-              return { ...value, selected: false };
+              return { ...value, selected: false }
             }
             return value;
           })
-        };
+        }
       });
     }
   )
@@ -86,9 +86,9 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
         return {
           ...group,
           values: group.values.map(value => {
-            return { ...value, selected: false };
+            return { ...value, selected: false }
           })
-        };
+        }
       });
     });
   }

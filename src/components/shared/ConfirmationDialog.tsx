@@ -22,7 +22,7 @@ export default function ConfirmationDialog({alertDialog, setAlertDialog}: Confir
       if (e.key === "Escape") {
         setAlertDialog(prev => ({ ...prev, open: false }));
       }
-    };
+    }
 
     if (alertDialog.open) {
       document.addEventListener("keydown", handleEsc);
@@ -30,7 +30,7 @@ export default function ConfirmationDialog({alertDialog, setAlertDialog}: Confir
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
-    };
+    }
   }, [alertDialog.open, setAlertDialog]);
 
   if (isMediumBreakpoint) { 

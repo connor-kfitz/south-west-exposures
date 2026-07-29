@@ -12,7 +12,7 @@ export type ProductImage = {
   id: string;
   file?: File | string | unknown;
   src?: string;
-};
+}
 
 export type ProductFaq = {
   question: string;

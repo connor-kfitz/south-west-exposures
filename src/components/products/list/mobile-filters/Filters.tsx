@@ -79,11 +79,11 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
             ...group,
             values: group.values.map(value => {
               if (value.name === name) {
-                return { ...value, selected: checked };
+                return { ...value, selected: checked }
               }
               return value;
             })
-          };
+          }
         }
         return group;
       });

@@ -23,7 +23,7 @@ export default async function AboutPage() {
     const cookieStore = await cookies();
 
     // Headers are used to send authentication cookies to the API
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/popular/get`, {
+    const response = await fetch(`${process.env.DOMAIN_NAME}/api/products/popular`, {
       headers: { Cookie: cookieStore.toString() }
     });
 

@@ -14,7 +14,7 @@ export function useAccessories(): useAccessoriesReturn {
 
   async function postAccessory(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/accessories/post", {
+      const response = await fetch("/api/products/accessories", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name })
@@ -42,7 +42,7 @@ export function useAccessories(): useAccessoriesReturn {
   async function deleteAccessory(id: string): Promise<string> {
     if (!id) return "The Id for this Accessory was not found.";
     try {
-      const response = await fetch(`/api/admin/products/accessories/delete/${id}`, {
+      const response = await fetch(`/api/products/accessories/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

@@ -15,7 +15,7 @@ export function useUsages(): useUsagesReturn {
 
   async function postUsage(name?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/usages/post", {
+      const response = await fetch("/api/products/usages", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name })
@@ -43,7 +43,7 @@ export function useUsages(): useUsagesReturn {
   async function deleteUsage(id: string): Promise<string> {
     if (!id) return "The Id for this Usage was not found.";
     try {
-      const response = await fetch(`/api/admin/products/usages/delete/${id}`, {
+      const response = await fetch(`/api/products/usages/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

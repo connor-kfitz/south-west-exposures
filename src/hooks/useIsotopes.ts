@@ -15,7 +15,7 @@ export function useIsotopes(): useIsotopesReturn {
 
   async function postIsotope(value?: string): Promise<boolean> {
     try {
-      const response = await fetch("/api/admin/products/isotopes/post", {
+      const response = await fetch("/api/products/isotopes", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: value })
@@ -43,7 +43,7 @@ export function useIsotopes(): useIsotopesReturn {
   async function deleteIsotope(id: string): Promise<string> {
     if (!id) return "The Id for this Isotope was not found.";
     try {
-      const response = await fetch(`/api/admin/products/isotopes/delete/${id}`, {
+      const response = await fetch(`/api/products/isotopes/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
