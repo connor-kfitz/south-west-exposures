@@ -16,7 +16,7 @@ export default function HeroHeader() {
             }}
           />
           <Image
-            src="/images/about/hero-background.png"
+            src="/images/home/hero-background.png"
             alt=""
             fill
             priority

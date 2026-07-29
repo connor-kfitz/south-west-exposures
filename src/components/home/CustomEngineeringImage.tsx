@@ -43,7 +43,7 @@ export default function CustomEngineeringImage() {
       pointer-events-none
       z-20
     ">
-      <Image src="/images/about/custom-engineering.png" alt="Vial Shield" width={862} height={869} className="w-[87.2%] sm:w-full mx-auto object-contain" priority/>
+      <Image src="/images/home/custom-engineering.png" alt="Vial Shield" width={862} height={869} className="w-[87.2%] sm:w-full mx-auto object-contain" priority/>
       <CustomEngineeringGradient className="sm:hidden absolute inset-x-0 bottom-[28%] h-[500px]"/>
     </div>
   );

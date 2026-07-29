@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function HeroImage() {
   return (
     <Image
-      src="/images/about/hero-product.png"
+      src="/images/home/hero-product.png"
       alt="Isotope Shield"
       width={781}
       height={781}

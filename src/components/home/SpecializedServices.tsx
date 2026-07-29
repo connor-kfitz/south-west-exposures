@@ -24,7 +24,7 @@ export default function SpecializedServices() {
               xl:bg-[position:-470.332px_-61.275px]
             "
             style={{
-              backgroundImage: "url('/images/about/specialized-services.png')",
+              backgroundImage: "url('/images/home/specialized-services.png')",
               transform: "scaleX(-1)"
             }}
             role="img"

@@ -15,7 +15,7 @@ export default function CustomEngineeringGradient({ className = "hidden sm:block
       }}
     >
       <Image
-        src="/images/about/custom-engineering-gradient.png"
+        src="/images/home/custom-engineering-gradient.png"
         alt=""
         fill
         className="object-cover object-center"
