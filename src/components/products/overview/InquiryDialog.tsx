@@ -1,19 +1,20 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { sendEmail } from "@/lib/helpers";
-import { useEffect, useState } from "react";
-import { ProductPreview } from "@/types/admin-products";
 import PhoneNumberInput from "@/components/shared/forms/PhoneNumberInput";
 import TextAreaInput from "@/components/shared/forms/TextAreaInput";
 import TextInput from "@/components/shared/forms/TextInput";
 import z from "zod";
 import Image from "next/image";
 import ProductCard from "../ProductCard";
+
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { recordProductEvent, sendEmail } from "@/lib/helpers";
+import { useEffect, useState } from "react";
+import { ProductPreview } from "@/types/admin-products";
 
 const contactFormSchema = z.object({
   fullName: z.string().min(1, "Please enter your full name").max(50),
@@ -25,11 +26,12 @@ const contactFormSchema = z.object({
 export type InquiryFormData = z.infer<typeof contactFormSchema>
 
 interface InquiryDialogProps {
+  productId: string;
   productName: string;
-  purchasedTogether?: ProductPreview[]; 
+  purchasedTogether?: ProductPreview[];
 }
 
-export default function InquiryDialog({productName, purchasedTogether}: InquiryDialogProps) {
+export default function InquiryDialog({productId, productName, purchasedTogether}: InquiryDialogProps) {
   const form = useForm<InquiryFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -57,7 +59,7 @@ export default function InquiryDialog({productName, purchasedTogether}: InquiryD
       </DialogTrigger>
       {open && (
         dialogState === "Form" ? (
-          <InquiryContent form={form} productName={productName} setOpen={setOpen} setDialogState={setDialogState}/>
+          <InquiryContent form={form} productId={productId} productName={productName} setOpen={setOpen} setDialogState={setDialogState}/>
         ) : (
           <SubmittedContent purchasedTogether={purchasedTogether ?? []} setOpen={setOpen}/>
         )
@@ -68,16 +70,19 @@ export default function InquiryDialog({productName, purchasedTogether}: InquiryD
 
 interface InquiryContentProps {
   form: ReturnType<typeof useForm<InquiryFormData>>;
+  productId: string;
   productName: string;
   setOpen: (open: boolean) => void;
   setDialogState: (state: "Form" | "Featured Products") => void;
 }
 
-function InquiryContent({ form, productName, setOpen, setDialogState }: InquiryContentProps) {
+function InquiryContent({ form, productId, productName, setOpen, setDialogState }: InquiryContentProps) {
 
   const onSubmit = async (data: InquiryFormData) => {
-    const success = sendEmail(data.fullName, data.email, data.phone, data.message, "", productName);
+    const success = await sendEmail(data.fullName, data.email, data.phone, data.message, "", productName);
     if (!success) return;
+
+    recordProductEvent(productId, "inquiry");
 
     form.reset();
     setDialogState("Featured Products");

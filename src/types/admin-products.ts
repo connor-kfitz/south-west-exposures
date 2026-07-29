@@ -37,6 +37,7 @@ export type Product = {
   usages: ProductAttribute[];
   volumes: ProductAttribute[];
   createdAt: Date;
+  popularityScore: number;
 }
 
 export type ProductPreview = {

@@ -1,14 +1,16 @@
 "use client";
 
-import { Product } from "@/types/admin-products";
-import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
-import { useEffect } from "react";
 import ImageCarousel from "./ImageCarousel";
 import Metadata from "./Metadata";
 import Features from "./Features";
 import Specifications from "./Specifications/Specifications";
 import Faqs from "./Faqs";
 import RelatedProducts from "./RelatedProducts";
+
+import { Product } from "@/types/admin-products";
+import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
+import { useEffect } from "react";
+import { recordProductEvent } from "@/lib/helpers";
 
 interface ProductOverviewProps {
   product: Product;
@@ -25,6 +27,10 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
       { name: product.name, link: "" }
     ])
   }, [product, setBreadcrumbs]);
+
+  useEffect(() => {
+    recordProductEvent(product.id, "view");
+  }, [product.id]);
 
   return (
     <main className="font-main bg-white pb-[64px] pt-6 padding-content sm:pb-[96px] md:pt-[45px] ">

@@ -69,7 +69,7 @@ export default function Metadata({ product, className }: MetadataProps) {
           )
         })}
       </ul>
-      <InquiryDialog productName={product.name} purchasedTogether={product.purchasedTogether}/>
+      <InquiryDialog productId={product.id} productName={product.name} purchasedTogether={product.purchasedTogether}/>
     </section>
   )
 }

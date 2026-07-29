@@ -39,6 +39,18 @@ export function sortVolumeValues(values: FilterValue[]): FilterValue[] {
   return [...values].sort((a, b) => parseVolumeValue(a.name) - parseVolumeValue(b.name));
 }
 
+export async function recordProductEvent(productId: string, type: 'view' | 'inquiry'): Promise<void> {
+  try {
+    await fetch(`/api/products/${productId}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type })
+    });
+  } catch (error) {
+    console.error('Error recording product event:', error);
+  }
+}
+
 export async function sendEmail(name: string, email: string, phone?: string, message?: string, website?: string, product?: string) {
   try {
     const body = `

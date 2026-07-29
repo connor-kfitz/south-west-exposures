@@ -9,6 +9,17 @@ export async function GET() {
 
   try {
     const query = `
+      WITH product_scores AS (
+        SELECT product_id,
+          SUM(CASE event_type
+            WHEN 'view' THEN 1
+            WHEN 'inquiry' THEN 5
+            WHEN 'cart_add' THEN 3
+            ELSE 0
+          END) AS popularity_score
+        FROM product_events
+        GROUP BY product_id
+      )
       SELECT
         p.product_id AS id,
         p.name,
@@ -16,6 +27,7 @@ export async function GET() {
         p.features,
         p.material,
         p.date_created AS "createdAt",
+        COALESCE(psc.popularity_score, 0)::int AS "popularityScore",
 
         COALESCE(json_agg(DISTINCT jsonb_build_object(
           'id', pco.customization_option_id,
@@ -93,6 +105,7 @@ export async function GET() {
         ) AS images
 
       FROM products p
+      LEFT JOIN product_scores psc ON psc.product_id = p.product_id
       LEFT JOIN products_customization_options pco ON p.product_id = pco.product_id
       LEFT JOIN customization_options co ON pco.customization_option_id = co.customization_option_id
       LEFT JOIN products_usages pu ON p.product_id = pu.product_id
@@ -111,8 +124,8 @@ export async function GET() {
       LEFT JOIN products rp ON pr.related_product_id = rp.product_id
       LEFT JOIN products_purchased_together pt ON p.product_id = pt.product_id
       LEFT JOIN products ptp ON pt.purchased_together_product_id = ptp.product_id
-      GROUP BY p.product_id
-      ORDER BY p.product_id ASC;
+      GROUP BY p.product_id, psc.popularity_score
+      ORDER BY COALESCE(psc.popularity_score, 0) DESC, p.date_created DESC, p.product_id ASC;
     `;
 
     const result = await client.query(query);
