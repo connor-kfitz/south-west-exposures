@@ -63,9 +63,9 @@ export function Combobox({ products, productsDnD, setProductsDnD, className }: C
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {products.map((product, index) => (
+              {products.map((product) => (
                 <CommandItem
-                  key={index}
+                  key={product.id}
                   onSelect={() => {
                     addProduct(product)
                   }}

@@ -94,8 +94,8 @@ export function ProductsTable<TData extends Product>({
                     <TableCell key={cell.id}>
                       {Array.isArray(cell.getValue()) ? (
                         <div className="flex flex-wrap gap-1">
-                          {(cell.getValue() as { name: string }[]).map((item, index) => (
-                            <Badge key={index} variant="secondary">
+                          {(cell.getValue() as { id: string; name: string }[]).map((item) => (
+                            <Badge key={item.id} variant="secondary">
                               {item.name}
                             </Badge>
                           ))}

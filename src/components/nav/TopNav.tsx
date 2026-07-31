@@ -48,8 +48,8 @@ export default function TopNav() {
           </div>
           <div className="hidden md:flex flex-wrap justify-between items-center w-full gap-y-2">
             <ul className="flex flex-wrap gap-[32px] text-gray-900 text-b6 leading-b6 relative top-[2px] mr-[32px]">
-              {navLinks.map((link, index) => (
-                <li key={index}>
+              {navLinks.map((link) => (
+                <li key={link.href}>
                   <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800
                     focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white
                     focus-visible:outline-none ${isActiveLink(link.href) ? " underline underline-offset-3" : ""}`}

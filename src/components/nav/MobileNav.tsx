@@ -32,7 +32,7 @@ export default function MobileNav({navLinks, isActiveLink}: MobileNavProps) {
         </SheetHeader>
         <ul className="flex flex-col items-stretch gap-[14px] text-gray-900 text-[18px] leading-[24px]">
           {navLinks.map((link, index) => (
-            <li className={index < navLinks.length - 1 ? "border-b-gray-200 border-b-[1px] pb-[14px]" : ""} key={index}>
+            <li className={index < navLinks.length - 1 ? "border-b-gray-200 border-b-[1px] pb-[14px]" : ""} key={link.href}>
               <SheetClose asChild>
                 <Link
                   className={`flex items-center justify-between whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] 

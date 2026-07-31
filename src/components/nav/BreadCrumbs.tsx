@@ -14,7 +14,7 @@ export default function BreadCrumbs({ breadCrumbs }: BreadCrumbsProps) {
           const isLast = index === breadCrumbs.length - 1;
 
           return (
-            <div key={index} className="flex items-center">
+            <div key={crumb.link} className="flex items-center">
               <BreadcrumbItem 
                 className="text-b7 leading-b7 text-gray-600"
               >

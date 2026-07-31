@@ -24,7 +24,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
       <ul className="hidden flex-wrap gap-4 sm:flex-col sm:flex">
         {images.map((image, index) => (
           image.src &&
-          <li key={index}>
+          <li key={image.id}>
             <button
               className="relative flex justify-center items-center bg-gray-100 rounded-[8px] min-w-[67px] min-h-[67px]
                 overflow-hidden group focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none"
@@ -100,7 +100,7 @@ export default function ImageCarousel({ images, className }: ImageCarouselProps)
         >
           {images.map((image, index) => (
             <SwiperSlide
-              key={index}
+              key={image.id}
               className="flex justify-center items-center rounded-xl relative"
             >
               {image.src ? (

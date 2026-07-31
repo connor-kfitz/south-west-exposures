@@ -148,8 +148,8 @@ function AttributeTable({ type, data, deleteOnClick }: AttributeTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item, index) => (
-          <TableRow className="border-border" key={index}>
+        {data.map((item) => (
+          <TableRow className="border-border" key={item.id}>
             <TableCell>{item.name}</TableCell>
             <TableCell>
               <Button variant="ghost" className="block ml-auto px-2" onClick={() => deleteOnClick(item.id)}>

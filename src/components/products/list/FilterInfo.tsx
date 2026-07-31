@@ -96,9 +96,9 @@ function FilterBadges({ filterState, setFilterState }: FilterBadgesProps) {
   return (
     <ul className="hidden lg:flex gap-4 flex-wrap mt-4 min-h-[32px]">
       {filterState.map((group) => 
-        group.values.map((value, index) => (
+        group.values.map((value) => (
           value.selected && (
-            <li key={index}>
+            <li key={value.id}>
               <button
                 type="button"
                 onClick={() => removeFilter(value.name)}
@@ -168,8 +168,8 @@ function SortDropdown({ sortByOptions, sortOption, setSortOption, className }: S
       </DropdownMenuTrigger>
       <DropdownMenuContent className="font-main w-[100px] bg-white rounded-[4px] text-gray-900 border-none p-0" style={{ boxShadow: 'var(--shadow-dropdown)' }} align="end">
         <DropdownMenuRadioGroup value={sortOption} onValueChange={(value) => setSortOption(value === sortOption ? "" : (value as SortByOptions))}>
-          {sortByOptions.map((option, index) => (
-            <DropdownMenuRadioItem key={index} value={option.value}
+          {sortByOptions.map((option) => (
+            <DropdownMenuRadioItem key={option.value} value={option.value}
               className="cursor-pointer py-1 px-2 text-b7 leading-b7"
             >
               <span className="ml-5">{option.label}</span>

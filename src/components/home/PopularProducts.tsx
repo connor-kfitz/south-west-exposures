@@ -20,8 +20,8 @@ export default function PopularProducts({ popularProducts }: PopularProductsProp
 
         <div className="sm:hidden mr-[24px] pb-6 w-[calc(100vw-48px)] overflow-x-auto">
           <ul className="flex gap-4 w-max">
-            {popularProducts.map((product, index) => (
-              <li key={index} className="flex-shrink-0 w-[277px]">
+            {popularProducts.map((product) => (
+              <li key={product.id} className="flex-shrink-0 w-[277px]">
                 <ProductCard product={product} />
               </li>
             ))}
@@ -29,8 +29,8 @@ export default function PopularProducts({ popularProducts }: PopularProductsProp
         </div>
 
         <ul className="hidden sm:grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {popularProducts.map((product, index) => (
-            <ProductCard product={product} key={index}/>
+          {popularProducts.map((product) => (
+            <ProductCard product={product} key={product.id}/>
           ))}
         </ul>
       </div>

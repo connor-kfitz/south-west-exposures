@@ -43,7 +43,7 @@ export default function HeaderDropdown({ volumes, columnIndex, selectedVolumeInd
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" className="font-main bg-white px-0 py-1 border border-gray-600 py-1 min-w-0 w-[110px] max-w-[110px]">
         {volumes.map((volume, index) => (
-          <DropdownMenuItem className="flex justify-start gap-2 pl-3 min-w-0 text-b6 hover:bg-transparent focus:bg-transparent" key={index} onClick={((e) => {e.preventDefault()})}>
+          <DropdownMenuItem className="flex justify-start gap-2 pl-3 min-w-0 text-b6 hover:bg-transparent focus:bg-transparent" key={volume} onClick={((e) => {e.preventDefault()})}>
             <Checkbox
               checked={index === selectedVolumeIndex}
               onCheckedChange={() => setSpecificationTableColumns((prev: number[]) => prev.map((item, i) => (i === columnIndex ? index : item)))}

@@ -160,7 +160,7 @@ function SubmittedContent({ purchasedTogether, setOpen }: SubmittedContentProps)
           <h2 className="text-h4 text-grey-900 font-semibold mb-4 text-center sm:text-left">Frequently purchased together</h2>
           <div className="flex justify-center gap-4">
             {purchasedTogether.slice(0, 3).map((product, index) => (
-              <ProductCard key={index} product={product} 
+              <ProductCard key={product.id} product={product}
                 className={`w-full max-w-[300px] mr-4
                   ${index === 1 ? " hidden sm:block" : ""}
                   ${index === 2 ? " hidden lg:block" : ""}

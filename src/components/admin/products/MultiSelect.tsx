@@ -80,9 +80,9 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
     >
       <div className="group min-h-[40px] rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
-          {selected?.map((framework, index) => {
+          {selected?.map((framework) => {
             return (
-              <Badge key={index} variant="secondary">
+              <Badge key={framework} variant="secondary">
                 {framework}
                 <button
                   className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
@@ -118,10 +118,10 @@ export function MultiSelect({ form, options, type, addSpecification, removeSpeci
           {open && selectables.length > 0 ? (
             <div className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
               <CommandGroup className="h-full overflow-auto">
-                {selectables.map((framework, index) => {
+                {selectables.map((framework) => {
                   return (
                     <CommandItem
-                      key={index}
+                      key={framework}
                       onMouseDown={(e) => {
                         e.preventDefault();
                         e.stopPropagation();

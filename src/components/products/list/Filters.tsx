@@ -18,7 +18,7 @@ export default function Filters({filters, setFilters, className}: FiltersProps) 
       <h2 className="mb-4 text-h3 leading-h3 text-gray-900 font-semibold">Filter</h2>
       <ul className="flex flex-col gap-4">
         {filters.map((filter, index) => (
-          <li key={index}>
+          <li key={filter.name}>
             <FilterBox filter={filter} setFilters={setFilters}/>
             {index <= filters.length - 2 ? <div className="w-full h-[1px] bg-gray-300 mt-4"></div> : null}
           </li>
@@ -129,9 +129,9 @@ function FilterBox({ filter, setFilters }: FilterBoxProps) {
         }}
         className={`items-start transition-all duration-300 ease-in-out flex flex-col gap-2 ${(collapsed === "open") ? "" : "overflow-hidden"}`}
       >
-        {getSortedFilterValues(filter).map((value, index) => (
+        {getSortedFilterValues(filter).map((value) => (
           <li
-            key={index}
+            key={value.id}
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => updateFilter(!value.selected, value.name)}
           >

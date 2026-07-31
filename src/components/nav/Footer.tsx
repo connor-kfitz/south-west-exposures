@@ -27,8 +27,8 @@ export default function Footer() {
           <span className="sr-only">South West Exposures</span>
           <div className="flex-col flex flex-wrap justify-between w-full space-y-2 sm:flex-row sm:items-center">
             <ul className="flex-col flex flex-wrap gap-[32px] gap-y-4 pb-6 mb-6 border-b border-[#BFDBFE] text-b6 leading-b6 relative top-[2px] pr-[32px] sm:flex-row sm:pb-0 sm:mb-0 sm:border-b-0 sm:gap-y-2">
-              {navLinks.map((link, index) => (
-                <li key={index}>
+              {navLinks.map((link) => (
+                <li key={link.href}>
                   <Link className="whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 
                       focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white 
                       focus-visible:outline-none"

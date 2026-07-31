@@ -92,8 +92,8 @@ function Main({ links, pathname }: MainProps) {
       <SidebarGroupLabel>Interface</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {links.map((item, index) => (
-            <SidebarMenuItem key={index}>
+          {links.map((item) => (
+            <SidebarMenuItem key={item.href}>
               <SidebarMenuButton asChild>
                 <Link className={isActiveLink(item.href) ? "bg-[#27272A]" : ""} href={item.href}>
                   <Image 

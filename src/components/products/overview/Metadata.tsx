@@ -19,8 +19,8 @@ export default function Metadata({ product, className }: MetadataProps) {
       <p className="text-gray-600 text-b6 leading-b6 mb-4">{product.description}</p>
       <h3 className="font-semibold text-b6 leading-b6 mb-1">Usage</h3>
       <ul className="mb-4 flex flex-col gap-3 text-gray-600"> 
-        {product.usages.map((usage, index) => (
-          <li className="flex items-center" key={index}>
+        {product.usages.map((usage) => (
+          <li className="flex items-center" key={usage.id}>
             <div className="flex justify-center items-center w-[32px] h-[32px] mr-2 rounded-[20px] bg-gray-100">
               <Image
                 src={usage.image || "/images/products/overview/test-tube.png"}
@@ -35,8 +35,8 @@ export default function Metadata({ product, className }: MetadataProps) {
       </ul>
       <h3 className="font-semibold text-b6 leading-b6">Isotopes</h3>
       <ul className="mb-4 flex gap-4 flex-wrap">
-        {sortIsotopeValues(product.isotopes).map((isotope, index) => (
-          <li key={index}>
+        {sortIsotopeValues(product.isotopes).map((isotope) => (
+          <li key={isotope.id}>
             <Link
               href={`/products?isotopes=${isotope.name.toLowerCase()}`}
               className="inline-block text-blue-600 underline underline-offset-3 p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
@@ -48,9 +48,9 @@ export default function Metadata({ product, className }: MetadataProps) {
       </ul>
       <h3 className="font-semibold text-b6 leading-b6 mb-1">Volume (mL)</h3>
       <ul className="mb-4 text-gray-600 flex-wrap">
-        {sortVolumeValues(product.volumes).map((volume, index) => (
+        {sortVolumeValues(product.volumes).map((volume) => (
           <li
-            key={index}
+            key={volume.id}
             className="inline after:content-[',\00a0'] last:after:content-['']"
           >
             {volume.name}
@@ -65,7 +65,7 @@ export default function Metadata({ product, className }: MetadataProps) {
             : volume.name.toLowerCase();
 
           return (
-            <li key={index} className="inline after:content-[',\00a0'] last:after:content-['']">
+            <li key={volume.id} className="inline after:content-[',\00a0'] last:after:content-['']">
               {name}
             </li>
           )

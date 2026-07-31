@@ -34,9 +34,9 @@ export default function ProductCard({product, className}: ProductCardProps) {
         <ul className="text-b7 leading-b7 text-gray-600">
           <li>
             <ul className="flex flex-wrap text-gray-600">
-              {product.shields.map((shield, index) => (
+              {product.shields.map((shield) => (
                 <li
-                  key={index}
+                  key={shield.id}
                   className="text-left after:content-[',\00a0'] last:after:content-[''] leading-[20px]"
                 >
                   {shield.name}
@@ -46,9 +46,9 @@ export default function ProductCard({product, className}: ProductCardProps) {
           </li>
           <li>
             <ul className="flex flex-wrap text-gray-600">
-              {sortVolumeValues(product.volumes).map((volume, index) => (
+              {sortVolumeValues(product.volumes).map((volume) => (
                 <li
-                  key={index}
+                  key={volume.id}
                   className="text-left after:content-[',\00a0'] last:after:content-[''] leading-[20px]"
                 >
                   {volume.name}
@@ -58,9 +58,9 @@ export default function ProductCard({product, className}: ProductCardProps) {
           </li>
           <li>
             <ul className="flex flex-wrap text-gray-600">
-              {sortIsotopeValues(product.isotopes).map((isotope, index) => (
+              {sortIsotopeValues(product.isotopes).map((isotope) => (
                 <li
-                  key={index}
+                  key={isotope.id}
                   className="text-left after:content-[',\00a0'] last:after:content-[''] leading-[20px]"
                 >
                   {isotope.name}

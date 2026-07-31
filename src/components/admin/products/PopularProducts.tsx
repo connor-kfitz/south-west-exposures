@@ -113,8 +113,8 @@ export default function PopularProducts({ products, popularProducts, postPopular
         >
           <SortableContext items={productsDnD.length > 0 ? productsDnD.map((image) => image.id) : []}>
             <ul className="flex gap-4">
-              {productsDnD.map((product, index) => 
-                <SortableProduct key={index} product={product} removeProduct={handleRemove}/>
+              {productsDnD.map((product) =>
+                <SortableProduct key={product.id} product={product} removeProduct={handleRemove}/>
               )}
             </ul>
           </SortableContext>
