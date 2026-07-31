@@ -12,7 +12,7 @@ export default function MobileNav({navLinks, isActiveLink}: MobileNavProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="relative ml-auto block md:hidden">
+        <div className="relative block">
           <button className="absolute w-[44px] h-[44px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></button>
           <Image
             src="/images/top-nav/burger-menu.svg"

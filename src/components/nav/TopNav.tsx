@@ -1,12 +1,14 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
-import { navLinks, socialLinks } from "@/lib/constants";
 import Link from "next/link";
 import Image from "next/image";
 import BreadCrumbs from "./BreadCrumbs";
 import MobileNav from "./MobileNav";
+import InquiryListSheet from "./inquiry/InquiryListSheet";
+
+import { usePathname } from "next/navigation";
+import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
+import { navLinks } from "@/lib/constants";
 
 export default function TopNav() {
 
@@ -40,13 +42,16 @@ export default function TopNav() {
             />
             <span className="sr-only">South West Exposures</span>
           </Link>
-          <MobileNav navLinks={navLinks} isActiveLink={isActiveLink}/>
+          <div className="ml-auto flex items-center gap-2 md:hidden">
+            <InquiryListSheet/>
+            <MobileNav navLinks={navLinks} isActiveLink={isActiveLink}/>
+          </div>
           <div className="hidden md:flex flex-wrap justify-between items-center w-full gap-y-2">
             <ul className="flex flex-wrap gap-[32px] text-gray-900 text-b6 leading-b6 relative top-[2px] mr-[32px]">
               {navLinks.map((link, index) => (
                 <li key={index}>
-                  <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 
-                    focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white 
+                  <Link className={`whitespace-nowrap p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800
+                    focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white
                     focus-visible:outline-none ${isActiveLink(link.href) ? " underline underline-offset-3" : ""}`}
                     href={link.href}
                   >
@@ -56,20 +61,9 @@ export default function TopNav() {
               ))}
             </ul>
             <ul className="flex items-center gap-[32px] relative top-[2px]">
-              {socialLinks.map((link, index) => (
-                <li key={index}>
-                  <Link className="block p-0.5 hover:text-blue-800 rounded-[4px] focus-visible:text-blue-800 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-                    href={link.href} target="_blank" rel="noopener noreferrer"
-                  >
-                    <Image 
-                      src={link.path}
-                      alt={link.alt}
-                      height={link.size}
-                      width={link.size}
-                    />
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <InquiryListSheet/>
+              </li>
             </ul>
           </div>
         </div>
@@ -80,5 +74,5 @@ export default function TopNav() {
         </div>
       </div> : null}
     </nav>
-  )
+  );
 }

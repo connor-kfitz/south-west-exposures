@@ -1,8 +1,10 @@
-import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
-import { Product } from "@/types/admin-products";
 import Image from "next/image";
 import Link from "next/link";
 import InquiryDialog from "./InquiryDialog";
+import AddToInquiryButton from "./AddToInquiryButton";
+
+import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
+import { Product } from "@/types/admin-products";
 
 interface MetadataProps {
   product: Product;
@@ -69,7 +71,10 @@ export default function Metadata({ product, className }: MetadataProps) {
           )
         })}
       </ul>
-      <InquiryDialog productId={product.id} productName={product.name} purchasedTogether={product.purchasedTogether}/>
+      <div className="flex flex-wrap items-center gap-4">
+        <AddToInquiryButton product={product}/>
+        <InquiryDialog productId={product.id} productName={product.name} purchasedTogether={product.purchasedTogether}/>
+      </div>
     </section>
   )
 }
