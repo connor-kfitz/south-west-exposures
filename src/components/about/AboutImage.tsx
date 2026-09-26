@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutImage({ className = "" }: { className?: string }) {
   return (
-    <div className={`relative w-full aspect-[2/1] overflow-hidden rounded-bl-[96px] ${className}`}>
+    <div className={`relative w-full aspect-[2/1] overflow-hidden rounded-bl-[48px] sm:rounded-bl-[96px] ${className}`}>
       <Image
         src="/images/about/hero.png"
         alt="Technician in protective clothing loading a shield into pharmaceutical filling equipment"

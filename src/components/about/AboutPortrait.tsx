@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function AboutPortrait({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`relative w-full max-h-[364px] max-w-[364px] aspect-square overflow-hidden rounded-full ${className}`}
+      className={`relative w-[236px] sm:w-full max-h-[364px] max-w-[364px] aspect-square overflow-hidden rounded-full ${className}`}
       style={{ background: "linear-gradient(to bottom, rgba(225,219,234,0.85) 0%, rgba(181,196,224,0.85) 100%)" }}
     >
       <Image

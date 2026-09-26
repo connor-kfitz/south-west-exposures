@@ -14,15 +14,14 @@ export const specificationTableBase = [
 export const navLinks: TopNavLink[] = [
   { name: "Products", href: "/products" },
   { name: "About", href: "/about" },
-  // { name: "News", href: "/news" },
   { name: "Contact Us", href: "/contact" }
 ];
 
 export const socialLinks: TopNavSocialLink[] = [
-  { path: "/images/top-nav/linkedin.svg", alt: "Linkedin Logo", size: 24, href: "https://www.linkedin.com/in/swexposures" },
+  { path: "/images/top-nav/linkedin.svg", alt: "Linkedin Logo", size: 24, href: "https://www.linkedin.com/in/swexposures" }
 ];
 
 export const linkedInLinks = {
-  company: "https://www.linkedin.com/company/southwestexposures1/home/",
-  founder: "https://www.linkedin.com/in/robert-kamen-23028b29/"
+  company: "https://www.linkedin.com/in/southwestexposures",
+  founder: "https://www.linkedin.com/in/robert-kamen-23028b29"
 }

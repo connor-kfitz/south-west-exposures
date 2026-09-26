@@ -21,14 +21,14 @@ export default function About() {
 
   return (
     <main className="font-main padding-content relative overflow-hidden">
-      <div className="pt-16 flex justify-center pb-[64px] sm:pb-[105px]">
+      <div className="pt-12 sm:pt-16 flex justify-center pb-[68px] sm:pb-[105px]">
         <div className="w-full max-w-[1160px]">
           <AboutHeader/>
-          <div className="relative mt-[86px]">
-            <AboutGradient className="top-[213px]"/>
+          <div className="relative mt-8 sm:mt-[86px]">
+            <AboutGradient className="top-[36.72%]"/>
             <AboutImage/>
           </div>
-          <AboutFounder className="relative mt-[86px]"/>
+          <AboutFounder className="relative mt-8 sm:mt-[86px]"/>
         </div>
       </div>
     </main>
