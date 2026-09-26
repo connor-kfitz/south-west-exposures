@@ -33,6 +33,7 @@ export async function GET() {
   const staticPaths = [
     { path: '', priority: 1.0 },
     { path: 'products', priority: 0.8 },
+    { path: 'about', priority: 0.6 },
     { path: 'contact', priority: 0.6 }
   ];
 
