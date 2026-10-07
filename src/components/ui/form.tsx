@@ -145,7 +145,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-start">
       <Image
         src="/images/shared/warning.svg"
         alt="Warning Icon"

@@ -27,12 +27,12 @@ export default function TextInput<T extends FieldValues>({form, name, label, for
             <Input 
               id={name} {...field}
               className={`${inputClass} ${hasError
-                ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                ? "!border-error focus-visible:border-error focus-visible:border-2 focus-visible:ring-0"
                   : ""
               }`}
             />
           </FormControl>
-          <FormMessage className={`${hasError ? "text-[#D92525]" : ""}`}/>
+          <FormMessage className={`${hasError ? "text-error" : ""}`}/>
         </FormItem>
       )}
     />

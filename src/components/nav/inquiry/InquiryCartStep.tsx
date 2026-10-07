@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import InquiryEmptyCart from "./InquiryEmptyCart";
 
 import { Button } from "@/components/ui/button";
@@ -35,20 +36,30 @@ export default function InquiryCartStep({ onContinue, onClose }: InquiryCartStep
             {products.map((product) => (
               <li
                 key={product.id}
-                className="relative flex items-center w-full gap-4 rounded-2xl border border-gray-300 p-4 pr-[52px]"
+                className="relative flex items-start w-full gap-4 rounded-2xl border border-gray-300 p-4 pr-[52px] has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-1 has-[a:focus-visible]:outline-blue-600"
               >
-                <div className="relative size-[88px] shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                <div className="relative size-[88px] shrink-0 overflow-hidden rounded-[8px]">
                   {product.imageSrc && (
-                    <Image src={product.imageSrc} alt={product.name} fill className="object-contain"/>
+                    <div className="absolute inset-x-[14px] inset-y-[6px]">
+                      <Image src={product.imageSrc} alt={product.name} fill sizes="60px" className="object-contain"/>
+                    </div>
                   )}
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-1 text-b7">
-                  <h3 className="font-medium text-gray-900">{product.name}</h3>
-                  <p className="line-clamp-2 text-gray-600">{product.description}</p>
+                  <h3 className="font-medium text-gray-900">
+                    <Link
+                      href={`/products/${product.id}`}
+                      onClick={onClose}
+                      className="cursor-pointer focus-visible:outline-none after:absolute after:inset-0 after:rounded-2xl after:content-['']"
+                    >
+                      {product.name}
+                    </Link>
+                  </h3>
+                  <p className="line-clamp-3 text-gray-600">{product.description}</p>
                 </div>
                 <button
                   onClick={() => removeProduct(product.id)}
-                  className="absolute right-3 top-3 flex size-8 items-center justify-center rounded-full cursor-pointer hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                  className="absolute right-[11px] top-[11px] z-10 flex size-8 items-center justify-center rounded-full cursor-pointer hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
                 >
                   <Image src="/images/products/list/trash.svg" alt="Garbage Can" height={32} width={32}/>
                   <span className="sr-only">Remove {product.name} from inquiry list</span>

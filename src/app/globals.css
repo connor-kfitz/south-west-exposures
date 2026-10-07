@@ -140,56 +140,57 @@ html {
   }
 }
 
+@utility text-d1 {
+  font-size: var(--font-size-d1);
+  line-height: var(--line-height-d1);
+}
+
+@utility text-d2 {
+  font-size: var(--font-size-d2);
+  line-height: var(--line-height-d2);
+}
+
+@utility text-d3 {
+  font-size: var(--font-size-d3);
+  line-height: var(--line-height-d3);
+}
+
+@utility text-h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+}
+
+@utility text-h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+
+@utility text-h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+}
+
+@utility text-h4 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+}
+
+@utility text-b5 {
+  font-size: var(--font-size-b5);
+  line-height: var(--line-height-b5);
+}
+
+@utility text-b6 {
+  font-size: var(--font-size-b6);
+  line-height: var(--line-height-b6);
+}
+
+@utility text-b7 {
+  font-size: var(--font-size-b7);
+  line-height: var(--line-height-b7);
+}
+
 @layer utilities {
-  .text-d1 {
-      font-size: var(--font-size-d1);
-      line-height: var(--line-height-d1);
-  }
-
-  .text-d2 {
-    font-size: var(--font-size-d2);
-    line-height: var(--line-height-d2);
-  }
-
-  .text-d3 {
-    font-size: var(--font-size-d3);
-    line-height: var(--line-height-d3);
-  }
-
-  .text-h1 {
-    font-size: var(--font-size-h1);
-    line-height: var(--line-height-h1);
-  }
-
-  .text-h2 {
-    font-size: var(--font-size-h2);
-    line-height: var(--line-height-h2);
-  }
-
-  .text-h3 {
-    font-size: var(--font-size-h3);
-    line-height: var(--line-height-h3);
-  }
-
-  .text-h4 {
-    font-size: var(--font-size-h4);
-    line-height: var(--line-height-h4);
-  }
-
-  .text-b5 {
-    font-size: var(--font-size-b5);
-    line-height: var(--line-height-b5);
-  }
-
-  .text-b6 {
-    font-size: var(--font-size-b6);
-    line-height: var(--line-height-b6);
-  }
-
-  .text-b7 {
-    font-size: var(--font-size-b7);
-    line-height: var(--line-height-b7);
-  }
 
   .padding-content {
     padding-left: var(--padding-content);
@@ -228,6 +229,9 @@ html {
   --breakpoint-homeCenterContent: 73.4375rem;
 
   --breakpoint-inquiryModalSize: 64.6875rem;
+
+  --color-error: #D92525;
+  --color-backdrop: rgba(0, 0, 0, 0.60);
 }
 
 @theme inline {

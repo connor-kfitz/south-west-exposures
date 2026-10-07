@@ -44,7 +44,9 @@ export default function InquiryListSheet() {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="font-main flex h-full w-full flex-col gap-0 border-none bg-white p-0 shadow-[16px_0px_48px_0px_rgba(65,66,83,0.3)] sm:max-w-[537px]"
+        overlayClassName="bg-backdrop"
+        className="font-main flex h-full w-full flex-col gap-0 border-none bg-white p-0 shadow-[16px_0px_48px_0px_rgba(65,66,83,0.15)] sm:max-w-[537px]"
+        closeClassName="size-[44px] top-4 right-4 sm:top-6 sm:right-6"
       >
         {renderStage(stage, setStage, () => setOpen(false))}
       </SheetContent>

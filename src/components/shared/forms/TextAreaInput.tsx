@@ -32,7 +32,7 @@ export default function TextAreaInput<T extends FieldValues>({form, name, label,
                 {...field}
                 maxLength={1000}
                 className={`${areaClass} ${hasError
-                  ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                  ? "!border-error focus-visible:border-error focus-visible:border-2 focus-visible:ring-0"
                   : ""
                 }`}
               />

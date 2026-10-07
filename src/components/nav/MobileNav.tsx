@@ -25,7 +25,7 @@ export default function MobileNav({navLinks, isActiveLink}: MobileNavProps) {
       <SheetContent
         side="right"
         className="block font-main w-full max-w-[293px] p-6 pt-[100px] bg-white sm:max-w-[293px] border-none"
-        overlayClassName="bg-black/60"
+        overlayClassName="bg-backdrop"
       >
         <SheetHeader className="p-0 w-0 h-0">
           <SheetTitle></SheetTitle>

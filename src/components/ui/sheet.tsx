@@ -49,10 +49,12 @@ function SheetContent({
   children,
   side = "right",
   overlayClassName,
+  closeClassName,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
   overlayClassName?: string
+  closeClassName?: string
 }) {
   return (
     <SheetPortal>
@@ -75,9 +77,12 @@ function SheetContent({
       >
         {children}
         <SheetPrimitive.Close
-          className="cursor-pointer h-[36px] w-[36px] flex justify-center items-center ring-offset-background data-[state=open]:bg-secondary rounded-full absolute top-5 right-5 
-          hover:bg-gray-200 focus-visible:bg-gray-200 active:bg-gray-300 touch-manipulation 
-          focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none disabled:pointer-events-none"
+          className={cn(
+            `cursor-pointer h-[36px] w-[36px] flex justify-center items-center ring-offset-background data-[state=open]:bg-secondary rounded-full absolute top-5 right-5 
+            hover:bg-gray-200 focus-visible:bg-gray-200 active:bg-gray-300 touch-manipulation 
+            focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none disabled:pointer-events-none`,
+            closeClassName
+          )}
         >
           <Image
             src="/images/products/list/close.svg"

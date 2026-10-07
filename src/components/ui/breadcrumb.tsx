@@ -45,13 +45,12 @@ function BreadcrumbLink({
 
   if (href) {
     return (
-      <Link href={href} passHref legacyBehavior>
-        <Comp
-          data-slot="breadcrumb-link"
-          className={cn("hover:text-foreground transition-colors", className)}
-          {...props}
-        />
-      </Link>
+      <Link
+        href={href}
+        data-slot="breadcrumb-link"
+        className={cn("hover:text-foreground transition-colors", className)}
+        {...props}
+      />
     );
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import TextInput from "@/components/shared/forms/TextInput";
 import TextAreaInput from "@/components/shared/forms/TextAreaInput";
 import PhoneNumberInput from "@/components/shared/forms/PhoneNumberInput";
@@ -75,7 +74,7 @@ export default function InquiryFormStep({ onBack, onSubmitted }: InquiryFormStep
             </ul>
           </div>
           {Object.keys(form.formState.errors).length > 0 && (
-            <div className="flex items-start gap-2 text-[#EF4444] p-6 bg-[#FEF2F2] mb-8 rounded-[8px]">
+            <div className="flex items-start gap-2 text-error p-6 bg-[#FEF2F2] mb-4 rounded-[8px]">
               <Image
                 src="/images/contact/error.svg"
                 alt="Error"
@@ -83,13 +82,7 @@ export default function InquiryFormStep({ onBack, onSubmitted }: InquiryFormStep
                 height={24}
               />
               <p className="text-b6 leading-b6">
-                Please review {Object.keys(form.formState.errors).length} error{Object.keys(form.formState.errors).length === 1 ? "" : "s"}.{" "}
-                <Link
-                  href={`#${Object.keys(form.formState.errors)[0]}`}
-                  className="text-[#2563EB] underline rounded-[4px] p-[1px] focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
-                >
-                  Go to first error
-                </Link>
+                Please review {Object.keys(form.formState.errors).length} error{Object.keys(form.formState.errors).length === 1 ? "" : "s"}.
               </p>
             </div>
           )}
@@ -97,22 +90,22 @@ export default function InquiryFormStep({ onBack, onSubmitted }: InquiryFormStep
             <TextInput form={form} name="fullName" label="Full name"
               formItemClass="gap-1"
               formLabelClass="text-b7 leading-b7 !text-gray-900"
-              inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+              inputClass="px-4 py-3 text-gray-900 border border-gray-600 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
             />
             <TextInput form={form} name="email" label="Email address"
               formItemClass="gap-1"
               formLabelClass="text-b7 leading-b7 !text-gray-900"
-              inputClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+              inputClass="px-4 py-3 text-gray-900 border border-gray-600 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
             />
             <PhoneNumberInput form={form} name="phone" label={<PhoneLabel/>}
               formItemClass="gap-1"
               formLabelClass="text-b7 leading-b7 !text-gray-900"
-              inputClass="tracking-wide px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+              inputClass="tracking-wide px-4 py-3 text-gray-900 border border-gray-600 rounded-[8px] h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
             />
             <TextAreaInput form={form} name="message" label="Message (optional)"
               formItemClass="gap-1"
               formLabelClass="text-b7 leading-b7 !text-gray-900"
-              areaClass="px-4 py-3 text-gray-900 border border-gray-500 rounded-[8px] min-h-[168px] max-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
+              areaClass="px-4 py-3 text-gray-900 border border-gray-600 rounded-[8px] min-h-[168px] max-h-[168px] resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-blue-600"
               maxChars={1000}
             />
           </div>

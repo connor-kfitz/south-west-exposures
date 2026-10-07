@@ -99,7 +99,7 @@ export default function PhoneNumberInput<T extends FieldValues>({form, name, lab
               }}
               placeholder="(___)___-____"
               className={`${inputClass} ${hasError
-                ? "!border-[#D92525] focus-visible:border-[#D92525] focus-visible:border-2 focus-visible:ring-0"
+                ? "!border-error focus-visible:border-error focus-visible:border-2 focus-visible:ring-0"
                 : ""
               }`}
             />
