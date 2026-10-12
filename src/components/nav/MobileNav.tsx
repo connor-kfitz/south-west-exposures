@@ -1,7 +1,8 @@
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { TopNavLink } from "@/types/top-nav";
 import Link from "next/link";
 import Image from "next/image";
+
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { TopNavLink } from "@/types/top-nav";
 
 interface MobileNavProps {
   navLinks: TopNavLink[];
@@ -12,15 +13,15 @@ export default function MobileNav({navLinks, isActiveLink}: MobileNavProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="relative block">
-          <button className="absolute w-[44px] h-[44px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></button>
+        <button className="flex items-center justify-center size-[44px] rounded-full cursor-pointer hover:bg-gray-300 focus-visible:bg-gray-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none">
           <Image
-            src="/images/top-nav/burger-menu.svg"
-            alt="Burder Menu"
-            height={28}
-            width={28}
+            src="/images/top-nav/burger.svg"
+            alt="Burger Menu"
+            height={18}
+            width={22}
           />
-        </div>
+          <span className="sr-only">Open menu</span>
+        </button>
       </SheetTrigger>
       <SheetContent
         side="right"

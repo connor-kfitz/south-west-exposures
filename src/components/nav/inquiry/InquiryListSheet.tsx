@@ -31,10 +31,10 @@ export default function InquiryListSheet() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <button className="relative flex items-center justify-center size-[44px] rounded-full cursor-pointer hover:bg-gray-100 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none">
+        <button className="relative flex items-center justify-center size-[44px] rounded-full cursor-pointer hover:bg-gray-300 focus-visible:bg-gray-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none">
           <Image
-            src="/images/top-nav/shopping-bag.svg"
-            alt="Shopping Bag"
+            src="/images/top-nav/basket.svg"
+            alt="Basket"
             height={24}
             width={24}
           />
@@ -69,7 +69,7 @@ function InquiryBadge({ count }: { count: number }) {
   if (count === 0) return null;
 
   return (
-    <Badge className="absolute top-1.5 right-1.5 h-[18px] min-w-[18px] justify-center rounded-full border-transparent bg-blue-600 px-1 text-[11px] leading-none text-white">
+    <Badge className="absolute left-[24px] top-[7px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full border border-white bg-blue-600 px-[3px] text-[10px] font-semibold leading-none tabular-nums text-white">
       {count}
     </Badge>
   );
