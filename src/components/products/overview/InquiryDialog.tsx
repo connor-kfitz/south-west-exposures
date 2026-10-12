@@ -55,7 +55,7 @@ export default function InquiryDialog({productId, productName, purchasedTogether
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="primary" size="primaryDefault" onClick={() => setOpen(true)}>Inquire about this product</Button>
+        <Button variant="primaryGhost" size="primaryGhostDefault" className="w-full sm:w-auto" onClick={() => setOpen(true)}>Ask a question</Button>
       </DialogTrigger>
       {open && (
         dialogState === "Form" ? (

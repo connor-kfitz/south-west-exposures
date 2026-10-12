@@ -36,7 +36,7 @@ export default function ProductOverview({ product }: ProductOverviewProps) {
     <main className="font-main bg-white pb-[64px] pt-6 padding-content sm:pb-[96px] md:pt-[45px] ">
       <div className="flex justify-center">
         <div className="w-full max-w-[1160px]">
-          <div className="flex flex-col-reverse w-full mb-[64px] md:flex-row md:gap-8">
+          <div className="flex flex-col-reverse w-full mb-[64px] sm:gap-[64px] md:flex-row md:gap-8">
           <div className="flex-1 flex-col">
             <ImageCarousel images={product.images} className="w-full flex flex-col sm:flex-row gap-8"/>
           </div>
