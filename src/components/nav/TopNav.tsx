@@ -32,11 +32,13 @@ export default function TopNav() {
     <nav className="w-full font-main">
       <div className="padding-content" style={{ boxShadow: 'var(--shadow-nav)' }}>
         <div className="flex items-center min-h-[88px] max-w-[1160px] py-3 mx-auto">
-          <Link href="/">
+          <Link href="/" className="shrink-0 block mr-[32px] relative bottom-[6px] rounded-[4px] focus-visible:ring-offset-2
+            focus-visible:ring-offset-white focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+          >
             <Image
               src="/images/top-nav/swe-logo.png"
               alt="South West Exposures"
-              className="mr-[32px] relative bottom-[6px]"
+              className="block"
               height={47}
               width={72}
             />
