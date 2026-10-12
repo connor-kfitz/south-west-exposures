@@ -5,6 +5,7 @@ import AddToInquiryButton from "./AddToInquiryButton";
 
 import { sortIsotopeValues, sortVolumeValues } from "@/lib/helpers";
 import { Product } from "@/types/admin-products";
+import { getUsageIcon, FallbackUsageIcon } from "./usageIcons";
 
 interface MetadataProps {
   product: Product;
@@ -19,19 +20,21 @@ export default function Metadata({ product, className }: MetadataProps) {
       <p className="text-gray-600 text-b6 leading-b6 mb-4">{product.description}</p>
       <h3 className="font-semibold text-b6 leading-b6 mb-1">Usage</h3>
       <ul className="mb-4 flex flex-col gap-3 text-gray-600"> 
-        {product.usages.map((usage) => (
-          <li className="flex items-center" key={usage.id}>
-            <div className="flex justify-center items-center w-[32px] h-[32px] mr-2 rounded-[20px] bg-gray-100">
-              <Image
-                src={usage.image || "/images/products/overview/test-tube.png"}
-                alt={usage.name}
-                width={20}
-                height={20}
-              />
-            </div>
-            <span>{usage.name}</span>
-          </li>
-        ))}
+        {product.usages.map((usage) => {
+          const icon = getUsageIcon(usage.name);
+          return (
+            <li className="flex items-center" key={usage.id}>
+              <div className="flex justify-center items-center w-[32px] h-[32px] mr-2 rounded-[20px] bg-gray-100 text-gray-900">
+                {usage.image ? (
+                  <Image src={usage.image} alt="" width={20} height={20}/>
+                ) : (
+                  icon ?? FallbackUsageIcon
+                )}
+              </div>
+              <span>{usage.name}</span>
+            </li>
+          );
+        })}
       </ul>
       <h3 className="font-semibold text-b6 leading-b6">Isotopes</h3>
       <ul className="mb-4 flex gap-4 flex-wrap">
