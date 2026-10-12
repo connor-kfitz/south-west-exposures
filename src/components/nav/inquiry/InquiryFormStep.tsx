@@ -141,8 +141,11 @@ function PhoneLabel() {
             <Image src="/images/shared/info.svg" alt="" width={16} height={16}/>
           </button>
         </TooltipTrigger>
-        <TooltipContent>
-          We&apos;ll only use this to reach you faster about your inquiry.
+        <TooltipContent
+          className="max-w-[232px] rounded-[4px] bg-gray-900 px-2 py-1 text-b7 leading-b7 font-normal text-white text-left text-wrap [filter:drop-shadow(0_4px_3px_rgba(3,7,18,0.05))_drop-shadow(0_10px_7.5px_rgba(3,7,18,0.1))]"
+          arrow={<Image src="/images/shared/tooltip-arrow.svg" alt="" width={16} height={9} className="rotate-180"/>}
+        >
+          We&apos;ll only use this to reach you faster about your inquiry
         </TooltipContent>
       </Tooltip>
     </span>
