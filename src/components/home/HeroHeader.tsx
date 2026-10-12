@@ -39,11 +39,11 @@ export default function HeroHeader() {
             <p className="text-b5 text-white max-w-[564px] mb-6">
               From concept to fabrication, South West Exposures engineers next-generation shielding systems that safeguard therapies and shape the future of care.
             </p>
-            <Link href="/products">
-              <Button variant="hero" size="hero" className="w-full sm:w-auto px-[24px] text-black">
-                See how it works
-              </Button>
-            </Link>
+            <Button asChild variant="hero" size="hero" className="w-full sm:w-auto px-[24px] text-black
+              focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+            >
+              <Link href="/products">See how it works</Link>
+            </Button>
           </div>
         </div>
       </div>
