@@ -12,16 +12,16 @@ export default function SpecializedServices() {
               w-full xl:max-w-[564px] 
               aspect-square sm:aspect-auto 
               sm:h-[649px] 
-              rounded-none sm:rounded-[16px] 
-              overflow-hidden 
-              bg-[#F3F4F6] 
+              rounded-none sm:rounded-[0_0_0_96px]
+              overflow-hidden
+              bg-[#F3F4F6]
               bg-[length:208.622%_118.487%]
-              bg-[position:calc(-264.04px-(100vw-375px)*0.6)_-0.373px] 
-              sm:bg-cover sm:bg-center 
+              bg-[position:calc(-264.04px-(100vw-375px)*0.6)_-0.373px]
+              sm:bg-cover sm:bg-center
               lg:bg-[length:1345px_769px]
               lg:bg-[position:-600px_-30px]
-              xl:bg-[length:238.516%_118.487%] 
-              xl:bg-[position:-470.332px_-61.275px]
+              xl:bg-[length:228.78%_113.65%]
+              xl:bg-[position:-470.33px_-29.92px]
             "
             style={{
               backgroundImage: "url('/images/home/specialized-services.png')",
