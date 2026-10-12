@@ -33,8 +33,10 @@ export default function ProductRange() {
         <ul className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           {productTypes.map((product) => (
             <li key={product.path} className="group h-full">
-              <Link href={product.path} className="block h-full">
-                <div className="bg-[#F3F4F6] rounded-[16px] w-full h-full pt-5 flex flex-col items-center justify-end gap-1 transition-transform duration-200 ease-in-out hover:shadow-md pb-8">
+              <Link href={product.path} className="block h-full rounded-[16px] focus-visible:ring-2 focus-visible:ring-blue-600
+                focus-visible:ring-offset-4 focus-visible:ring-offset-white focus-visible:outline-none"
+              >
+                <div className="bg-[#F3F4F6] rounded-[16px] w-full h-full pt-5 flex flex-col items-center justify-end gap-1 pb-8">
                   <div className="w-full flex justify-center">
                     <Image
                       src={product.imageSrc}

@@ -11,7 +11,9 @@ export default function CustomSolutions() {
           <p className="text-b5 text-gray-600 mb-6">
             SWE combines industry knowledge with innovative design to deliver practical shielding systems for drug development, distribution, and administration. As theranostics and RLT advance toward becoming the standard of care in oncology, we partner with teams to make these breakthroughs safe, reliable, and scalable.
           </p>
-          <Link href="mailto:robert.kamen@swexposures.com" className="block w-full sm:w-auto"><Button variant="primary" size="primaryDefault" className="text-md font-medium pt-[13px] pb-[15px] w-full sm:w-auto">Explore custom solutions</Button></Link>
+          <Button asChild variant="primary" size="primaryDefault" className="text-md font-medium pt-[13px] pb-[15px] w-full sm:w-auto">
+            <Link href="mailto:robert.kamen@swexposures.com">Explore custom solutions</Link>
+          </Button>
         </div>
       </div>
     </section>

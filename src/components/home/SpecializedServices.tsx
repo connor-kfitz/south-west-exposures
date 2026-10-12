@@ -36,11 +36,9 @@ export default function SpecializedServices() {
           <p className="text-b5 text-gray-600 mb-6">
             Integrated health physics expertise and regulatory support to help you meet safety standards, optimize shielding, and maintain confident compliance across all major authorities.
           </p>
-          <Link href="/contact" className="block w-full sm:w-auto">
-            <Button variant="primary" size="primaryDefault" className="text-md font-medium pt-[13px] pb-[15px] w-full sm:w-auto">
-              Learn more about our services
-            </Button>
-          </Link>
+          <Button asChild variant="primary" size="primaryDefault" className="text-md font-medium pt-[13px] pb-[15px] w-full sm:w-auto">
+            <Link href="/contact">Learn more about our services</Link>
+          </Button>
         </div>
       </div>
     </section>
