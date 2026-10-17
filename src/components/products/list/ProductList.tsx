@@ -1,15 +1,19 @@
 "use client";
 
+import Filters from "./Filters";
+import FilterInfo from "./FilterInfo";
+import Products from "./Products";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import ProductCategoryFilter from "@/components/shared/ProductCategoryFilter";
+
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { Product } from "@/types/admin-products";
 import { Filter, SortByOptions } from "@/types/product-list";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useProductFilters } from "@/stores/useProductFilters";
-import Filters from "./Filters";
-import FilterInfo from "./FilterInfo";
-import Products from "./Products";
-import useMediaQuery from "@/hooks/useMediaQuery";
+import { productCategories } from "@/lib/constants";
+import { ProductCategory } from "@/types/product-category";
 
 interface ProductListProps {
   products: Product[];
@@ -51,28 +55,43 @@ export default function ProductList({products, filters}: ProductListProps) {
     const [filterName, filterValue] = firstEntry.value;
     if (!filterName || !filterValue) return;
 
-    setFilterState((prevFilters) =>
-      prevFilters.map((group) => {
-        if (group.name.toLowerCase() === filterName) {
-          return {
-            ...group,
-            values: group.values.map((v) => ({
-              ...v,
-              selected: v.name.toLowerCase() === filterValue.toLowerCase()
-            }))
-          }
-        } else {
-          return {
-            ...group,
-            values: group.values.map((v) => ({
-              ...v,
-              selected: false
-            }))
-          }
-        }
-      })
-    );
+    if (filterName === "category" && filterValue === "all") {
+      setFilterState((prevFilters) => selectOnly(prevFilters, null));
+      return;
+    }
+
+    setFilterState((prevFilters) => selectOnly(prevFilters, { group: filterName, value: filterValue }));
   }, [searchParams, setFilterState]);
+
+  function handleCategorySelect(category: ProductCategory) {
+    setFilterState((prevFilters) => selectOnly(prevFilters, category.filter));
+  }
+
+  function getSelectedCategory(): string | null {
+    const selectedValues = filterState.flatMap(group =>
+      group.values.filter(v => v.selected).map(v => ({ group: group.name.toLowerCase(), value: v.name.toLowerCase() }))
+    );
+
+    if (selectedValues.length === 0) return "All products";
+    if (selectedValues.length > 1) return null;
+
+    const [{ group, value }] = selectedValues;
+    const match = productCategories.find(c => c.filter?.group === group && c.filter.value === value);
+    return match ? match.name : null;
+  }
+
+  function selectOnly(filters: Filter[], selection: { group: string; value: string } | null): Filter[] {
+    return filters.map((group) => {
+      const isSelectedGroup = selection !== null && group.name.toLowerCase() === selection.group.toLowerCase();
+      return {
+        ...group,
+        values: group.values.map((v) => ({
+          ...v,
+          selected: isSelectedGroup && v.name.toLowerCase() === selection.value.toLowerCase()
+        }))
+      }
+    });
+  }
 
   useEffect(() => {
 
@@ -148,11 +167,25 @@ export default function ProductList({products, filters}: ProductListProps) {
 
   }, [filterState, sortOption, products]);
 
+  const selectedCategory = getSelectedCategory();
+  const heading = selectedCategory && selectedCategory !== "All products" ? selectedCategory : "Products";
+
   return (
-    <main className="font-main bg-white pb-6 xl:pb-[96px] padding-content">
-      <div className="pt-6 flex justify-center xl:pt-[48px]">
+    <main className="font-main bg-white pb-6 xl:pb-[96px]">
+      <div className="pt-6 md:pt-12 padding-content">
+        <h1 className="max-w-[1160px] mx-auto text-h1 leading-h1 text-gray-900 font-semibold mb-8 md:mb-6">{heading}</h1>
+      </div>
+      <div className="padding-content max-md:pr-0! md:bg-gray-50">
+        <ProductCategoryFilter
+          variant="page"
+          className="max-w-[1160px] mx-auto py-8 max-md:justify-start max-md:gap-4 max-md:h-[226px] max-md:px-6 max-md:py-[13px]
+            max-md:scroll-px-6 max-md:bg-gray-50 max-md:rounded-l-[8px]"
+          selected={selectedCategory}
+          onSelect={handleCategorySelect}
+        />
+      </div>
+      <div className="pt-12 flex justify-center padding-content">
         <div className="w-full max-w-[1160px]">
-          <h1 className="text-h1 leading-h1 text-gray-900 font-semibold mb-8">Products</h1>
           <div className="flex gap-8">
             <>
               {isAboveLg && (

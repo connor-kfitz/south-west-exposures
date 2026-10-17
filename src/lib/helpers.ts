@@ -1,4 +1,5 @@
 import { Filter as FilterValue } from "@/types/admin-products";
+import { productCategories } from "@/lib/constants";
 
 export function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -87,4 +88,13 @@ export async function sendEmail(name: string, email: string, phone?: string, mes
     console.error('Error sending email:', error);
     return false;
   }
+}
+
+export function getCategoryFromUrl(pathname: string, searchParams: URLSearchParams): string | null {
+  if (pathname !== "/products") return null;
+  const match = productCategories.find(c => c.filter
+    ? searchParams.get(c.filter.group)?.toLowerCase() === c.filter.value
+    : searchParams.get("category") === "all"
+  );
+  return match ? match.name : null;
 }

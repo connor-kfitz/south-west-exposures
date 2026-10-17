@@ -191,6 +191,12 @@ html {
   line-height: var(--line-height-b7);
 }
 
+@utility focus-ring {
+  &:focus-visible {
+    @apply ring-2 ring-blue-600 ring-offset-2 ring-offset-white outline-none;
+  }
+}
+
 @layer utilities {
 
   .padding-content {
