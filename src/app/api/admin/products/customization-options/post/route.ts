@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
+import { revalidatePublicPages } from '@/lib/productQueries';
 
 export async function POST(req: Request) {
   try {
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
       [name]
     );
 
+    revalidatePublicPages();
     return NextResponse.json({ message: 'Customization option created', customizationOption: result.rows[0] }, { status: 201 });
   } catch (error) {
     console.error(error);

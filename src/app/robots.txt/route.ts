@@ -3,7 +3,7 @@ const DOMAIN = process.env.DOMAIN_NAME || process.env.NEXT_PUBLIC_DOMAIN || proc
 export async function GET() {
   const sitemapUrl = `${DOMAIN}/sitemap.xml`;
 
-  const body = `User-agent: *\nAllow: /\nSitemap: ${sitemapUrl}\n`;
+  const body = `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /auth\nSitemap: ${sitemapUrl}\n`;
 
   return new Response(body, {
     headers: { 'Content-Type': 'text/plain' },

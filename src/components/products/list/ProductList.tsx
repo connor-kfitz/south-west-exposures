@@ -3,7 +3,7 @@
 import { useBreadcrumbs } from "@/contexts/BreadcrumbContext";
 import { Product } from "@/types/admin-products";
 import { Filter, SortByOptions } from "@/types/product-list";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useProductFilters } from "@/stores/useProductFilters";
 import Filters from "./Filters";
@@ -43,9 +43,10 @@ export default function ProductList({products, filters}: ProductListProps) {
     setFilterStorage(filterState)
   }, [filterState, filterStorage, setFilterStorage]);
 
-  const searchParams = useSearchParams();
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
 
   useEffect(() => {
+    if (!searchParams) return;
     const firstEntry = searchParams.entries().next();
     if (firstEntry.done) return;
     const [filterName, filterValue] = firstEntry.value;
@@ -150,6 +151,9 @@ export default function ProductList({products, filters}: ProductListProps) {
 
   return (
     <main className="font-main bg-white pb-6 xl:pb-[96px] padding-content">
+      <Suspense fallback={null}>
+        <SearchParamsReader onChange={setSearchParams}/>
+      </Suspense>
       <div className="pt-6 flex justify-center xl:pt-[48px]">
         <div className="w-full max-w-[1160px]">
           <h1 className="text-h1 leading-h1 text-gray-900 font-semibold mb-8">Products</h1>
@@ -178,4 +182,14 @@ export default function ProductList({products, filters}: ProductListProps) {
       </div>
     </main>
   )
+}
+
+function SearchParamsReader({ onChange }: { onChange: (searchParams: URLSearchParams) => void }) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    onChange(searchParams);
+  }, [searchParams, onChange]);
+
+  return null;
 }

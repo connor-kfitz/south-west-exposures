@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
+import { revalidatePublicPages } from '@/lib/productQueries';
 
 interface PopularProductInput {
   productId: string;
@@ -17,6 +18,7 @@ export async function POST(req: Request) {
     await pool.query('DELETE FROM popular_products');
 
     if (data.length === 0) {
+      revalidatePublicPages();
       return NextResponse.json({ message: 'Popular products cleared successfully' }, { status: 200 });
     }
 
@@ -41,6 +43,7 @@ export async function POST(req: Request) {
 
     const result = await pool.query(insertQuery, values);
 
+    revalidatePublicPages();
     return NextResponse.json({
       message: 'Popular products updated successfully',
       popularProducts: result.rows,

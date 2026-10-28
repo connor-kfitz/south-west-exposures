@@ -1,4 +1,5 @@
 import pool from "@/lib/db";
+import { revalidatePublicPages } from "@/lib/productQueries";
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ customizationOptionId: string }> }) {
   const { customizationOptionId } = await params;
@@ -36,6 +37,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ custo
       );
     }
 
+    revalidatePublicPages();
     return new Response(
       JSON.stringify({ message: 'Customization option deleted successfully.' }),
       { status: 200 }

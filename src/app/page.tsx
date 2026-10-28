@@ -1,8 +1,8 @@
 import About from "@/components/about/About";
 import { Metadata } from "next";
-import { cookies } from "next/headers";
+import { getPopularProducts } from "@/lib/productQueries";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 // Build a canonical site domain to use for the page canonical link.
 const rawDomain = process.env.DOMAIN_NAME || process.env.NEXT_PUBLIC_DOMAIN || process.env.VERCEL_URL || 'http://localhost:3000';
@@ -17,24 +17,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
+  const popularProducts = await getPopularProducts();
 
-  try {
-
-    const cookieStore = await cookies();
-
-    // Headers are used to send authentication cookies to the API
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/popular/get`, {
-      headers: { Cookie: cookieStore.toString() }
-    });
-
-    if (!response.ok) throw new Error(`Failed to fetch popular products, status: ${response.status}`);
-  
-    const popularProducts = await response.json();
-
-    return <main className="bg-gray-50 relative overflow-hidden"><About popularProducts={popularProducts}/></main>
-
-  } catch {
-
-     return <main><About popularProducts={[]}/></main>
-  }
+  return <main className="bg-gray-50 relative overflow-hidden"><About popularProducts={popularProducts}/></main>
 }

@@ -1,4 +1,5 @@
 import pool from "@/lib/db";
+import { revalidatePublicPages } from "@/lib/productQueries";
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ usageId: string }> }) {
 
@@ -36,6 +37,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ usage
       );
     }
 
+    revalidatePublicPages();
     return new Response(
       JSON.stringify({ message: 'Usage deleted successfully.' }),
       { status: 200 }

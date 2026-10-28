@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
+import { revalidatePublicPages } from '@/lib/productQueries';
 
 export async function POST(req: Request) {
   try {
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
       [name]
     );
 
+    revalidatePublicPages();
     return NextResponse.json({ message: 'Usage created', usage: result.rows[0] }, { status: 201 });
   } catch (error) {
     console.error(error);

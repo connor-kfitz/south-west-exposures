@@ -1,5 +1,6 @@
 import pool from "@/lib/db";
 import { PoolClient } from "pg";
+import { revalidatePublicPages } from "@/lib/productQueries";
 
 async function deleteProductAccessories(client: PoolClient, productId: string) {
   await client.query("DELETE FROM products_accessories WHERE product_id = $1", [productId]);
@@ -78,6 +79,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ produ
 
     await client.query("COMMIT");
 
+    revalidatePublicPages();
     return new Response(
       JSON.stringify({ message: "Product deleted successfully." }),
       { status: 200 }

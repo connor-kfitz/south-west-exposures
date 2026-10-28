@@ -1,14 +1,15 @@
 import ProductOverview from "@/components/products/overview/ProductOverview";
-import { Product } from "@/types/admin-products";
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { getProductById, getProductIds } from "@/lib/productQueries";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: {params: Promise<{ productId: string }>}): Promise<Metadata> {
   const { productId } = await params
 
-  const product = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`).then((res) => res.json())
+  const product = await getProductById(productId);
+  if (!product) return {};
 
   return {
     title: product.name,
@@ -18,14 +19,9 @@ export async function generateMetadata({ params }: {params: Promise<{ productId:
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get`);
-    if (!response.ok) throw new Error(`Failed to fetch products: ${response.status}`);
-    
-    const products = await response.json();
+    const productIds = await getProductIds();
 
-    return products.map((product: Product) => ({
-      slug: product.id.toString()
-    }));
+    return productIds.map((productId) => ({ productId }));
 
   } catch (error) {
     console.error('Error generating static params:', error);
@@ -40,25 +36,8 @@ interface ProductPageProps {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productId } = await params;
 
-  const cookieStore = await cookies();
+  const product = await getProductById(productId);
+  if (!product) notFound();
 
-  try {
-    const response = await fetch(`${process.env.DOMAIN_NAME}/api/admin/products/get/${productId}`, {
-      headers: { Cookie: cookieStore.toString() }
-    });
-    if (!response.ok) throw new Error(`Failed to fetch product, status: ${response.status}`);
-  
-    const product = await response.json();
-
-    return <ProductOverview product={product}/>
-
-  } catch (error) {
-     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-
-     return (
-       <div>
-         <p>{errorMessage}</p>
-       </div>
-     )
-  }
+  return <ProductOverview product={product}/>
 }

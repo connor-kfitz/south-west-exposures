@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import { ProductImage } from '@/types/admin-products';
+import { revalidatePublicPages } from '@/lib/productQueries';
 
 export async function POST(req: Request) {
   const client = await pool.connect();
@@ -206,6 +207,7 @@ export async function POST(req: Request) {
 
     await client.query('COMMIT');
 
+    revalidatePublicPages();
     return NextResponse.json(
       {
         message: 'Product created',

@@ -2,6 +2,7 @@ import pool from '@/lib/db';
 import { NextResponse } from 'next/server';
 import { ProductImage } from '@/types/admin-products';
 import { PoolClient } from 'pg';
+import { revalidatePublicPages } from '@/lib/productQueries';
 
 export async function PUT(req: Request) {
   const client = await pool.connect();
@@ -42,6 +43,7 @@ export async function PUT(req: Request) {
 
     await client.query('COMMIT');
 
+    revalidatePublicPages();
     return NextResponse.json({ message: 'Product updated successfully' }, { status: 200 });
   } catch (error) {
     await client.query('ROLLBACK');

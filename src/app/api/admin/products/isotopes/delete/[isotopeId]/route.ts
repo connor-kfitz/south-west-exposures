@@ -1,4 +1,5 @@
 import pool from "@/lib/db";
+import { revalidatePublicPages } from "@/lib/productQueries";
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ isotopeId: string }> }) {
 
@@ -37,6 +38,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ isoto
         );
     }
 
+    revalidatePublicPages();
     return new Response(
       JSON.stringify(
         { message: 'Isotope deleted successfully.' }),
